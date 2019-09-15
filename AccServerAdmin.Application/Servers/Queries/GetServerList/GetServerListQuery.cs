@@ -8,7 +8,7 @@ namespace AccServerAdmin.Application.Servers.Queries.GetServerList
     {
         public IEnumerable<Server> Execute()
         {
-            return new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
