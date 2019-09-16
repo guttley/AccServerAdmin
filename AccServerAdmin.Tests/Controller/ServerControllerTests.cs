@@ -61,6 +61,7 @@ namespace AccServerAdmin.Tests.Controller
             var servers = controller.GetServerList();
 
             // Assert
+            getListCommand.Received().Execute();
             Assert.That(servers, Is.EquivalentTo(_servers));
         }
 
@@ -90,34 +91,11 @@ namespace AccServerAdmin.Tests.Controller
             var server = controller.GetServerById(searchGuid);
 
             // Assert
+            getByIdCommand.Received().Execute(searchGuid);
             Assert.That(server.Id, Is.EqualTo(searchGuid));
             Assert.That(server.Name, Is.EqualTo(serverName));
         }
 
-        [Test]
-        public void GetsServerById_ReturnsNull()
-        {
-            // Arrange
-            var searchGuid = Guid.NewGuid();
-            var createCommand = Substitute.For<ICreateServerCommand>();
-            var updateCommand = Substitute.For<IUpdateServerCommand>();
-            var deleteCommand = Substitute.For<IDeleteServerCommand>();
-            var getByIdCommand = Substitute.For<IGetServerByIdQuery>();
-            var getListCommand = Substitute.For<IGetServerListQuery>();
-            var controller = new ServerController(createCommand, deleteCommand, updateCommand, getByIdCommand, getListCommand);
-
-            getByIdCommand.Execute(Arg.Is(_server1.Id)).Returns(_server1);
-            getByIdCommand.Execute(Arg.Is(_server2.Id)).Returns(_server2);
-            getByIdCommand.Execute(Arg.Is(_server3.Id)).Returns(_server3);
-            getByIdCommand.Execute(Arg.Is(_server4.Id)).Returns(_server4);
-            getByIdCommand.Execute(Arg.Is(_server5.Id)).Returns(_server5);
-
-            // Act
-            var server = controller.GetServerById(searchGuid);
-
-            // Assert
-            Assert.That(server, Is.Null);
-        }
 
         [Test]
         public void CreatesServer()
@@ -136,6 +114,7 @@ namespace AccServerAdmin.Tests.Controller
             var server = controller.CreateServer(_server1.Name);
 
             // Assert
+            createCommand.Received().Execute(_server1.Name);
             Assert.That(server.Id, Is.EqualTo(_server1.Id));
             Assert.That(server.Name, Is.EqualTo(_server1.Name));
         }
@@ -144,6 +123,7 @@ namespace AccServerAdmin.Tests.Controller
         public void UpdatesServer()
         {
             // Arrange
+            var newServerName = "New server name - wibble";
             var createCommand = Substitute.For<ICreateServerCommand>();
             var updateCommand = Substitute.For<IUpdateServerCommand>();
             var deleteCommand = Substitute.For<IDeleteServerCommand>();
@@ -152,7 +132,10 @@ namespace AccServerAdmin.Tests.Controller
             var controller = new ServerController(createCommand, deleteCommand, updateCommand, getByIdCommand, getListCommand);
 
             // Act
-            controller.UpdateServer(_server1.Id, _server1.Name);
+            controller.UpdateServer(_server1.Id, newServerName);
+
+            // Assert
+            updateCommand.Received().Execute(_server1.Id, newServerName);
         }
 
         [Test]
@@ -167,7 +150,11 @@ namespace AccServerAdmin.Tests.Controller
             var controller = new ServerController(createCommand, deleteCommand, updateCommand, getByIdCommand, getListCommand);
 
             // Act
-            controller.UpdateServer(_server1.Id, _server1.Name);
+            controller.DeleteServer(_server1.Id);
+
+            // Assert
+            deleteCommand.Received().Execute(_server1.Id);
         }
+
     }
 }

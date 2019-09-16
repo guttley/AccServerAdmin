@@ -1,5 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using AccServerAdmin.Application.Servers.Commands.CreateServer;
+using AccServerAdmin.Application.Servers.Commands.DeleteServer;
+using AccServerAdmin.Application.Servers.Commands.UpdateServer;
+using AccServerAdmin.Application.Servers.Queries.GetServerById;
+using AccServerAdmin.Application.Servers.Queries.GetServerList;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Service.Controllers;
+using AccServerAdmin.Service.Helpers;
+using Castle.Facilities.AspNetCore;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +21,7 @@ namespace AccServerAdmin.Service
 {
     public class Startup
     {
+        private static readonly WindsorContainer Container = new WindsorContainer();
         private const string ApiTitle = "ACC Server Admin API";
         private const string ApiVersion = "v1";
 
@@ -21,12 +35,22 @@ namespace AccServerAdmin.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = ApiTitle, Version = ApiVersion });
             });
+
+            RegisterApplicationComponents(services);
+
+            services.AddWindsor(Container,
+                opts => opts.UseEntryAssembly(typeof(ServerController).Assembly), 
+                () => services.BuildServiceProvider(validateScopes: false));
+
+
+            ValidateConfiguration();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +74,27 @@ namespace AccServerAdmin.Service
             {
                 c.SwaggerEndpoint($"/swagger/{ApiVersion}/swagger.json", ApiTitle);
             });
-
         }
+
+        private void RegisterApplicationComponents(IServiceCollection services)
+        {
+            // Application components
+            Container.Register(Component.For<IHttpContextAccessor>().ImplementedBy<HttpContextAccessor>());
+            Container.Register(Component.For<ConfigValiator>());
+
+            // Server componets
+            Container.Register(Component.For<ICreateServerCommand>().ImplementedBy<CreateServerCommand>());
+            Container.Register(Component.For<IUpdateServerCommand>().ImplementedBy<UpdateServerCommand>());
+            Container.Register(Component.For<IDeleteServerCommand>().ImplementedBy<DeleteServerCommand>());
+            Container.Register(Component.For<IGetServerListQuery>().ImplementedBy<GetServerListQuery>());
+            Container.Register(Component.For<IGetServerByIdQuery>().ImplementedBy<GetServerByIdQuery>());
+        }
+
+        private void ValidateConfiguration()
+        {
+            var validator = Container.Resolve<ConfigValiator>();
+            validator.Execute();
+        }
+
     }
 }
