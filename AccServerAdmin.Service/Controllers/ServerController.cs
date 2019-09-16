@@ -1,11 +1,14 @@
-﻿using AccServerAdmin.Application.Servers.Commands.CreateServer;
+﻿using System;
+using System.Collections.Generic;
+using AccServerAdmin.Application.Servers.Commands.CreateServer;
+using AccServerAdmin.Application.Servers.Commands.DeleteServer;
+using AccServerAdmin.Application.Servers.Commands.UpdateServer;
+using AccServerAdmin.Application.Servers.Queries.GetServerById;
 using AccServerAdmin.Application.Servers.Queries.GetServerList;
 using AccServerAdmin.Domain;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
-namespace AccServerAdmin.Controllers
+namespace AccServerAdmin.Service.Controllers
 {
     [Route("api/server")]
     [ApiController]
@@ -16,7 +19,6 @@ namespace AccServerAdmin.Controllers
         private readonly IUpdateServerCommand _updateServerCommand;
         private readonly IGetServerByIdQuery _getServerByIdQuery;
         private readonly IGetServerListQuery _getServerListQuery;
-
 
         public ServerController(
             ICreateServerCommand createServerCommand,
@@ -36,7 +38,7 @@ namespace AccServerAdmin.Controllers
         /// GET api/server
         /// </summary>
         [HttpGet]
-        public IEnumerable<Server> Get()
+        public IEnumerable<Server> GetServerList()
         {
             return _getServerListQuery.Execute();
         }
@@ -45,7 +47,7 @@ namespace AccServerAdmin.Controllers
         /// GET api/server/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public Server Get(Guid serverId)
+        public Server GetServerById(Guid serverId)
         {
             return _getServerByIdQuery.Execute(serverId);
         }
@@ -53,18 +55,17 @@ namespace AccServerAdmin.Controllers
         /// <summary>
         /// POST api/Server
         /// </summary>
-        /// <param name="value"></param>
-        [HttpPost]
-        public void Post([FromBody] string serverName)
+        [HttpPost("{serverName}")]
+        public Server CreateServer(string serverName)
         {
-            _createServerCommand.Execute(serverName);
+            return _createServerCommand.Execute(serverName);
         }
 
         /// <summary>
         /// PUT api/server/{serverId}/{serverName} 
         /// </summary>
-        [HttpPut("{serverId}")]
-        public void Put(Guid serverId, [FromBody] string serverName)
+        [HttpPut("{serverId}/{serverName}")]
+        public void UpdateServer(Guid serverId, string serverName)
         {
             _updateServerCommand.Execute(serverId, serverName);
         }
@@ -72,9 +73,8 @@ namespace AccServerAdmin.Controllers
         /// <summary>
         /// DELETE api/server/{serverId}
         /// </summary>
-        /// <param name="serverId"></param>
         [HttpDelete("{serverId}")]
-        public void Delete(Guid serverId)
+        public void DeleteServer(Guid serverId)
         {
             _deleteServerCommand.Execute(serverId);
         }

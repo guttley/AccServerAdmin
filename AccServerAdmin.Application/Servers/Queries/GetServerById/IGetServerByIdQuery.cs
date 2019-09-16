@@ -1,7 +1,7 @@
-﻿using AccServerAdmin.Domain;
-using System;
+﻿using System;
+using AccServerAdmin.Domain;
 
-namespace AccServerAdmin.Application.Servers.Queries.GetServerList
+namespace AccServerAdmin.Application.Servers.Queries.GetServerById
 {
     public interface IGetServerByIdQuery
     {

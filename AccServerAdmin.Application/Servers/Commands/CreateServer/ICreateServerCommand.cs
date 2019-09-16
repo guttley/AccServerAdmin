@@ -1,7 +1,9 @@
-﻿namespace AccServerAdmin.Application.Servers.Commands.CreateServer
+﻿using AccServerAdmin.Domain;
+
+namespace AccServerAdmin.Application.Servers.Commands.CreateServer
 {
     public interface ICreateServerCommand
     {
-        void Execute(string serverName);
+        Server Execute(string serverName);
     }
 }

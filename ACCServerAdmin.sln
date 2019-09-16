@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Service", "AccServerAdmin.Service\AccServerAdmin.Service.csproj", "{88AF2671-76C1-42F5-BE32-CB85E279E7C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccServerAdmin.Tests", "AccServerAdmin.Tests\AccServerAdmin.Tests.csproj", "{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{88AF2671-76C1-42F5-BE32-CB85E279E7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88AF2671-76C1-42F5-BE32-CB85E279E7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88AF2671-76C1-42F5-BE32-CB85E279E7C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
