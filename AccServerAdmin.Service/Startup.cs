@@ -101,8 +101,7 @@ namespace AccServerAdmin.Service
             Container.Register(Component.For<IDeleteServerCommand>().ImplementedBy<DeleteServerCommand>());
             Container.Register(Component.For<IGetServerListQuery>().ImplementedBy<GetServerListQuery>());
             Container.Register(Component.For<IGetServerByIdQuery>().ImplementedBy<GetServerByIdQuery>());
-            Container.Register(Component.For<IServerPersistence>().ImplementedBy<ServerPersistence>());
-            Container.Register(Component.For<IServerSetup>().ImplementedBy<ServerSetup>());
+            Container.Register(Component.For<IServerRepository>().ImplementedBy<ServerRepository>());
         }
 
     }

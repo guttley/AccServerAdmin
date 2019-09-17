@@ -23,6 +23,18 @@ namespace AccServerAdmin.Infrastructure.IO
         }
 
         /// <inheritdoc />
+        public void Delete(string path, bool recursive)
+        {
+            Directory.Delete(path, recursive);
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<string> GetDirectories(string path)
+        {
+            return Directory.GetDirectories(path);
+        }
+
+        /// <inheritdoc />
         public IEnumerable<string> GetFiles(string path)
         {
             return Directory.GetFiles(path);

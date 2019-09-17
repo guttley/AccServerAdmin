@@ -8,7 +8,7 @@ namespace AccServerAdmin.Persistence.Server
     using AccServerAdmin.Infrastructure.Helpers;
     using AccServerAdmin.Domain;
     
-    public class ServerPersistence : IServerPersistence
+    public class ServerRepository : IServerRepository
     {
         private readonly AppSettings _settings;
         private readonly IDirectory _directory;
@@ -16,7 +16,7 @@ namespace AccServerAdmin.Persistence.Server
         private readonly IJsonConverter _jsonConverter;
         private const string Filename = "AccAdmin.json";
 
-        public ServerPersistence(
+        public ServerRepository(
             IOptions<AppSettings> settings,
             IDirectory directory,
             IFile file,
@@ -36,7 +36,7 @@ namespace AccServerAdmin.Persistence.Server
             if (string.IsNullOrEmpty(server.Location))
                 server.Location = Path.GetDirectoryName(path);
 
-            if (!_directory.Exists(server.Location))
+            if (!_directory.Exists(Path.GetDirectoryName(server.Location)))
                 _directory.CreateDirectory(server.Location);
 
             var json = _jsonConverter.SerializeObject(server);

@@ -1,34 +1,44 @@
 ﻿using Microsoft.Extensions.Options;
+using System.IO;
+
 
 namespace AccServerAdmin.Application.Servers.Commands.CreateServer
 {
     using AccServerAdmin.Domain;
-    using AccServerAdmin.Infrastructure.Helpers;
-    using AccServerAdmin.Persistence.Server;
-    
+    using AccServerAdmin.Infrastructure.IO;
+    using AccServerAdmin.Persistence.Server;    
 
     public class CreateServerCommand : ICreateServerCommand
     {
-        private readonly IServerPersistence _serverPersistence;
-        private readonly IServerSetup _serverSetup;
         private readonly AppSettings _settings;
+        private readonly IServerRepository _serverRepository;
+        private readonly IDirectory _directory;
+        private readonly IFile _file;
 
         public CreateServerCommand(
-            IServerPersistence serverPersistence,
-            IServerSetup serverSetup,
-            IOptions<AppSettings> settings)
+            IOptions<AppSettings> options,
+            IServerRepository serverRepository,
+            IDirectory directory,
+            IFile file)
         {
-            _serverPersistence = serverPersistence;
-            _serverSetup = serverSetup;
-            _settings = settings.Value;
+            _settings = options.Value;
+            _serverRepository = serverRepository;
+            _directory = directory;
+            _file = file;
         }
 
         public Server Execute(string serverName)
         {
             var server = new Server { Name = serverName };
+            var sourceFiles = _directory.GetFiles(_settings.ServerBasePath);
 
-            _serverPersistence.Save(server);
-            _serverSetup.Execute(server);
+            _serverRepository.Save(server);            
+
+            foreach (var sourceFile in sourceFiles)
+            {
+                var destinationFile = Path.Combine(server.Location, Path.GetFileName(sourceFile));
+                _file.Copy(sourceFile, destinationFile);
+            }
 
             return server;
         }

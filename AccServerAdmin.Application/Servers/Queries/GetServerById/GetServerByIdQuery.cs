@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AccServerAdmin.Domain;
+using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Server;
 using Microsoft.Extensions.Options;
 
 namespace AccServerAdmin.Application.Servers.Queries.GetServerById
@@ -7,15 +11,31 @@ namespace AccServerAdmin.Application.Servers.Queries.GetServerById
     public class GetServerByIdQuery : IGetServerByIdQuery
     {
         private readonly AppSettings _settings;
+        private readonly IServerRepository _serverRepository;
+        private readonly IDirectory _directory;
 
-        public GetServerByIdQuery(IOptions<AppSettings> settings)
+        public GetServerByIdQuery(
+            IOptions<AppSettings> options,
+            IServerRepository serverRepository,
+            IDirectory directory)
         {
-            _settings = settings.Value;
+            _settings = options.Value;
+            _serverRepository = serverRepository;
+            _directory = directory;
         }
 
         public Server Execute(Guid serverId)
         {
-            throw new NotImplementedException();
+            var instanceDirs = _directory.GetDirectories(_settings.InstanceBasePath);
+
+            var server = instanceDirs.Where(d => d.Contains(serverId.ToString()))
+                                .Select(_serverRepository.Read)
+                                .FirstOrDefault();
+
+            if (server is null)
+                throw new KeyNotFoundException();
+
+            return server;
         }
     }
 }

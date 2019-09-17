@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AccServerAdmin.Infrastructure.IO
 {    
@@ -22,9 +20,24 @@ namespace AccServerAdmin.Infrastructure.IO
         void CreateDirectory(string path);
 
         /// <summary>
+        /// Deletes the directory specified
+        /// </summary>
+        /// <param name="path">Absolute path</param>
+        /// <param name="recursive">If true deletes all files and folders in the path</param>
+        void Delete(string path, bool recursive);
+
+        /// <summary>
+        /// Gets a list of directories in a directory
+        /// </summary>
+        /// <param name="path">Absolute path</param>
+        IEnumerable<string> GetDirectories(string path);
+
+        /// <summary>
         /// Gets a list of files in a directory
         /// </summary>
         /// <param name="path">Absolute path</param>
         IEnumerable<string> GetFiles(string path);
+
+
     }
 }

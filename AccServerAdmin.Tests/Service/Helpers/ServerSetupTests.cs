@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -23,7 +22,6 @@ namespace AccServerAdmin.Tests.Service.Helpers
             var settings = new AppSettings {InstanceBasePath = "C:\\MyInstances", ServerBasePath = "C:\\ServerBase"};
             var options = Substitute.For<IOptions<AppSettings>>();
             options.Value.Returns(settings);
-            var serverSetup = new ServerSetup(options, directory, file);
 
             var server = new Server
             {

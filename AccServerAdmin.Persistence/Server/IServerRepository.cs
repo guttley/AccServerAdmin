@@ -5,7 +5,7 @@
     /// <summary>
     /// Interface to persist server information to disk
     /// </summary>
-    public interface IServerPersistence
+    public interface IServerRepository
     {
         /// <summary>
         /// Writes the server config to disk
