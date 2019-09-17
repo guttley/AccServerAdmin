@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AccServerAdmin.Service
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         public static void Main(string[] args)
@@ -15,6 +17,7 @@ namespace AccServerAdmin.Service
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.ReadLine();
             }
         }
 

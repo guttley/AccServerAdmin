@@ -11,7 +11,7 @@ using AccServerAdmin.Service.Controllers;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace AccServerAdmin.Tests.Controller
+namespace AccServerAdmin.Tests.Service.Controller
 {
     [ExcludeFromCodeCoverage]
     public class ServerControllerTests
@@ -22,7 +22,6 @@ namespace AccServerAdmin.Tests.Controller
         private Server _server4;
         private Server _server5;
         private List<Server> _servers;
-
 
         [SetUp]
         public void Setup()
@@ -42,7 +41,6 @@ namespace AccServerAdmin.Tests.Controller
                 _server5
             };
         }
-
 
         [Test]
         public void GetsListOfServers()
@@ -95,7 +93,6 @@ namespace AccServerAdmin.Tests.Controller
             Assert.That(server.Id, Is.EqualTo(searchGuid));
             Assert.That(server.Name, Is.EqualTo(serverName));
         }
-
 
         [Test]
         public void CreatesServer()

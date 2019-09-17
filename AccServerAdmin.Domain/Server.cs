@@ -7,7 +7,6 @@ namespace AccServerAdmin.Domain
     /// </summary>
     public class Server
     {
-
         public Server()
         {
             Id = Guid.NewGuid();
@@ -22,6 +21,11 @@ namespace AccServerAdmin.Domain
         /// Name of the server
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Location of the server instance
+        /// </summary>
+        public string Location { get; set; }
 
     }
 }

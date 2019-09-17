@@ -1,7 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 
-namespace AccServerAdmin.Domain
+namespace AccServerAdmin.Domain.AccConfig
 {
     /// <summary>
     /// Model for the session of the session list from the event.json file

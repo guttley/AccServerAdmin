@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AccServerAdmin.Domain
+namespace AccServerAdmin.Domain.AccConfig
 {
     /// <summary>
     /// Model for the settings.json file

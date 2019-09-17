@@ -1,12 +1,4 @@
-﻿using System;
-using AccServerAdmin.Application.Servers.Commands.CreateServer;
-using AccServerAdmin.Application.Servers.Commands.DeleteServer;
-using AccServerAdmin.Application.Servers.Commands.UpdateServer;
-using AccServerAdmin.Application.Servers.Queries.GetServerById;
-using AccServerAdmin.Application.Servers.Queries.GetServerList;
-using AccServerAdmin.Domain;
-using AccServerAdmin.Service.Controllers;
-using AccServerAdmin.Service.Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
 using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -19,6 +11,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AccServerAdmin.Service
 {
+    using AccServerAdmin.Application.Servers.Commands.CreateServer;
+    using AccServerAdmin.Application.Servers.Commands.DeleteServer;
+    using AccServerAdmin.Application.Servers.Commands.UpdateServer;
+    using AccServerAdmin.Application.Servers.Queries.GetServerById;
+    using AccServerAdmin.Application.Servers.Queries.GetServerList;
+    using AccServerAdmin.Domain;
+    using AccServerAdmin.Persistence.Server;
+    using AccServerAdmin.Service.Controllers;
+    using AccServerAdmin.Infrastructure.Helpers;
+    using AccServerAdmin.Infrastructure.IO;
+
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private static readonly WindsorContainer Container = new WindsorContainer();
@@ -43,7 +47,7 @@ namespace AccServerAdmin.Service
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = ApiTitle, Version = ApiVersion });
             });
 
-            RegisterApplicationComponents(services);
+            RegisterApplicationComponents();
 
             services.AddWindsor(Container,
                 opts => opts.UseEntryAssembly(typeof(ServerController).Assembly), 
@@ -76,24 +80,29 @@ namespace AccServerAdmin.Service
             });
         }
 
-        private void RegisterApplicationComponents(IServiceCollection services)
+        private void ValidateConfiguration()
+        {
+            var validator = Container.Resolve<ConfigValidator>();
+            validator.Execute();
+        }
+
+        private void RegisterApplicationComponents()
         {
             // Application components
             Container.Register(Component.For<IHttpContextAccessor>().ImplementedBy<HttpContextAccessor>());
-            Container.Register(Component.For<ConfigValiator>());
+            Container.Register(Component.For<IJsonConverter>().ImplementedBy<JsonConverter>());
+            Container.Register(Component.For<IFile>().ImplementedBy<FileApiWrapper>());
+            Container.Register(Component.For<IDirectory>().ImplementedBy<DirectoryApiWrapper>());
+            Container.Register(Component.For<ConfigValidator>());
 
-            // Server componets
+            // Server components
             Container.Register(Component.For<ICreateServerCommand>().ImplementedBy<CreateServerCommand>());
             Container.Register(Component.For<IUpdateServerCommand>().ImplementedBy<UpdateServerCommand>());
             Container.Register(Component.For<IDeleteServerCommand>().ImplementedBy<DeleteServerCommand>());
             Container.Register(Component.For<IGetServerListQuery>().ImplementedBy<GetServerListQuery>());
             Container.Register(Component.For<IGetServerByIdQuery>().ImplementedBy<GetServerByIdQuery>());
-        }
-
-        private void ValidateConfiguration()
-        {
-            var validator = Container.Resolve<ConfigValiator>();
-            validator.Execute();
+            Container.Register(Component.For<IServerPersistence>().ImplementedBy<ServerPersistence>());
+            Container.Register(Component.For<IServerSetup>().ImplementedBy<ServerSetup>());
         }
 
     }

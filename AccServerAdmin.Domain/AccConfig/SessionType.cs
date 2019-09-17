@@ -1,4 +1,4 @@
-﻿namespace AccServerAdmin.Domain
+﻿namespace AccServerAdmin.Domain.AccConfig
 {
     /// <summary>
     /// Types of sessions

@@ -1,15 +1,25 @@
-﻿using AccServerAdmin.Domain;
-using Microsoft.Extensions.Options;
-using System.IO;
+﻿using Microsoft.Extensions.Options;
 
 namespace AccServerAdmin.Application.Servers.Commands.CreateServer
 {
+    using AccServerAdmin.Domain;
+    using AccServerAdmin.Infrastructure.Helpers;
+    using AccServerAdmin.Persistence.Server;
+    
+
     public class CreateServerCommand : ICreateServerCommand
     {
+        private readonly IServerPersistence _serverPersistence;
+        private readonly IServerSetup _serverSetup;
         private readonly AppSettings _settings;
 
-        public CreateServerCommand(IOptions<AppSettings> settings)
+        public CreateServerCommand(
+            IServerPersistence serverPersistence,
+            IServerSetup serverSetup,
+            IOptions<AppSettings> settings)
         {
+            _serverPersistence = serverPersistence;
+            _serverSetup = serverSetup;
             _settings = settings.Value;
         }
 
@@ -17,12 +27,8 @@ namespace AccServerAdmin.Application.Servers.Commands.CreateServer
         {
             var server = new Server { Name = serverName };
 
-            
-
-            //
-            //  Create a new directory in the 
-            //
-
+            _serverPersistence.Save(server);
+            _serverSetup.Execute(server);
 
             return server;
         }

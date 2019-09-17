@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace AccServerAdmin.Domain
+namespace AccServerAdmin.Domain.AccConfig
 {
     /// <summary>
     /// Model for the event.json file
