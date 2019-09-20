@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using AccServerAdmin.Infrastructure.IO;
 using Microsoft.Extensions.Options;
 
 namespace AccServerAdmin.Persistence.Server
 {
-    using AccServerAdmin.Infrastructure.Helpers;
-    using AccServerAdmin.Domain;
+    using Infrastructure.IO;
+    using Infrastructure.Helpers;
+    using Domain;
     
     public class ServerRepository : IServerRepository
     {
@@ -29,16 +29,26 @@ namespace AccServerAdmin.Persistence.Server
         }
 
         /// <inheritdoc />
+        public Server New(string serverName)
+        {
+            var id = Guid.NewGuid();
+            var server = new Server
+            {
+                Id = id,
+                Name = serverName,
+                Location = Path.Combine(_settings.InstanceBasePath, id.ToString())
+            };
+
+            return server;
+        }
+
+        /// <inheritdoc />
         public void Save(Server server)
         {
-            var path = Path.Combine(_settings.InstanceBasePath, server.Id.ToString(), Filename);
-
-            if (string.IsNullOrEmpty(server.Location))
-                server.Location = Path.GetDirectoryName(path);
-
             if (!_directory.Exists(Path.GetDirectoryName(server.Location)))
                 _directory.CreateDirectory(server.Location);
 
+            var path = Path.Combine(server.Location, Filename);
             var json = _jsonConverter.SerializeObject(server);
             _file.WriteAllText(path, json);
         }

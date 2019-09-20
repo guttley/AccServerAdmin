@@ -7,10 +7,10 @@ namespace AccServerAdmin.Domain
     /// </summary>
     public class Server
     {
-        public Server()
-        {
-            Id = Guid.NewGuid();
-        }
+        /// <summary>
+        /// Filename of the config file
+        /// </summary>
+        public const string Filename = "AccAdmin.json";
 
         /// <summary>
         /// Unique Id of the server instance

@@ -3,8 +3,8 @@ using Microsoft.Extensions.Options;
 
 namespace AccServerAdmin.Infrastructure.Helpers
 {
-    using AccServerAdmin.Domain;
-    using AccServerAdmin.Infrastructure.IO;
+    using Domain;
+    using IO;
 
     public class ConfigValidator
     {

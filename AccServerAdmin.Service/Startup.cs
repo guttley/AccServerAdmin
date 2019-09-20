@@ -11,16 +11,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AccServerAdmin.Service
 {
-    using AccServerAdmin.Application.Servers.Commands.CreateServer;
-    using AccServerAdmin.Application.Servers.Commands.DeleteServer;
-    using AccServerAdmin.Application.Servers.Commands.UpdateServer;
-    using AccServerAdmin.Application.Servers.Queries.GetServerById;
-    using AccServerAdmin.Application.Servers.Queries.GetServerList;
-    using AccServerAdmin.Domain;
-    using AccServerAdmin.Persistence.Server;
-    using AccServerAdmin.Service.Controllers;
-    using AccServerAdmin.Infrastructure.Helpers;
-    using AccServerAdmin.Infrastructure.IO;
+    using Application.Servers.Commands.CreateServer;
+    using Application.Servers.Commands.DeleteServer;
+    using Application.Servers.Commands.UpdateServer;
+    using Application.Servers.Queries.GetServerById;
+    using Application.Servers.Queries.GetServerList;
+    using Domain;
+    using Persistence.Server;
+    using Controllers;
+    using Infrastructure.Helpers;
+    using Infrastructure.IO;
 
     [ExcludeFromCodeCoverage]
     public class Startup

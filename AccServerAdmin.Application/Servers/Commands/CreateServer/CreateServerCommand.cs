@@ -4,9 +4,9 @@ using System.IO;
 
 namespace AccServerAdmin.Application.Servers.Commands.CreateServer
 {
-    using AccServerAdmin.Domain;
-    using AccServerAdmin.Infrastructure.IO;
-    using AccServerAdmin.Persistence.Server;    
+    using Domain;
+    using Infrastructure.IO;
+    using Persistence.Server;    
 
     public class CreateServerCommand : ICreateServerCommand
     {
@@ -29,7 +29,7 @@ namespace AccServerAdmin.Application.Servers.Commands.CreateServer
 
         public Server Execute(string serverName)
         {
-            var server = new Server { Name = serverName };
+            var server = _serverRepository.New(serverName);
             var sourceFiles = _directory.GetFiles(_settings.ServerBasePath);
 
             _serverRepository.Save(server);            

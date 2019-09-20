@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace AccServerAdmin.Application.Servers.Commands.DeleteServer
 {
-    using AccServerAdmin.Domain;
-    using AccServerAdmin.Infrastructure.IO;
+    using Domain;
+    using Infrastructure.IO;
 
     public class DeleteServerCommand : IDeleteServerCommand
     {

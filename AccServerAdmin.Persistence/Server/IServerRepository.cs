@@ -1,12 +1,18 @@
 ﻿namespace AccServerAdmin.Persistence.Server
 {
-    using AccServerAdmin.Domain;
+    using Domain;
 
     /// <summary>
     /// Interface to persist server information to disk
     /// </summary>
     public interface IServerRepository
     {
+        /// <summary>
+        /// Returns a new server
+        /// </summary>
+        /// <param name="serverName">Name of the new server</param>
+        Server New(string serverName);
+
         /// <summary>
         /// Writes the server config to disk
         /// </summary>

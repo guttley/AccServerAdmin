@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace AccServerAdmin.Application.Servers.Commands.UpdateServer
 {
-    using AccServerAdmin.Domain;
-    using AccServerAdmin.Infrastructure.IO;
-    using AccServerAdmin.Persistence.Server;
+    using Domain;
+    using Infrastructure.IO;
+    using Persistence.Server;
     using System.Linq;
 
     public class UpdateServerCommand : IUpdateServerCommand
