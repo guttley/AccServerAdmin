@@ -7,10 +7,12 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {
+    [ExcludeFromCodeCoverage]
     public class CreateServerCommandTest
     {
         [Test]

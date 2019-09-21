@@ -17,14 +17,13 @@ namespace AccServerAdmin.Application.Servers.Commands.UpdateServer
 
         public UpdateServerCommand(
             IOptions<AppSettings> options,
-            IDirectory directory,
-            IServerRepository serverRepository)
+            IServerRepository serverRepository,
+            IDirectory directory)
         {
             _settings = options.Value;
-            _directory = directory;
             _serverRepository = serverRepository;
+            _directory = directory;
         }
-
 
         public void Execute(Guid serverId, string serverName)
         {

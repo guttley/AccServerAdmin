@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
@@ -31,6 +32,7 @@ namespace AccServerAdmin.Domain.AccConfig
     ///   }
     /// ]
     /// </example>
+    [ExcludeFromCodeCoverage]
     public class Session
     {
         [JsonProperty("hourOfDay")]

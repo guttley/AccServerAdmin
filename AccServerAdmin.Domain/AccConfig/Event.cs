@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
@@ -45,6 +46,7 @@ namespace AccServerAdmin.Domain.AccConfig
     ///  "postRaceSeconds": 0
     ///}
     /// </example>
+    [ExcludeFromCodeCoverage]
     public class Event
     {
         [JsonProperty("track")]

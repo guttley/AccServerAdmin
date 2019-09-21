@@ -17,12 +17,12 @@ namespace AccServerAdmin.Application.Servers.Queries.GetServerList
 
         public GetServerListQuery(
             IOptions<AppSettings> options,
-            IDirectory directory,
-            IServerRepository serverRepository)
+            IServerRepository serverRepository,
+            IDirectory directory)
         {
             _settings = options.Value;
-            _directory = directory;
             _serverRepository = serverRepository;
+            _directory = directory;
             _guidRegex = new Regex("(\\{){0,1}[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}(\\}){0,1}");
         }
 

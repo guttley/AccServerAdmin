@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
 {
@@ -14,6 +15,7 @@ namespace AccServerAdmin.Domain.AccConfig
     ///   "registerToLobby": 1
     /// }
     /// </example>
+    [ExcludeFromCodeCoverage]
     public class Configuration
     {
         [JsonProperty("udpPort")]

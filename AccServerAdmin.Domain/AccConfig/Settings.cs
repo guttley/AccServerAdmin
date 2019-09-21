@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
 {
@@ -20,6 +21,7 @@ namespace AccServerAdmin.Domain.AccConfig
     ///   "isRaceLocked": 0
     /// }
     /// </example>
+    [ExcludeFromCodeCoverage]
     public class Settings
     {
         [JsonProperty("serverName")]

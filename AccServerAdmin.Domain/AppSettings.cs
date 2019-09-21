@@ -1,8 +1,11 @@
-﻿namespace AccServerAdmin.Domain
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace AccServerAdmin.Domain
 {
     /// <summary>
     /// Config data for this admin application
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class AppSettings
     {
         /// <summary>

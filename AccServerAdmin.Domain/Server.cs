@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AccServerAdmin.Domain
 {
     /// <summary>
     /// This class holds the data for the server instance
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class Server
     {
         /// <summary>

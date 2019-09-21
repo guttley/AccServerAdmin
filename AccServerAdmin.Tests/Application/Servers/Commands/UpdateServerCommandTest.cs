@@ -7,42 +7,48 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using AccServerAdmin.Application.Servers.Commands.DeleteServer;
+using AccServerAdmin.Application.Servers.Commands.UpdateServer;
+using AccServerAdmin.Persistence.Server;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {
     [ExcludeFromCodeCoverage]
-    public class DeleteServerCommandTest
+    public class UpdateServerCommandTest
     {
         [Test]
         public void TestExecute()
         {
             // Arrange
             var serverId = Guid.NewGuid();
+            var serverName = "TestFoo Server";
             var settings = new AppSettings { InstanceBasePath = "C:\\FakeInstancePath" };
+            var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
+            var server = new Server {Id = serverId, Name = serverName, Location = serverPath};
             var dirs = new List<string>
             {
                 Path.Combine(settings.InstanceBasePath, Guid.NewGuid().ToString()),
                 Path.Combine(settings.InstanceBasePath, Guid.NewGuid().ToString()),
                 Path.Combine(settings.InstanceBasePath, Guid.NewGuid().ToString()),
-                Path.Combine(settings.InstanceBasePath, serverId.ToString())
+                serverPath
             };
 
             var options = Substitute.For<IOptions<AppSettings>>();
+            var repo = Substitute.For<IServerRepository>();
             var directory = Substitute.For<IDirectory>();
 
             options.Value.Returns(settings);
             directory.GetDirectories(settings.InstanceBasePath).Returns(dirs);
+            repo.Read(serverPath).Returns(server);
 
-            var command = new DeleteServerCommand(options, directory);
+            var command = new UpdateServerCommand(options, repo, directory);
 
             // Act
-            command.Execute(serverId);
+            command.Execute(serverId, serverName);
 
             // Assert
-           
             directory.Received().GetDirectories(settings.InstanceBasePath);
-            directory.Received(1).Delete(Path.Combine(settings.InstanceBasePath, serverId.ToString()), true);
+            repo.Received().Read(serverPath);
+            repo.Save(server);
 
         }
 
@@ -51,6 +57,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
         {
             // Arrange
             var serverId = Guid.NewGuid();
+            var serverName = "TestFoo Server";
             var settings = new AppSettings { InstanceBasePath = "C:\\FakeInstancePath" };
             var dirs = new List<string>
             {
@@ -60,15 +67,16 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             };
 
             var options = Substitute.For<IOptions<AppSettings>>();
+            var repo = Substitute.For<IServerRepository>();
             var directory = Substitute.For<IDirectory>();
 
             options.Value.Returns(settings);
             directory.GetDirectories(settings.InstanceBasePath).Returns(dirs);
 
-            var command = new DeleteServerCommand(options, directory);
+            var command = new UpdateServerCommand(options, repo, directory);
 
             // Act / Assert
-            Assert.Throws<KeyNotFoundException>(() => command.Execute(serverId));
+            Assert.Throws<KeyNotFoundException>(() => command.Execute(serverId, serverName));
         }
     }
 }
