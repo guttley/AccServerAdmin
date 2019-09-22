@@ -5,15 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccServerAdmin.Domain\AccServerAdmin.Domain.csproj" />
-    <ProjectReference Include="..\AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj" />
-    <ProjectReference Include="..\AccServerAdmin.Resouce\AccServerAdmin.Resouce.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Options">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.options\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\AccServerAdmin.Domain\AccServerAdmin.Domain.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Resouce\AccServerAdmin.Resouce.csproj" />
   </ItemGroup>
 
 </Project>
