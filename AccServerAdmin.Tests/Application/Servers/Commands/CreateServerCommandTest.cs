@@ -52,9 +52,9 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             directory.Received().GetFiles(settings.ServerBasePath);
             repo.Received().Save(server);
 
-            file.Received().Copy($"{settings.ServerBasePath}\\File.1", $"{settings.InstanceBasePath}\\{server.Id}\\File.1");
-            file.Received().Copy($"{settings.ServerBasePath}\\File.2", $"{settings.InstanceBasePath}\\{server.Id}\\File.2");
-            file.Received().Copy($"{settings.ServerBasePath}\\File.3", $"{settings.InstanceBasePath}\\{server.Id}\\File.3");
+            file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.1"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.1"));
+            file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.2"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.2"));
+            file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.3"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.3"));
         }
     }
 }
