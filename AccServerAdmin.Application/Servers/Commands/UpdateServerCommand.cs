@@ -1,39 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using AccServerAdmin.Domain;
-using AccServerAdmin.Infrastructure.IO;
+﻿using System;
 using AccServerAdmin.Persistence.Server;
-using System.Linq;
-using AccServerAdmin.Resouce;
+using AccServerAdmin.Application.Common;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
     public class UpdateServerCommand : IUpdateServerCommand
     {
-        private readonly AppSettings _settings;
-        private readonly IDirectory _directory;
+        private readonly IServerDirectoryResolver _serverResolver;
         private readonly IServerRepository _serverRepository;
 
         public UpdateServerCommand(
-            IOptions<AppSettings> options,
-            IServerRepository serverRepository,
-            IDirectory directory)
+            IServerDirectoryResolver serverResolver,
+            IServerRepository serverRepository)
         {
-            _settings = options.Value;
+            _serverResolver = serverResolver;
             _serverRepository = serverRepository;
-            _directory = directory;
         }
 
         public void Execute(Guid serverId, string serverName)
         {
-            var server = _directory.GetDirectories(_settings.InstanceBasePath)
-                            .Where(d => d.Contains(serverId.ToString()))
-                            .Select(_serverRepository.Read)
-                            .FirstOrDefault();
-
-            if (server is null)
-                throw new KeyNotFoundException(string.Format(Strings.ServerIdNotFoundFormat, serverId));
+            var serverPath = _serverResolver.Resolve(serverId);
+            var server = _serverRepository.Read(serverPath);
 
             server.Name = serverName;
             _serverRepository.Save(server);

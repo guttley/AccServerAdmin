@@ -61,7 +61,16 @@ namespace AccServerAdmin.Resouce {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No server found with id: .
+        ///   Looks up a localized string similar to &quot;No {0} exists in the directory: {1}.
+        /// </summary>
+        public static string FileDoesNotExistFormat {
+            get {
+                return ResourceManager.GetString("FileDoesNotExistFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No server found with id: {0}.
         /// </summary>
         public static string ServerIdNotFoundFormat {
             get {

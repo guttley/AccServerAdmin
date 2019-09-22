@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FileDoesNotExistFormat" xml:space="preserve">
+    <value>"No {0} exists in the directory: {1}</value>
+  </data>
   <data name="ServerIdNotFoundFormat" xml:space="preserve">
-    <value>No server found with id: </value>
+    <value>No server found with id: {0}</value>
   </data>
 </root>

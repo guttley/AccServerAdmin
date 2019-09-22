@@ -1,0 +1,40 @@
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using AccServerAdmin.Application.Common;
+using AccServerAdmin.Application.ServerConfig.Queries;
+using AccServerAdmin.Domain.AccConfig;
+using AccServerAdmin.Persistence.ServerConfig;
+using NSubstitute;
+using NUnit.Framework;
+
+namespace AccServerAdmin.Tests.Application.ServerConfig
+{
+    [ExcludeFromCodeCoverage]
+    public class GetServerConfigByIdTests
+    {
+
+        [Test]
+        public void Executes()
+        {
+            // Arrange
+            var serverId = Guid.NewGuid();
+            var path = "C:\\MyFakePath";
+            var resolver = Substitute.For<IServerDirectoryResolver>();
+            var repo = Substitute.For<IServerConfigRepository>();
+            var command = new GetServerConfigByIdQuery(resolver, repo);
+            var config = new Configuration();
+
+            resolver.Resolve(serverId).Returns(path);
+            repo.Read(path).Returns(config);
+
+            // Act
+            var returnedConfig = command.Execute(serverId);
+
+            // Assert
+            resolver.Received().Resolve(serverId);
+            repo.Received().Save(path, config);
+            Assert.That(returnedConfig, Is.EqualTo(config));
+        }
+
+    }
+}

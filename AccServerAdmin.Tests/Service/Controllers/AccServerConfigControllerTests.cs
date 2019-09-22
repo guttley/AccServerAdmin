@@ -17,10 +17,9 @@ namespace AccServerAdmin.Tests.Service.Controllers
         {
             // Arrange
             var serverId = Guid.NewGuid();
-            var createCommand = Substitute.For<ICreateServerConfigCommand>();
-            var updateCommand = Substitute.For<IUpdateServerConfigCommand>();
+            var saveCommand = Substitute.For<ISaveServerConfigCommand>();
             var getByIdCommand = Substitute.For<IGetServerConfigByIdQuery>();
-            var controller = new AccServerConfigController(createCommand, updateCommand, getByIdCommand);
+            var controller = new AccServerConfigController(saveCommand, getByIdCommand);
             var config = new Configuration();
 
             getByIdCommand.Execute(Arg.Is(serverId)).Returns(config);
@@ -34,39 +33,20 @@ namespace AccServerAdmin.Tests.Service.Controllers
         }
 
         [Test]
-        public void CreatesServer()
+        public void SaveServer()
         {
             // Arrange
             var serverId = Guid.NewGuid();
-            var createCommand = Substitute.For<ICreateServerConfigCommand>();
-            var updateCommand = Substitute.For<IUpdateServerConfigCommand>();
+            var saveCommand = Substitute.For<ISaveServerConfigCommand>();
             var getByIdCommand = Substitute.For<IGetServerConfigByIdQuery>();
-            var controller = new AccServerConfigController(createCommand, updateCommand, getByIdCommand);
+            var controller = new AccServerConfigController(saveCommand, getByIdCommand);
             var config = new Configuration();
 
             // Act
-            controller.CreateServerConfig(serverId, config);
+            controller.SaveServeConfig(serverId, config);
 
             // Assert
-            createCommand.Received().Execute(serverId, config);
-        }
-
-        [Test]
-        public void UpdatesServer()
-        {
-            // Arrange
-            var serverId = Guid.NewGuid();
-            var createCommand = Substitute.For<ICreateServerConfigCommand>();
-            var updateCommand = Substitute.For<IUpdateServerConfigCommand>();
-            var getByIdCommand = Substitute.For<IGetServerConfigByIdQuery>();
-            var controller = new AccServerConfigController(createCommand, updateCommand, getByIdCommand);
-            var config = new Configuration();
-
-            // Act
-            controller.UpdateServeConfig(serverId, config);
-
-            // Assert
-            updateCommand.Received().Execute(serverId, config);
+            saveCommand.Received().Execute(serverId, config);
         }
 
 

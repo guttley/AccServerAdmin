@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using AccServerAdmin.Application.Common;
 using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -91,6 +92,7 @@ namespace AccServerAdmin.Service
             Container.Register(Component.For<IJsonConverter>().ImplementedBy<JsonConverter>());
             Container.Register(Component.For<IFile>().ImplementedBy<FileApiWrapper>());
             Container.Register(Component.For<IDirectory>().ImplementedBy<DirectoryApiWrapper>());
+            Container.Register(Component.For<IServerDirectoryResolver>().ImplementedBy<ServerDirectoryResolver>());
             Container.Register(Component.For<ConfigValidator>());
 
             // Server components

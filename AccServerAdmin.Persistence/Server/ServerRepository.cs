@@ -8,6 +8,9 @@ namespace AccServerAdmin.Persistence.Server
 {
     using Domain;
 
+    /// <summary>
+    /// Implements IServerRepository to store files in the server directory
+    /// </summary>
     public class ServerRepository : IServerRepository
     {
         private readonly AppSettings _settings;

@@ -3,7 +3,7 @@
     using Domain;
 
     /// <summary>
-    /// Interface to persist server information to disk
+    /// Interface to persist server information
     /// </summary>
     public interface IServerRepository
     {

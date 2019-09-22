@@ -10,17 +10,14 @@ namespace AccServerAdmin.Service.Controllers
     [ApiController]
     public class AccServerConfigController : ControllerBase
     {
-        private readonly ICreateServerConfigCommand _createConfigCommand;
-        private readonly IUpdateServerConfigCommand _updateConfigCommand;
+        private readonly ISaveServerConfigCommand _saveConfigCommand;
         private readonly IGetServerConfigByIdQuery _getServerConfigQuery;
 
         public AccServerConfigController(
-            ICreateServerConfigCommand createConfigCommand,
-            IUpdateServerConfigCommand updateConfigCommand,
+            ISaveServerConfigCommand saveConfigCommand,
             IGetServerConfigByIdQuery getServerConfigQuery)
         {
-            _createConfigCommand = createConfigCommand;
-            _updateConfigCommand = updateConfigCommand;
+            _saveConfigCommand = saveConfigCommand;
             _getServerConfigQuery = getServerConfigQuery;
         }
 
@@ -34,21 +31,12 @@ namespace AccServerAdmin.Service.Controllers
         }
 
         /// <summary>
-        /// POST api/accServerConfig/{serverId}
-        /// </summary>
-        [HttpPost("{serverId}")]
-        public void CreateServerConfig(Guid serverId, [FromBody] Configuration config)
-        {
-            _createConfigCommand.Execute(serverId, config);
-        }
-
-        /// <summary>
         /// PUT api/accServerConfig/{serverId}
         /// </summary>
         [HttpPut("{serverId}")]
-        public void UpdateServeConfig(Guid serverId, [FromBody] Configuration config)
+        public void SaveServeConfig(Guid serverId, [FromBody] Configuration config)
         {
-            _updateConfigCommand.Execute(serverId, config);
+            _saveConfigCommand.Execute(serverId, config);
         }
 
     }

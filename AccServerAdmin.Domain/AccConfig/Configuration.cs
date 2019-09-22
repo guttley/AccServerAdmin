@@ -28,6 +28,9 @@ namespace AccServerAdmin.Domain.AccConfig
         public int MaxClients { get; set; }
 
         [JsonProperty("configVersion")]
-        public string Version { get; set; }
+        public int Version { get; set; }
+
+        [JsonProperty("registerToLobby")]
+        public int RegisterToLobby { get; set; }
     }
 }

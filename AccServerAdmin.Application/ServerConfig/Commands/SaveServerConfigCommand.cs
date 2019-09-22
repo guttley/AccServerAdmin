@@ -3,27 +3,25 @@ using AccServerAdmin.Application.Common;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.ServerConfig;
 
-namespace AccServerAdmin.Application.ServerConfig.Queries
+namespace AccServerAdmin.Application.ServerConfig.Commands
 {
-    public class GetServerConfigByIdQuery : IGetServerConfigByIdQuery
+    public class SaveServerConfigCommand : ISaveServerConfigCommand
     {
         private readonly IServerDirectoryResolver _serverResolver;
         private readonly IServerConfigRepository _configRepository;
 
-        public GetServerConfigByIdQuery(
+        public SaveServerConfigCommand(
             IServerDirectoryResolver serverResolver,
-            IServerConfigRepository configRepository)
+            IServerConfigRepository serverRepository)
         {
             _serverResolver = serverResolver;
-            _configRepository = configRepository;
+            _configRepository = serverRepository;
         }
 
-        public Configuration Execute(Guid serverId)
+        public void Execute(Guid serverId, Configuration config)
         {
             var path = _serverResolver.Resolve(serverId);
-            var config = _configRepository.Read(path);
-
-            return config;
+            _configRepository.Save(path, config);
         }
     }
 }
