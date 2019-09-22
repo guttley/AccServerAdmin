@@ -15,4 +15,4 @@ pipelines:
           - export TEST_NAME=AccServerAdmin.Tests
           - dotnet restore
           - dotnet build $PROJECT_NAME
-          - dotnet test $TEST_NAME
+          - dotnet test $TEST_NAME --results-directory ./test-reports/
