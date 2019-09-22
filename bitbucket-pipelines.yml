@@ -13,6 +13,6 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - export PROJECT_NAME=AccServerAdmin.Service
           - export TEST_NAME=AccServerAdmin.Tests
-          - dotnet restore --verbosity detailed
+          - dotnet restore
           - dotnet build $PROJECT_NAME
           - dotnet test $TEST_NAME
