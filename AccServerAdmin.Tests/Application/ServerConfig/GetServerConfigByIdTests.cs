@@ -32,7 +32,7 @@ namespace AccServerAdmin.Tests.Application.ServerConfig
 
             // Assert
             resolver.Received().Resolve(serverId);
-            repo.Received().Save(path, config);
+            repo.Received().Read(path);
             Assert.That(returnedConfig, Is.EqualTo(config));
         }
 
