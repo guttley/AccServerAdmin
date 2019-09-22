@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Resouce;
 
-namespace AccServerAdmin.Application.Servers.Commands.DeleteServer
+namespace AccServerAdmin.Application.Servers.Commands
 {
-    using Domain;
-    using Infrastructure.IO;
-
     public class DeleteServerCommand : IDeleteServerCommand
     {
         private readonly AppSettings _settings;
@@ -27,7 +27,7 @@ namespace AccServerAdmin.Application.Servers.Commands.DeleteServer
             var path = instanceDirs.FirstOrDefault(d => d.Contains(serverId.ToString()));
 
             if (string.IsNullOrEmpty(path))
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException(string.Format(Strings.ServerIdNotFoundFormat, serverId));
 
             _directory.Delete(path, true);
         }

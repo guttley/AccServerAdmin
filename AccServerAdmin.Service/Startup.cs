@@ -8,20 +8,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Persistence.Server;
+using AccServerAdmin.Service.Controllers;
+using AccServerAdmin.Infrastructure.Helpers;
+using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Application.Servers.Commands;
+using AccServerAdmin.Application.Servers.Queries;
+using AccServerAdmin.Service.Middleware;
 
 namespace AccServerAdmin.Service
 {
-    using Application.Servers.Commands.CreateServer;
-    using Application.Servers.Commands.DeleteServer;
-    using Application.Servers.Commands.UpdateServer;
-    using Application.Servers.Queries.GetServerById;
-    using Application.Servers.Queries.GetServerList;
-    using Domain;
-    using Persistence.Server;
-    using Controllers;
-    using Infrastructure.Helpers;
-    using Infrastructure.IO;
-
     [ExcludeFromCodeCoverage]
     public class Startup
     {
@@ -70,6 +67,7 @@ namespace AccServerAdmin.Service
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseMvc();
 

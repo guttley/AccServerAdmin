@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using AccServerAdmin.Application.Servers.Queries.GetServerList;
+using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Server;

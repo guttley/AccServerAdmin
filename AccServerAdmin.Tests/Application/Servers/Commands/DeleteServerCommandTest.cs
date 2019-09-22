@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using AccServerAdmin.Application.Servers.Commands.DeleteServer;
+using AccServerAdmin.Application.Servers.Commands;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {

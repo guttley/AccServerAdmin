@@ -1,7 +1,7 @@
-﻿namespace AccServerAdmin.Infrastructure.Helpers
-{
-    using Domain;
+﻿using AccServerAdmin.Domain;
 
+namespace AccServerAdmin.Infrastructure.Helpers
+{
     /// <summary>
     /// Interface that defines the server setup process
     /// </summary>

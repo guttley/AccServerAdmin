@@ -1,11 +1,10 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Options;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Infrastructure.IO;
 
 namespace AccServerAdmin.Infrastructure.Helpers
 {
-    using Domain;
-    using IO;
-
     public class ConfigValidator
     {
         private readonly IDirectory _directory;

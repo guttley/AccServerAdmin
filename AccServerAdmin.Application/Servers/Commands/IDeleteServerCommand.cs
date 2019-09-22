@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AccServerAdmin.Application.Servers.Commands.DeleteServer
+namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface IDeleteServerCommand
     {

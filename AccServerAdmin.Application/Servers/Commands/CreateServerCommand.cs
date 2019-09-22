@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
 using System.IO;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Server;
 
 
-namespace AccServerAdmin.Application.Servers.Commands.CreateServer
+namespace AccServerAdmin.Application.Servers.Commands
 {
-    using Domain;
-    using Infrastructure.IO;
-    using Persistence.Server;    
-
     public class CreateServerCommand : ICreateServerCommand
     {
         private readonly AppSettings _settings;

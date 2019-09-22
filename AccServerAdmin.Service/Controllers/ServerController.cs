@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AccServerAdmin.Application.Servers.Commands.CreateServer;
-using AccServerAdmin.Application.Servers.Commands.DeleteServer;
-using AccServerAdmin.Application.Servers.Commands.UpdateServer;
-using AccServerAdmin.Application.Servers.Queries.GetServerById;
-using AccServerAdmin.Application.Servers.Queries.GetServerList;
+using AccServerAdmin.Application.Servers.Commands;
+using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
 using Microsoft.AspNetCore.Mvc;
 

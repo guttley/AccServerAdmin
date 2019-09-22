@@ -4,9 +4,10 @@ using System.Linq;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Server;
+using AccServerAdmin.Resouce;
 using Microsoft.Extensions.Options;
 
-namespace AccServerAdmin.Application.Servers.Queries.GetServerById
+namespace AccServerAdmin.Application.Servers.Queries
 {
     public class GetServerByIdQuery : IGetServerByIdQuery
     {
@@ -33,7 +34,7 @@ namespace AccServerAdmin.Application.Servers.Queries.GetServerById
                                 .FirstOrDefault();
 
             if (server is null)
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException(string.Format(Strings.ServerIdNotFoundFormat, serverId));
 
             return server;
         }

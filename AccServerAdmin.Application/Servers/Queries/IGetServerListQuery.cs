@@ -1,7 +1,7 @@
 ﻿using AccServerAdmin.Domain;
 using System.Collections.Generic;
 
-namespace AccServerAdmin.Application.Servers.Queries.GetServerList
+namespace AccServerAdmin.Application.Servers.Queries
 {
     public interface IGetServerListQuery
     {

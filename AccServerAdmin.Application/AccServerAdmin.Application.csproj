@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AccServerAdmin.Domain\AccServerAdmin.Domain.csproj" />
     <ProjectReference Include="..\AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Resouce\AccServerAdmin.Resouce.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿using AccServerAdmin.Application.Servers.Commands.CreateServer;
+﻿using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Server;

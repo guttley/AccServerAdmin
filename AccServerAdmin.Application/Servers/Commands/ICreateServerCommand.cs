@@ -1,6 +1,6 @@
 ﻿using AccServerAdmin.Domain;
 
-namespace AccServerAdmin.Application.Servers.Commands.CreateServer
+namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface ICreateServerCommand
     {

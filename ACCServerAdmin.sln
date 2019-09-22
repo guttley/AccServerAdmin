@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Tests", "Acc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Persistence", "AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj", "{5FB3324E-0446-4D6F-9B07-1FE7925D580D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccServerAdmin.Infrastructure", "AccServerAdmin.Infrastructure\AccServerAdmin.Infrastructure.csproj", "{63DC755E-0D2A-486E-A249-55ABB144B72F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Infrastructure", "AccServerAdmin.Infrastructure\AccServerAdmin.Infrastructure.csproj", "{63DC755E-0D2A-486E-A249-55ABB144B72F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccServerAdmin.Resouce", "AccServerAdmin.Resouce\AccServerAdmin.Resouce.csproj", "{B63B00E5-FA41-4E1C-8E9E-E54B53CE0875}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{63DC755E-0D2A-486E-A249-55ABB144B72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63DC755E-0D2A-486E-A249-55ABB144B72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63DC755E-0D2A-486E-A249-55ABB144B72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B63B00E5-FA41-4E1C-8E9E-E54B53CE0875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B63B00E5-FA41-4E1C-8E9E-E54B53CE0875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B63B00E5-FA41-4E1C-8E9E-E54B53CE0875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B63B00E5-FA41-4E1C-8E9E-E54B53CE0875}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

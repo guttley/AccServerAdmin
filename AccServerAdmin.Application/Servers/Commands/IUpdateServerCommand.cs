@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AccServerAdmin.Application.Servers.Commands.UpdateServer
+namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface IUpdateServerCommand
     {

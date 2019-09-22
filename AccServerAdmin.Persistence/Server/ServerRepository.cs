@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Extensions.Options;
+using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Infrastructure.Helpers;
 
 namespace AccServerAdmin.Persistence.Server
 {
-    using Infrastructure.IO;
-    using Infrastructure.Helpers;
     using Domain;
-    
+
     public class ServerRepository : IServerRepository
     {
         private readonly AppSettings _settings;

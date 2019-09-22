@@ -7,8 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using AccServerAdmin.Application.Servers.Commands.UpdateServer;
 using AccServerAdmin.Persistence.Server;
+using AccServerAdmin.Application.Servers.Commands;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AccServerAdmin.Application.Servers.Queries.GetServerList
+namespace AccServerAdmin.Application.Servers.Queries
 {
     public class GetServerListQuery : IGetServerListQuery
     {

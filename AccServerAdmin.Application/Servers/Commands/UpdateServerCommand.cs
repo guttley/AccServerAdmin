@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Server;
+using System.Linq;
+using AccServerAdmin.Resouce;
 
-namespace AccServerAdmin.Application.Servers.Commands.UpdateServer
+namespace AccServerAdmin.Application.Servers.Commands
 {
-    using Domain;
-    using Infrastructure.IO;
-    using Persistence.Server;
-    using System.Linq;
-
     public class UpdateServerCommand : IUpdateServerCommand
     {
         private readonly AppSettings _settings;
@@ -33,7 +33,7 @@ namespace AccServerAdmin.Application.Servers.Commands.UpdateServer
                             .FirstOrDefault();
 
             if (server is null)
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException(string.Format(Strings.ServerIdNotFoundFormat, serverId));
 
             server.Name = serverName;
             _serverRepository.Save(server);
