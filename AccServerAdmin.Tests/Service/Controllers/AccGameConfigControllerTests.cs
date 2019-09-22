@@ -9,22 +9,22 @@ using NUnit.Framework;
 namespace AccServerAdmin.Tests.Service.Controllers
 {
     [ExcludeFromCodeCoverage]
-    public class AccServerConfigControllerTests
+    public class AccGameConfigControllerTests
     {
         [Test]
-        public void GetsServerConfigById()
+        public void GetsGameConfigById()
         {
             // Arrange
             var serverId = Guid.NewGuid();
-            var saveCommand = Substitute.For<ISaveConfigCommand<ServerConfiguration>>();
-            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<ServerConfiguration>>();
-            var controller = new AccServerConfigController(saveCommand, getByIdCommand);
-            var config = new ServerConfiguration();
+            var saveCommand = Substitute.For<ISaveConfigCommand<GameConfiguration>>();
+            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<GameConfiguration>>();
+            var controller = new AccGameConfigController(saveCommand, getByIdCommand);
+            var config = new GameConfiguration();
 
             getByIdCommand.Execute(Arg.Is(serverId)).Returns(config);
 
             // Act
-            var returnedConfig = controller.GetServerConfig(serverId);
+            var returnedConfig = controller.GetGameConfig(serverId);
 
             // Assert
             getByIdCommand.Received().Execute(serverId);
@@ -36,13 +36,13 @@ namespace AccServerAdmin.Tests.Service.Controllers
         {
             // Arrange
             var serverId = Guid.NewGuid();
-            var saveCommand = Substitute.For<ISaveConfigCommand<ServerConfiguration>>();
-            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<ServerConfiguration>>();
-            var controller = new AccServerConfigController(saveCommand, getByIdCommand);
-            var config = new ServerConfiguration();
+            var saveCommand = Substitute.For<ISaveConfigCommand<GameConfiguration>>();
+            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<GameConfiguration>>();
+            var controller = new AccGameConfigController(saveCommand, getByIdCommand);
+            var config = new GameConfiguration();
 
             // Act
-            controller.SaveServerConfig(serverId, config);
+            controller.SaveGameConfig(serverId, config);
 
             // Assert
             saveCommand.Received().Execute(serverId, config);

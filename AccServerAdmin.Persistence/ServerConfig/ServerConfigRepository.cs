@@ -1,24 +1,18 @@
-﻿using System;
-using System.IO;
-using AccServerAdmin.Infrastructure.Helpers;
+﻿using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Persistence.ServerConfig
 {
-    using AccServerAdmin.Resouce;
-    using Domain;
     using Domain.AccConfig;
 
     /// <summary>
     /// Implements IServerConfigRepository
     /// </summary>
-    public class ServerConfigRepository : IServerConfigRepository
+    public class ServerConfigRepository : BaseConfigRepository<ServerConfiguration>
     {
         private const string ConfigDir = "cfg";
         private const string Filename = "configuration.json";
-        private readonly IDirectory _directory;
-        private readonly IFile _file;
-        private readonly IJsonConverter _jsonConverter;
 
         public const int DefaultMaxClients = 30;
         public const int DefaultUdpPort = 9331;
@@ -30,16 +24,15 @@ namespace AccServerAdmin.Persistence.ServerConfig
             IDirectory directory,
             IFile file,
             IJsonConverter converter)
+            : base(directory, file, converter, ConfigDir, Filename)
         {
-            _directory = directory;
-            _file = file;
-            _jsonConverter = converter;
+
         }
 
         /// <inheritdoc />
-        public Configuration New()
+        public override ServerConfiguration New()
         {
-            return new Configuration
+            return new ServerConfiguration
             {
                 MaxClients = DefaultMaxClients,
                 TcpPort =  DefaultTcpPort,
@@ -49,32 +42,5 @@ namespace AccServerAdmin.Persistence.ServerConfig
             };
         }
 
-        /// <inheritdoc />
-        public void Save(string serverDirectory,  Configuration config)
-        {
-            var path = Path.Combine(serverDirectory, ConfigDir);
-            var json = _jsonConverter.SerializeObject(config);
-
-            if (!_directory.Exists(path))
-                _directory.CreateDirectory(path);
-
-            path = Path.Combine(path, Filename);
-            _file.WriteAllText(path, json);
-        }
-
-        /// <inheritdoc />
-        public Configuration Read(string serverDirectory)
-        {
-            var path = Path.Combine(serverDirectory, ConfigDir, Filename);
-
-            if (!_file.Exists(path))
-                return New();
-
-            var json = _file.ReadAllText(path);
-            var config = _jsonConverter.DeserializeObject<Configuration>(json);
-
-            return config;
-
-        }
     }
 }

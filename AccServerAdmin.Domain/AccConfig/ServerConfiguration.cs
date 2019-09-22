@@ -16,7 +16,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// }
     /// </example>
     [ExcludeFromCodeCoverage]
-    public class Configuration
+    public class ServerConfiguration
     {
         [JsonProperty("udpPort")]
         public ushort UdpPort { get; set; }

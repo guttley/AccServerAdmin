@@ -22,7 +22,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// }
     /// </example>
     [ExcludeFromCodeCoverage]
-    public class Settings
+    public class GameConfiguration
     {
         [JsonProperty("serverName")]
         public string ServerName { get; set; }
@@ -37,13 +37,13 @@ namespace AccServerAdmin.Domain.AccConfig
         public int TrackMedalsRequirement { get; set; }
 
         [JsonProperty("configVersion")]
-        public string Version { get; set; }
+        public int Version { get; set; }
 
         [JsonProperty("racecraftRatingRequirement")]
         public int RacecraftRatingRequirement { get; set; }
 
         [JsonProperty("spectatorSlots")]
-        public int spectatorSlots { get; set; }
+        public int SpectatorSlots { get; set; }
 
         [JsonProperty("spectatorPassword")]
         public string SpectatorPassword { get; set; }
@@ -52,7 +52,7 @@ namespace AccServerAdmin.Domain.AccConfig
         public int DumpLeaderboards { get; set; }
 
         [JsonProperty("isRaceLocked")]
-        public int isRaceLocked { get; set; }
+        public int IsRaceLocked { get; set; }
 
     }
 }

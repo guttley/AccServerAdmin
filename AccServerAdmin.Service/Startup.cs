@@ -16,6 +16,7 @@ using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
+using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Service.Middleware;
 
 namespace AccServerAdmin.Service
@@ -102,6 +103,13 @@ namespace AccServerAdmin.Service
             Container.Register(Component.For<IGetServerListQuery>().ImplementedBy<GetServerListQuery>());
             Container.Register(Component.For<IGetServerByIdQuery>().ImplementedBy<GetServerByIdQuery>());
             Container.Register(Component.For<IServerRepository>().ImplementedBy<ServerRepository>());
+
+            // Config components
+            Container.Register(Component.For<IGetConfigByIdQuery<ServerConfiguration>>().ImplementedBy<GetConfigByIdQuery<ServerConfiguration>>());
+            Container.Register(Component.For<ISaveConfigCommand<ServerConfiguration>>().ImplementedBy<SaveConfigCommand<ServerConfiguration>>());
+            Container.Register(Component.For<IGetConfigByIdQuery<GameConfiguration>>().ImplementedBy<GetConfigByIdQuery<GameConfiguration>>());
+            Container.Register(Component.For<ISaveConfigCommand<GameConfiguration>>().ImplementedBy<SaveConfigCommand<GameConfiguration>>());
+
         }
 
     }

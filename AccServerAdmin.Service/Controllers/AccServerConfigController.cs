@@ -1,6 +1,5 @@
 ﻿using System;
-using AccServerAdmin.Application.ServerConfig.Commands;
-using AccServerAdmin.Application.ServerConfig.Queries;
+using AccServerAdmin.Application.Common;
 using Microsoft.AspNetCore.Mvc;
 using AccServerAdmin.Domain.AccConfig;
 
@@ -10,31 +9,31 @@ namespace AccServerAdmin.Service.Controllers
     [ApiController]
     public class AccServerConfigController : ControllerBase
     {
-        private readonly ISaveServerConfigCommand _saveConfigCommand;
-        private readonly IGetServerConfigByIdQuery _getServerConfigQuery;
+        private readonly ISaveConfigCommand<ServerConfiguration> _saveConfigCommand;
+        private readonly IGetConfigByIdQuery<ServerConfiguration> _getConfigQuery;
 
         public AccServerConfigController(
-            ISaveServerConfigCommand saveConfigCommand,
-            IGetServerConfigByIdQuery getServerConfigQuery)
+            ISaveConfigCommand<ServerConfiguration> saveConfigCommand,
+            IGetConfigByIdQuery<ServerConfiguration> getConfigQuery)
         {
             _saveConfigCommand = saveConfigCommand;
-            _getServerConfigQuery = getServerConfigQuery;
+            _getConfigQuery = getConfigQuery;
         }
 
         /// <summary>
         /// GET api/accServerConfig/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public Configuration GetServerConfig(Guid serverId)
+        public ServerConfiguration GetServerConfig(Guid serverId)
         {
-            return _getServerConfigQuery.Execute(serverId);
+            return _getConfigQuery.Execute(serverId);
         }
 
         /// <summary>
         /// PUT api/accServerConfig/{serverId}
         /// </summary>
         [HttpPut("{serverId}")]
-        public void SaveServeConfig(Guid serverId, [FromBody] Configuration config)
+        public void SaveServerConfig(Guid serverId, [FromBody] ServerConfiguration config)
         {
             _saveConfigCommand.Execute(serverId, config);
         }

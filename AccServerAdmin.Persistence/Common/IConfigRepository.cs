@@ -1,31 +1,29 @@
-﻿using AccServerAdmin.Domain.AccConfig;
-
-namespace AccServerAdmin.Persistence.ServerConfig
+﻿namespace AccServerAdmin.Persistence.Common
 {
 
     /// <summary>
-    /// Interface to persist server configuration information
+    /// Interface to persist configuration information
     /// </summary>
-    public interface IServerConfigRepository
+    public interface IConfigRepository<T> where T : new()
     {
         /// <summary>
         /// Returns a new configuration
         /// </summary>
-        Configuration New();
+        T New();
 
         /// <summary>
         /// Saves the configuration
         /// </summary>
         /// <param name="serverDirectory">Server instance path</param>
         /// <param name="config">Configuration to save</param>
-        void Save(string serverDirectory, Configuration config);
+        void Save(string serverDirectory, T config);
 
         /// <summary>
         /// Reads the configuration given the server instance base path
         /// </summary>
         /// <param name="serverDirectory">Server instance path</param>
         /// <returns></returns>
-        Configuration Read(string serverDirectory);
+        T Read(string serverDirectory);
 
     }
 }
