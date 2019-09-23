@@ -6,7 +6,7 @@ using AccServerAdmin.Persistence.Common;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace AccServerAdmin.Tests.Application.ServerConfig
+namespace AccServerAdmin.Tests.Application.Common
 {
     [ExcludeFromCodeCoverage]
     public class SaveServerConfigCommandTests
@@ -24,7 +24,6 @@ namespace AccServerAdmin.Tests.Application.ServerConfig
             var config = new ServerConfiguration();
 
             resolver.Resolve(serverId).Returns(path);
-
 
             // Act
             command.Execute(serverId, config);

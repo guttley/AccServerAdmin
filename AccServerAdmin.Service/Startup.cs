@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AccServerAdmin.Application.Common;
 using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
@@ -18,6 +19,8 @@ using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Service.Middleware;
+using Microsoft.AspNetCore.Authentication;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AccServerAdmin.Service
 {
@@ -39,11 +42,16 @@ namespace AccServerAdmin.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+
+            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = ApiTitle, Version = ApiVersion });
+                c.AddSecurityDefinition("basic", new BasicAuthScheme { Type = "basic", Description = "basic authentication" });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> { { "basic", new string[] { } }, });
             });
 
             RegisterApplicationComponents();
@@ -51,7 +59,6 @@ namespace AccServerAdmin.Service
             services.AddWindsor(Container,
                 opts => opts.UseEntryAssembly(typeof(ServerController).Assembly), 
                 () => services.BuildServiceProvider(validateScopes: false));
-
 
             ValidateConfiguration();
         }
@@ -69,15 +76,20 @@ namespace AccServerAdmin.Service
                 app.UseHsts();
             }
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+            app.UseAuthentication();
+
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseMvc();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint($"/swagger/{ApiVersion}/swagger.json", ApiTitle);
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint($"/swagger/{ApiVersion}/swagger.json", ApiTitle); });
         }
 
         private void ValidateConfiguration()
@@ -109,6 +121,10 @@ namespace AccServerAdmin.Service
             Container.Register(Component.For<ISaveConfigCommand<ServerConfiguration>>().ImplementedBy<SaveConfigCommand<ServerConfiguration>>());
             Container.Register(Component.For<IGetConfigByIdQuery<GameConfiguration>>().ImplementedBy<GetConfigByIdQuery<GameConfiguration>>());
             Container.Register(Component.For<ISaveConfigCommand<GameConfiguration>>().ImplementedBy<SaveConfigCommand<GameConfiguration>>());
+            Container.Register(Component.For<IGetConfigByIdQuery<EventConfiguration>>().ImplementedBy<GetConfigByIdQuery<EventConfiguration>>());
+            Container.Register(Component.For<ISaveConfigCommand<EventConfiguration>>().ImplementedBy<SaveConfigCommand<EventConfiguration>>());
+            Container.Register(Component.For<IGetConfigByIdQuery<SessionConfiguration>>().ImplementedBy<GetConfigByIdQuery<SessionConfiguration>>());
+            Container.Register(Component.For<ISaveConfigCommand<SessionConfiguration>>().ImplementedBy<SaveConfigCommand<SessionConfiguration>>());
 
         }
 

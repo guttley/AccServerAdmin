@@ -33,7 +33,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// ]
     /// </example>
     [ExcludeFromCodeCoverage]
-    public class Session
+    public class SessionConfiguration
     {
         [JsonProperty("hourOfDay")]
         public int HourOfDay { get; set; }

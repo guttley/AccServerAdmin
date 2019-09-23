@@ -6,7 +6,7 @@
     public sealed class SessionType
     {
         public const string Practice = "P";
-        public const string QUally = "Q";
+        public const string Qually = "Q";
         public const string Race = "R";
     }
 }

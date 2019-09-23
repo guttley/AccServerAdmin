@@ -7,35 +7,35 @@ using Microsoft.AspNetCore.Authorization;
 namespace AccServerAdmin.Service.Controllers
 {
     [Authorize]
-    [Route("api/accServerConfig")]
+    [Route("api/accEventConfig")]
     [ApiController]
-    public class AccServerConfigController : ControllerBase
+    public class AccEventConfigController : ControllerBase
     {
-        private readonly ISaveConfigCommand<ServerConfiguration> _saveConfigCommand;
-        private readonly IGetConfigByIdQuery<ServerConfiguration> _getConfigQuery;
+        private readonly ISaveConfigCommand<EventConfiguration> _saveConfigCommand;
+        private readonly IGetConfigByIdQuery<EventConfiguration> _getConfigQuery;
 
-        public AccServerConfigController(
-            ISaveConfigCommand<ServerConfiguration> saveConfigCommand,
-            IGetConfigByIdQuery<ServerConfiguration> getConfigQuery)
+        public AccEventConfigController(
+            ISaveConfigCommand<EventConfiguration> saveConfigCommand,
+            IGetConfigByIdQuery<EventConfiguration> getConfigQuery)
         {
             _saveConfigCommand = saveConfigCommand;
             _getConfigQuery = getConfigQuery;
         }
 
         /// <summary>
-        /// GET api/accServerConfig/{serverId}
+        /// GET api/accEventConfig/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public ServerConfiguration GetServerConfig(Guid serverId)
+        public EventConfiguration GetGameConfig(Guid serverId)
         {
             return _getConfigQuery.Execute(serverId);
         }
 
         /// <summary>
-        /// PUT api/accServerConfig/{serverId}
+        /// PUT api/accEventConfig/{serverId}
         /// </summary>
         [HttpPut("{serverId}")]
-        public void SaveServerConfig(Guid serverId, [FromBody] ServerConfiguration config)
+        public void SaveGameConfig(Guid serverId, [FromBody] EventConfiguration config)
         {
             _saveConfigCommand.Execute(serverId, config);
         }

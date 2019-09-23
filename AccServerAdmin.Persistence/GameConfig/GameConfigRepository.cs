@@ -20,8 +20,6 @@ namespace AccServerAdmin.Persistence.GameConfig
         public const int DefaultSpectatorSlots = 0;
         public const int DefaultDumpLeaderboards = 1;
         public const int DefaultIsRaceLocked = 1;
-        
-        public const int DefaultRegisterToLobby = 1;
 
         public GameConfigRepository(
             IDirectory directory,

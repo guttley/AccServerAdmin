@@ -2,9 +2,11 @@
 using AccServerAdmin.Application.Common;
 using Microsoft.AspNetCore.Mvc;
 using AccServerAdmin.Domain.AccConfig;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AccServerAdmin.Service.Controllers
 {
+    [Authorize]
     [Route("api/accGameConfig")]
     [ApiController]
     public class AccGameConfigController : ControllerBase

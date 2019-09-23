@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccServerAdmin.Service.Controllers
 {
+    [Authorize]
     [Route("api/server")]
     [ApiController]
     public class ServerController : ControllerBase

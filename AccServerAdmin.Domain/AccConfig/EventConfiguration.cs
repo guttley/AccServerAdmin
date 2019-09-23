@@ -47,7 +47,7 @@ namespace AccServerAdmin.Domain.AccConfig
     ///}
     /// </example>
     [ExcludeFromCodeCoverage]
-    public class Event
+    public class EventConfiguration
     {
         [JsonProperty("track")]
         public string Track { get; set; }
@@ -68,19 +68,19 @@ namespace AccServerAdmin.Domain.AccConfig
         public int TrackTemp { get; set; }
 
         [JsonProperty("cloudLevel")]
-        public decimal cloudLevel { get; set; }
+        public double CloudLevel { get; set; }
 
         [JsonProperty("rain")]
-        public decimal Rain { get; set; }
+        public double Rain { get; set; }
 
         [JsonProperty("weatherRandomness")]
         public int WeatherRandomness { get; set; }
 
         [JsonProperty("configVersion")]
-        public string Version { get; set; }
+        public int Version { get; set; }
 
         [JsonProperty("sessions")]
-        public List<Session> Sessions { get; set; }
+        public List<SessionConfiguration> Sessions { get; set; }
 
         [JsonProperty("postQualySeconds")]
         public int PostQualySeconds { get; set; }

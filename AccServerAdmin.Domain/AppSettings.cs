@@ -18,5 +18,14 @@ namespace AccServerAdmin.Domain
         /// </summary>
         public string InstanceBasePath { get; set; }
 
+        /// <summary>
+        /// Admin user name
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
+        /// Admin user password
+        /// </summary>
+        public string Password { get; set; }
     }
 }
