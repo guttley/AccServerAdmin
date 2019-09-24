@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain;
+using AccServerAdmin.Resouce;
+using Castle.Core.Internal;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AccServerAdmin.Service.Middleware
 {
+    // dotnet Core 3.0 broke this as they made DefaultHttpRequest internal, so need to find another way to test it
+    [ExcludeFromCodeCoverage]
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly AppSettings _settings;
@@ -26,21 +31,21 @@ namespace AccServerAdmin.Service.Middleware
             _settings = options.Value;
         }
 
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            if (!Request.Headers.ContainsKey("Authorization"))
-                return AuthenticateResult.Fail("Missing Authorization Header");
-
             try
             {
+                if (!Request.Headers.ContainsKey("Authorization"))
+                   return Task.FromResult(AuthenticateResult.Fail(Strings.MissingAuthHeader));
+
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':');
                 var username = credentials[0];
                 var password = credentials[1];
 
-                if (username != _settings.Username || password != _settings.Password)
-                    return AuthenticateResult.Fail("Invalid Username or Password");
+                if (!(username.EqualsText(_settings.Username) && password.EqualsText(_settings.Password)))
+                    return Task.FromResult(AuthenticateResult.Fail(Strings.InvalidUserOrPass));
 
                 var claims = new[]
                 {
@@ -52,12 +57,11 @@ namespace AccServerAdmin.Service.Middleware
                 var principal = new ClaimsPrincipal(identity);
                 var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-                return AuthenticateResult.Success(ticket);
-
+                return Task.FromResult(AuthenticateResult.Success(ticket));
             }
             catch
             {
-                return AuthenticateResult.Fail("Invalid Authorization Header");
+                return Task.FromResult(AuthenticateResult.Fail(Strings.InvalidAuthHeader));
             }
         }
     }

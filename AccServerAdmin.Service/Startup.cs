@@ -20,6 +20,7 @@ using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Service.Middleware;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace AccServerAdmin.Service
@@ -43,7 +44,10 @@ namespace AccServerAdmin.Service
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddNewtonsoftJson()
+                .AddMvcOptions(o => o.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
@@ -56,15 +60,14 @@ namespace AccServerAdmin.Service
 
             RegisterApplicationComponents();
 
-            services.AddWindsor(Container,
-                opts => opts.UseEntryAssembly(typeof(ServerController).Assembly), 
-                () => services.BuildServiceProvider(validateScopes: false));
+            services.AddWindsor(Container, opts => opts.UseEntryAssembly(typeof(ServerController).Assembly)); 
+                //() => services.BuildServiceProvider(validateScopes: false));
 
             ValidateConfiguration();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

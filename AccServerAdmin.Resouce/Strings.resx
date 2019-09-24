@@ -120,6 +120,15 @@
   <data name="FileDoesNotExistFormat" xml:space="preserve">
     <value>"No {0} exists in the directory: {1}</value>
   </data>
+  <data name="InvalidAuthHeader" xml:space="preserve">
+    <value>Invalid Authorization Header</value>
+  </data>
+  <data name="InvalidUserOrPass" xml:space="preserve">
+    <value>Invalid Username or Password</value>
+  </data>
+  <data name="MissingAuthHeader" xml:space="preserve">
+    <value>Missing Authorization Header</value>
+  </data>
   <data name="ServerIdNotFoundFormat" xml:space="preserve">
     <value>No server found with id: {0}</value>
   </data>

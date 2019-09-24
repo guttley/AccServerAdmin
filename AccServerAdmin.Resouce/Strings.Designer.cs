@@ -70,6 +70,33 @@ namespace AccServerAdmin.Resouce {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Authorization Header.
+        /// </summary>
+        public static string InvalidAuthHeader {
+            get {
+                return ResourceManager.GetString("InvalidAuthHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Username or Password.
+        /// </summary>
+        public static string InvalidUserOrPass {
+            get {
+                return ResourceManager.GetString("InvalidUserOrPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Authorization Header.
+        /// </summary>
+        public static string MissingAuthHeader {
+            get {
+                return ResourceManager.GetString("MissingAuthHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No server found with id: {0}.
         /// </summary>
         public static string ServerIdNotFoundFormat {
