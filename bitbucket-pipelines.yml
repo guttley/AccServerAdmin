@@ -8,8 +8,6 @@ image: microsoft/dotnet:sdk
 pipelines:
   default:
     - step:
-        caches:
-          - dotnetcore
         script: # Modify the commands below to build your repository.
           - export PROJECT_NAME=AccServerAdmin.Service
           - export TEST_NAME=AccServerAdmin.Tests
