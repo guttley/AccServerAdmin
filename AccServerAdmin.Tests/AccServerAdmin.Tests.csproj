@@ -13,4 +13,11 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AccServerAdmin.Application\AccServerAdmin.Application.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Infrastructure\AccServerAdmin.Infrastructure.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Service\AccServerAdmin.Service.csproj" />
+  </ItemGroup>
+
 </Project>
