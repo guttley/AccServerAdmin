@@ -102,7 +102,7 @@ namespace AccServerAdmin.Tests.Service.Middleware
             Assert.That(authResult.Failure, Is.Not.Null);
             Assert.That(authResult.Failure.Message, Is.EqualTo(Strings.InvalidUserOrPass));
         }
-
+        
         //[Test]
         public async Task TestAuthenticatedSuccess()
         {

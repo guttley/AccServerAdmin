@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AccServerAdmin.Service.Controllers
+namespace AccServerAdmin.Service.Controllers.Api
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/server")]
     [ApiController]
     public class ServerController : ControllerBase
@@ -46,7 +45,7 @@ namespace AccServerAdmin.Service.Controllers
         /// GET api/server/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public Server GetServerById(Guid serverId)
+        public Server GetServerById([FromQuery] Guid serverId)
         {
             return _getServerByIdQuery.Execute(serverId);
         }
@@ -55,7 +54,7 @@ namespace AccServerAdmin.Service.Controllers
         /// POST api/Server
         /// </summary>
         [HttpPost("{serverName}")]
-        public Server CreateServer(string serverName)
+        public Server CreateServer([FromQuery] string serverName)
         {
             return _createServerCommand.Execute(serverName);
         }
@@ -64,7 +63,7 @@ namespace AccServerAdmin.Service.Controllers
         /// PUT api/server/{serverId}/{serverName} 
         /// </summary>
         [HttpPut("{serverId}/{serverName}")]
-        public void UpdateServer(Guid serverId, string serverName)
+        public void UpdateServer([FromQuery] Guid serverId, [FromQuery] string serverName)
         {
             _updateServerCommand.Execute(serverId, serverName);
         }
@@ -73,7 +72,7 @@ namespace AccServerAdmin.Service.Controllers
         /// DELETE api/server/{serverId}
         /// </summary>
         [HttpDelete("{serverId}")]
-        public void DeleteServer(Guid serverId)
+        public void DeleteServer([FromQuery] Guid serverId)
         {
             _deleteServerCommand.Execute(serverId);
         }

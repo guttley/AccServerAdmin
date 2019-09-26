@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Service.Controllers;
+using AccServerAdmin.Service.Controllers.Api;
 using NSubstitute;
 using NUnit.Framework;
 

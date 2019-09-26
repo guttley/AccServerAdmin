@@ -1,10 +1,10 @@
 ﻿using System;
 using AccServerAdmin.Application.Common;
-using Microsoft.AspNetCore.Mvc;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace AccServerAdmin.Service.Controllers
+namespace AccServerAdmin.Service.Controllers.Api
 {
     [Authorize]
     [Route("api/accGameConfig")]
@@ -26,7 +26,7 @@ namespace AccServerAdmin.Service.Controllers
         /// GET api/accGameConfig/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public GameConfiguration GetGameConfig(Guid serverId)
+        public GameConfiguration GetGameConfig([FromQuery] Guid serverId)
         {
             return _getConfigQuery.Execute(serverId);
         }
@@ -35,7 +35,7 @@ namespace AccServerAdmin.Service.Controllers
         /// PUT api/accGameConfig/{serverId}
         /// </summary>
         [HttpPut("{serverId}")]
-        public void SaveGameConfig(Guid serverId, [FromBody] GameConfiguration config)
+        public void SaveGameConfig([FromQuery] Guid serverId, [FromBody] GameConfiguration config)
         {
             _saveConfigCommand.Execute(serverId, config);
         }
