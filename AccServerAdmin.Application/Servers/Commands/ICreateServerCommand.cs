@@ -1,9 +1,10 @@
-﻿using AccServerAdmin.Domain;
+﻿using System.Threading.Tasks;
+using AccServerAdmin.Domain;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface ICreateServerCommand
     {
-        Server Execute(string serverName);
+        Task<Server> ExecuteAsync(string serverName);
     }
 }

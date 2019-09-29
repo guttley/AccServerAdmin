@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain;
 
 namespace AccServerAdmin.Application.Servers.Queries
 {
     public interface IGetServerByIdQuery
     {
-        Server Execute(Guid serverId);
+        Task<Server> ExecuteAsync(Guid serverId);
     }
 }

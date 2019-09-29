@@ -17,7 +17,7 @@
     <ProjectReference Include="..\AccServerAdmin.Application\AccServerAdmin.Application.csproj" />
     <ProjectReference Include="..\AccServerAdmin.Infrastructure\AccServerAdmin.Infrastructure.csproj" />
     <ProjectReference Include="..\AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj" />
-    <ProjectReference Include="..\AccServerAdmin.ServiceOld\AccServerAdmin.ServiceOld.csproj" />
+    <ProjectReference Include="..\AccServerAdmin.Service\AccServerAdmin.Service.csproj" />
   </ItemGroup>
 
 </Project>

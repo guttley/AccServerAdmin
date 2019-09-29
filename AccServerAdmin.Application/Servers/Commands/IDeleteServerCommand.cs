@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface IDeleteServerCommand
     {
-        void Execute(Guid serverId);
+        Task ExecuteAsync(Guid serverId);
     }
 }

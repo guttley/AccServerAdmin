@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AccServerAdmin.Domain\AccServerAdmin.Domain.csproj" />
     <ProjectReference Include="..\AccServerAdmin.Infrastructure\AccServerAdmin.Infrastructure.csproj" />
     <ProjectReference Include="..\AccServerAdmin.Resouce\AccServerAdmin.Resouce.csproj" />

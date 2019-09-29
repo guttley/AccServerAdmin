@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 
 namespace AccServerAdmin.Application.Common
 {
     public interface IServerDirectoryResolver
     {
-        string Resolve(Guid serverId);
+        Task<string> ResolveAsync(Guid serverId);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
@@ -49,6 +51,10 @@ namespace AccServerAdmin.Domain.AccConfig
     [ExcludeFromCodeCoverage]
     public class EventConfiguration
     {
+        [Key]
+        [JsonIgnore]
+        public Guid ServerId { get; set; }
+
         [JsonProperty("track")]
         public string Track { get; set; }
 

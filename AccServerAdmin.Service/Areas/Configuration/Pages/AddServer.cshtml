@@ -1,0 +1,40 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.AddServerModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<section class="forms">
+    <div class="container-fluid">
+
+        <header>
+            <h1 class="h3 display">Server</h1>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Create New Server</h4>
+                    </div>
+                    <div class="card-body">
+                        <p></p>
+                        <form method="post">
+                            <div class="form-group">
+                                <label asp-for="Server.Name" class="label-material">Server Name</label>
+                                <input asp-for="Server.Name" type="text" class="form-control">
+                                <span asp-validation-for="Server.Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

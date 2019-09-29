@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using AccServerAdmin.Domain;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface IUpdateServerCommand
     {
-        void Execute(Guid serverId, string serverName);
+        Task ExecuteAsync(Server server);
     }
 }

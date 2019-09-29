@@ -1,5 +1,5 @@
+using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Common;
-using AccServerAdmin.Application.Helpers;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -7,15 +7,15 @@ using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.DbContext;
 using AccServerAdmin.Persistence.EventConfig;
 using AccServerAdmin.Persistence.GameConfig;
-using AccServerAdmin.Persistence.Server;
+using AccServerAdmin.Persistence.Repository;
 using AccServerAdmin.Persistence.ServerConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using AccServerAdmin.Service.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,7 +35,6 @@ namespace AccServerAdmin.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(o => o.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -46,7 +45,6 @@ namespace AccServerAdmin.Service
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
 
             services.AddRazorPages()
                 .AddRazorPagesOptions(o =>
@@ -85,7 +83,6 @@ namespace AccServerAdmin.Service
                 endpoints.MapRazorPages();
             });
 
-
             dbContext.Database.Migrate();
         }
 
@@ -96,26 +93,29 @@ namespace AccServerAdmin.Service
             services.AddTransient<IFile, FileApiWrapper>();
             services.AddTransient<IDirectory, DirectoryApiWrapper>();
             services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
-            services.AddTransient<ConfigValidator>();
-
-            // Server components
+            
+            // CQRS components
+            services.AddScoped<IGetAppSettingsQuery, GetAppSettingsQuery>();
+            services.AddScoped<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
             services.AddTransient<ICreateServerCommand, CreateServerCommand>();
-            services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
-            services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
-            services.AddTransient<IGetServerListQuery, GetServerListQuery>();
-            services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
+            //services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
+            //services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
+            services.AddScoped<IGetServerListQuery, GetServerListQuery>();
+            //services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
 
-            // Config components
-            services.AddSingleton<IAppSettingsRepository, AppSettingsRepository>();
-            services.AddTransient<IGetConfigByIdQuery<ServerConfiguration>, GetConfigByIdQuery<ServerConfiguration>>();
-            services.AddTransient<ISaveConfigCommand<ServerConfiguration>, SaveConfigCommand<ServerConfiguration>>();
-            services.AddTransient<IGetConfigByIdQuery<GameConfiguration>, GetConfigByIdQuery<GameConfiguration>>();
-            services.AddTransient<ISaveConfigCommand<GameConfiguration>, SaveConfigCommand<GameConfiguration>>();
-            services.AddTransient<IGetConfigByIdQuery<EventConfiguration>, GetConfigByIdQuery<EventConfiguration>>();
-            services.AddTransient<ISaveConfigCommand<EventConfiguration>, SaveConfigCommand<EventConfiguration>>();
+            
+            //services.AddScoped<IGetConfigByIdQuery<ServerConfiguration>, GetConfigByIdQuery<ServerConfiguration>>();
+            //services.AddScoped<ISaveConfigCommand<ServerConfiguration>, SaveConfigCommand<ServerConfiguration>>();
+            //services.AddScoped<IGetConfigByIdQuery<GameConfiguration>, GetConfigByIdQuery<GameConfiguration>>();
+            //services.AddScoped<ISaveConfigCommand<GameConfiguration>, SaveConfigCommand<GameConfiguration>>();
+            //services.AddScoped<IGetConfigByIdQuery<EventConfiguration>, GetConfigByIdQuery<EventConfiguration>>();
+            //services.AddScoped<ISaveConfigCommand<EventConfiguration>, SaveConfigCommand<EventConfiguration>>();
 
             // repositories
-            services.AddTransient<IServerRepository, ServerRepository>();
+            services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
+            services.AddScoped<IDataRepository<Server>, ServerRepository>();
+            services.AddScoped<IDataRepository<ServerConfiguration>, ServerConfigurationRepository>();
+
             services.AddTransient<IConfigRepository<ServerConfiguration>, ServerConfigRepository>();
             services.AddTransient<IConfigRepository<GameConfiguration>, GameConfigRepository>();
             services.AddTransient<IConfigRepository<EventConfiguration>, EventConfigRepository>();

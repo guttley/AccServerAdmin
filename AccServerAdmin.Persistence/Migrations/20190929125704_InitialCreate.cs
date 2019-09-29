@@ -1,12 +1,25 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AccServerAdmin.Service.Migrations
+namespace AccServerAdmin.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AppSettings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ServerBasePath = table.Column<string>(nullable: false),
+                    InstanceBasePath = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppSettings", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -44,6 +57,78 @@ namespace AccServerAdmin.Service.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventConfigurations",
+                columns: table => new
+                {
+                    ServerId = table.Column<Guid>(nullable: false),
+                    Track = table.Column<string>(nullable: true),
+                    EventType = table.Column<string>(nullable: true),
+                    PreRaceWaitingTimeSeconds = table.Column<int>(nullable: false),
+                    SessionOverTimeSeconds = table.Column<int>(nullable: false),
+                    AmbientTemp = table.Column<int>(nullable: false),
+                    TrackTemp = table.Column<int>(nullable: false),
+                    CloudLevel = table.Column<double>(nullable: false),
+                    Rain = table.Column<double>(nullable: false),
+                    WeatherRandomness = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    PostQualySeconds = table.Column<int>(nullable: false),
+                    PostRaceSeconds = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventConfigurations", x => x.ServerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameConfigurations",
+                columns: table => new
+                {
+                    ServerId = table.Column<Guid>(nullable: false),
+                    ServerName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    AdminPassword = table.Column<string>(nullable: true),
+                    TrackMedalsRequirement = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    RacecraftRatingRequirement = table.Column<int>(nullable: false),
+                    SpectatorSlots = table.Column<int>(nullable: false),
+                    SpectatorPassword = table.Column<string>(nullable: true),
+                    DumpLeaderboards = table.Column<int>(nullable: false),
+                    IsRaceLocked = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameConfigurations", x => x.ServerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServerConfigurations",
+                columns: table => new
+                {
+                    ServerId = table.Column<Guid>(nullable: false),
+                    UdpPort = table.Column<ushort>(nullable: false),
+                    TcpPort = table.Column<ushort>(nullable: false),
+                    MaxClients = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    RegisterToLobby = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServerConfigurations", x => x.ServerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Servers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +237,29 @@ namespace AccServerAdmin.Service.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SessionConfiguration",
+                columns: table => new
+                {
+                    EventId = table.Column<Guid>(nullable: false),
+                    HourOfDay = table.Column<int>(nullable: false),
+                    DayOfWeekend = table.Column<int>(nullable: false),
+                    TimeMultiplier = table.Column<int>(nullable: false),
+                    SessionType = table.Column<string>(nullable: true),
+                    SessionDurationMinutes = table.Column<int>(nullable: false),
+                    EventConfigurationServerId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SessionConfiguration", x => x.EventId);
+                    table.ForeignKey(
+                        name: "FK_SessionConfiguration_EventConfigurations_EventConfigurationServerId",
+                        column: x => x.EventConfigurationServerId,
+                        principalTable: "EventConfigurations",
+                        principalColumn: "ServerId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -188,10 +296,18 @@ namespace AccServerAdmin.Service.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SessionConfiguration_EventConfigurationServerId",
+                table: "SessionConfiguration",
+                column: "EventConfigurationServerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppSettings");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -208,10 +324,25 @@ namespace AccServerAdmin.Service.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "GameConfigurations");
+
+            migrationBuilder.DropTable(
+                name: "ServerConfigurations");
+
+            migrationBuilder.DropTable(
+                name: "Servers");
+
+            migrationBuilder.DropTable(
+                name: "SessionConfiguration");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "EventConfigurations");
         }
     }
 }

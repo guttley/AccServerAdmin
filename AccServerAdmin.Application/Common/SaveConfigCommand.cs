@@ -1,25 +1,35 @@
 ﻿using System;
+using System.Threading.Tasks;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Common
 {
     public class SaveConfigCommand<T> : ISaveConfigCommand<T> where T : new()
     {
-        private readonly IServerDirectoryResolver _serverResolver;
         private readonly IConfigRepository<T> _configRepository;
+        private readonly IDataRepository<T> _dataRepository;
+        private readonly IDataRepository<Server> _serverRepository;
 
         public SaveConfigCommand(
-            IServerDirectoryResolver serverResolver,
-            IConfigRepository<T> configRepository)
+            IConfigRepository<T> configRepository,
+            IDataRepository<T> dataRepository,
+            IDataRepository<Server> serverRepository)
         {
-            _serverResolver = serverResolver;
             _configRepository = configRepository;
+            _dataRepository = dataRepository;
+            _serverRepository = serverRepository;
         }
 
-        public void Execute(Guid serverId, T config)
+        public async Task ExecuteAsync(Guid serverId, T config)
         {
-            var path = _serverResolver.Resolve(serverId);
+            var server = await _serverRepository.GetAsync(serverId);
+            
+            /*
+            _configRepository.Save();
             _configRepository.Save(path, config);
+            */
+            throw new NotImplementedException();
         }
     }
 }

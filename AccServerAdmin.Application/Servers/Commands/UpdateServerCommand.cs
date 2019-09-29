@@ -1,29 +1,22 @@
-﻿using System;
-using AccServerAdmin.Persistence.Server;
-using AccServerAdmin.Application.Common;
+﻿using System.Threading.Tasks;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
     public class UpdateServerCommand : IUpdateServerCommand
     {
-        private readonly IServerDirectoryResolver _serverResolver;
-        private readonly IServerRepository _serverRepository;
+        private readonly IDataRepository<Server> _serverRepository;
 
-        public UpdateServerCommand(
-            IServerDirectoryResolver serverResolver,
-            IServerRepository serverRepository)
+        public UpdateServerCommand(IDataRepository<Server> serverRepository)
         {
-            _serverResolver = serverResolver;
             _serverRepository = serverRepository;
         }
 
-        public void Execute(Guid serverId, string serverName)
+        public async Task ExecuteAsync(Server server)
         {
-            var serverPath = _serverResolver.Resolve(serverId);
-            var server = _serverRepository.Read(serverPath);
-
-            server.Name = serverName;
-            _serverRepository.Save(server);
+            var dbServer = await _serverRepository.GetAsync(server.Id);
+            await _serverRepository.UpdateAsync(dbServer, server);
         }
     }
 }

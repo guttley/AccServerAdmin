@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Infrastructure.IO;
 
@@ -17,9 +18,9 @@ namespace AccServerAdmin.Application.Servers.Commands
             _directory = directory;
         }
 
-        public void Execute(Guid serverId)
+        public async Task ExecuteAsync(Guid serverId)
         {
-            var path = _serverResolver.Resolve(serverId);
+            var path = await _serverResolver.ResolveAsync(serverId);
             _directory.Delete(path, true);
         }
     }

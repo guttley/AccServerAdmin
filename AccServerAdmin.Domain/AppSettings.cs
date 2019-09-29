@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AccServerAdmin.Domain
 {
@@ -8,14 +10,21 @@ namespace AccServerAdmin.Domain
     [ExcludeFromCodeCoverage]
     public class AppSettings
     {
+        [Key]
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Path from where each instance server layout will be copied
         /// </summary>
+        [Required]
+        [DataType(DataType.Text)]
         public string ServerBasePath { get; set; }
 
         /// <summary>
         /// Base path to where each instance server will be created
         /// </summary>
+        [Required]
+        [DataType(DataType.Text)]
         public string InstanceBasePath { get; set; }
     }
 }

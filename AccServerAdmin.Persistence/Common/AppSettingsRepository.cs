@@ -1,68 +1,60 @@
 ﻿using System;
-using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Infrastructure.Helpers;
-using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.DbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccServerAdmin.Persistence.Common
 {
     /// <summary>
     /// Implements IServerConfigRepository
     /// </summary>
-    public class AppSettingsRepository : IAppSettingsRepository
+    public class AppSettingsRepository : IDataRepository<AppSettings>
     {
-        private readonly IDirectory _directory;
-        private readonly IFile _file;
-        private readonly IJsonConverter _jsonConverter;
-        private readonly string _path;
-        private readonly string _fullPath;
+        private readonly ApplicationDbContext _dbContext;
 
-        public AppSettingsRepository(
-            IDirectory directory,
-            IFile file,
-            IJsonConverter converter)
+        public AppSettingsRepository(ApplicationDbContext dbContext)
         {
-            _directory = directory;
-            _file = file;
-            _jsonConverter = converter;
-
-            var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            _path = Path.Combine(programData, "AccServerAdmin");
-            _fullPath = Path.Combine(_path, "AppSettings.json");
+            _dbContext = dbContext;
         }
 
         /// <inheritdoc />
-        public void Save(AppSettings config)
+        public async Task<IEnumerable<AppSettings>> GetAllAsync()
         {
-            var json = _jsonConverter.SerializeObject(config);
-            
-            if (!_directory.Exists(_path))
-                _directory.CreateDirectory(_path);
-
-            _file.WriteAllText(_fullPath, json);
+            return await _dbContext.AppSettings.ToListAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public AppSettings Read(bool createIfNotExists)
+        public Task<AppSettings> GetAsync(Guid id)
         {
-            if (!_file.Exists(_path))
-            {
-                if (createIfNotExists)
-                {
-                    return new AppSettings
-                    {
-                        ServerBasePath = Path.Combine(_path, "ServerBase"),
-                        InstanceBasePath = Path.Combine(_path, "ServerBase")
-                    };
-                }
+            throw new NotImplementedException("Use GetAll().FirstOrDefault()");
+        }
 
-                return null;
-            }
+        /// <inheritdoc />
+        public async Task AddAsync(AppSettings entity)
+        {
+            if (_dbContext.AppSettings.Any())
+                throw new InvalidOperationException("Cannot add a second app settings record");
 
-            var json = _file.ReadAllText(_path);
-            var config = _jsonConverter.DeserializeObject<AppSettings>(json);
+            _dbContext.AppSettings.Add(entity);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
 
-            return config;
+        /// <inheritdoc />
+        public async Task UpdateAsync(AppSettings dbEntity, AppSettings entity)
+        {
+            dbEntity.InstanceBasePath = entity.InstanceBasePath;
+            dbEntity.ServerBasePath = entity.ServerBasePath;
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task DeleteAsync(AppSettings entity)
+        {
+            _dbContext.AppSettings.Remove(entity);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

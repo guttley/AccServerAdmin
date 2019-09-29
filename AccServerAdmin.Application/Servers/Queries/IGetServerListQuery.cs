@@ -1,10 +1,11 @@
 ﻿using AccServerAdmin.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AccServerAdmin.Application.Servers.Queries
 {
     public interface IGetServerListQuery
     {
-        IEnumerable<Server> Execute();
+        Task<IEnumerable<Server>> ExecuteAsync();
     }
 }

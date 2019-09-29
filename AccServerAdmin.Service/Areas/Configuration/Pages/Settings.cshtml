@@ -1,0 +1,60 @@
+﻿@page
+@model SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<section class="forms">
+    <div class="container-fluid">
+
+        <header>
+            <h1 class="h3 display">Settings</h1>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Directory Settings</h4>
+                    </div>
+                    <div class="card-body">
+                        <p></p>
+                        <form method="post">
+                            <div class="form-group">
+                                <label asp-for="Settings.ServerBasePath" class="label-material">Base Server Directory</label>
+                                <input asp-for="Settings.ServerBasePath" type="text" class="form-control">
+                                <span asp-validation-for="Settings.ServerBasePath" class="text-danger"></span>
+                                <span class="text-small text-gray help-block-none">Directory of the base ACC server files, this folder is copied whenever a new instance is created. You will need to copy the server files here.</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Settings.InstanceBasePath" class="label-material">Instance Base Directory</label>
+                                <input asp-for="Settings.InstanceBasePath" type="text" class="form-control">
+                                <span asp-validation-for="Settings.InstanceBasePath" class="text-danger"></span>
+                                <span class="text-small text-gray help-block-none">The directory where to create new ACC server instances.</span>
+                            </div>
+
+                            <div class="form-group i-checks">
+                                <input asp-for="CreateDirectories" type="checkbox" class="form-control-custom">
+                                <label asp-for="CreateDirectories" class="label-material">Create directories</label>
+                            </div>
+
+                            @if (Model.IsDefaulted)
+                            {
+                                <div class="form-group">
+                                    <p class="text-danger">These settings are the defaults, please alter them or accept by pressing Save</p>
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -41,7 +41,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet]
         public async Task<IEnumerable<Server>> GetServerList()
         {
-            return await _getServerListQuery.ExecuteAsync();
+            return await _getServerListQuery.ExecuteAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet("{serverId}")]
         public async Task<Server> GetServerById([FromQuery] Guid serverId)
         {
-            return await _getServerByIdQuery.ExecuteAsync(serverId);
+            return await _getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpPost("{serverName}")]
         public async Task<Server> CreateServer([FromQuery] string serverName)
         {
-            return await _createServerCommand.ExecuteAsync(serverName);
+            return await _createServerCommand.ExecuteAsync(serverName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpPut("{serverId}")]
         public async Task UpdateServerAsync([FromQuery] Guid serverId, [FromBody] Server server)
         {
-            await _updateServerCommand.ExecuteAsync(server);
+            await _updateServerCommand.ExecuteAsync(server).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpDelete("{serverId}")]
         public async Task DeleteServer([FromQuery] Guid serverId)
         {
-            await _deleteServerCommand.ExecuteAsync(serverId);
+            await _deleteServerCommand.ExecuteAsync(serverId).ConfigureAwait(false);
         }
     }
     */

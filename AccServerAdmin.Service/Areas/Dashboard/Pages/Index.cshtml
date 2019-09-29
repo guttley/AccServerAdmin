@@ -1,0 +1,46 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Dashboard.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="forms">
+    <div class="container-fluid">
+
+        <header>
+            <h1 class="h3 display">Dashboard </h1>
+        </header>
+
+        <div class="row">
+
+            @if (Model.NeedsConfiguring)
+            {
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <h4>Configuration required</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Before using this tool you must setup the directory configuration in the <a asp-page="/Settings">Settings</a></p>
+                        </div>
+                    </div>
+                </div>
+            } 
+            else if (!Model.Servers.Any())
+            {
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center">
+                            <h4>No Servers Configured</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>Create a new server here <a asp-area="Configuration" asp-page="/AddServer">Settings</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>

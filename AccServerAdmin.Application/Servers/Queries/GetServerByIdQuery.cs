@@ -1,29 +1,22 @@
 ﻿using System;
-using AccServerAdmin.Application.Common;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Persistence.Server;
+using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Servers.Queries
 {
     public class GetServerByIdQuery : IGetServerByIdQuery
     {
-        private readonly IServerRepository _serverRepository;
-        private readonly IServerDirectoryResolver _serverResolver;
+        private readonly IDataRepository<Server> _serverRepository;
 
-        public GetServerByIdQuery(
-            IServerDirectoryResolver serverResolver,
-            IServerRepository serverRepository)
+        public GetServerByIdQuery(IDataRepository<Server> serverRepository)
         {
-            _serverResolver = serverResolver;
             _serverRepository = serverRepository;
         }
         
-        public Server Execute(Guid serverId)
+        public async Task<Server> ExecuteAsync(Guid serverId)
         {
-            var path = _serverResolver.Resolve(serverId);
-            var server = _serverRepository.Read(path);
-
-            return server;
+            return await _serverRepository.GetAsync(serverId);
         }
     }
 }

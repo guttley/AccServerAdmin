@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AccServerAdmin.Domain
@@ -10,24 +12,15 @@ namespace AccServerAdmin.Domain
     public class Server
     {
         /// <summary>
-        /// Filename of the config file
-        /// </summary>
-        public const string Filename = "AccAdmin.json";
-
-        /// <summary>
         /// Unique Id of the server instance
         /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         /// <summary>
         /// Name of the server
         /// </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Location of the server instance
-        /// </summary>
-        public string Location { get; set; }
-
     }
 }

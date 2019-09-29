@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AccServerAdmin.Domain;
+using System.Threading.Tasks;
+
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Resouce;
-using Microsoft.Extensions.Options;
 
 namespace AccServerAdmin.Application.Common
 {
+    using AccServerAdmin.Domain;
+
     public class ServerDirectoryResolver : IServerDirectoryResolver
     {
-        private readonly AppSettings _settings;
+        private readonly IDataRepository<AppSettings> _appSettingsRepository;
         private readonly IDirectory _directory;
 
         public ServerDirectoryResolver(
-            IAppSettingsRepository appSettingsRepository,
+            IDataRepository<AppSettings> appSettingsRepository,
             IDirectory directory)
         {
-            _settings = appSettingsRepository.Read();
+            _appSettingsRepository = appSettingsRepository;
             _directory = directory;
         }
 
-        public string Resolve(Guid serverId)
+        public async Task<string> ResolveAsync(Guid serverId)
         {
-            var path = _directory.GetDirectories(_settings.InstanceBasePath)
+            var settings = (await _appSettingsRepository.GetAllAsync()).FirstOrDefault();
+
+            var path = _directory.GetDirectories(settings.InstanceBasePath)
                                  .FirstOrDefault(d => d.Contains(serverId.ToString()));
             
             if (string.IsNullOrEmpty(path))

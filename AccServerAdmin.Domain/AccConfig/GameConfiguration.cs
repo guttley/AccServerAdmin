@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
@@ -24,6 +26,10 @@ namespace AccServerAdmin.Domain.AccConfig
     [ExcludeFromCodeCoverage]
     public class GameConfiguration
     {
+        [Key]
+        [JsonIgnore]
+        public Guid ServerId { get; set; }
+
         [JsonProperty("serverName")]
         public string ServerName { get; set; }
 

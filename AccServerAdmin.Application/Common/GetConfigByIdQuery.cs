@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Common
@@ -16,11 +17,10 @@ namespace AccServerAdmin.Application.Common
             _configRepository = configRepository;
         }
 
-        public T Execute(Guid serverId)
+        public async Task<T> ExecuteAsync(Guid serverId)
         {
-            var path = _serverResolver.Resolve(serverId);
+            var path = await _serverResolver.ResolveAsync(serverId);
             var config = _configRepository.Read(path);
-
             return config;
         }
     }

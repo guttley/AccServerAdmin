@@ -73,7 +73,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
                 throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
             }
 
-            await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync().ConfigureAwait(false);
 
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
