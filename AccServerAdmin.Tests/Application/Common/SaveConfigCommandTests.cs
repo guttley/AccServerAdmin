@@ -11,7 +11,7 @@ namespace AccServerAdmin.Tests.Application.Common
     [ExcludeFromCodeCoverage]
     public class SaveServerConfigCommandTests
     {
-
+        /*
         [Test]
         public void Executes()
         {
@@ -32,6 +32,6 @@ namespace AccServerAdmin.Tests.Application.Common
             resolver.Received().Resolve(serverId);
             repo.Received().Save(path, config);
         }
-
+        */
     }
 }

@@ -1,14 +1,13 @@
 ﻿using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
-using AccServerAdmin.Persistence.Server;
-using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
@@ -17,7 +16,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
     public class CreateServerCommandTest
     {
         [Test]
-        public void TestExecute()
+        public async Task TestExecute()
         {
             // Arrange
             var id = Guid.NewGuid();
@@ -30,20 +29,19 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
                 Path.Combine(settings.ServerBasePath, "File.3")
             };
 
-            var server = new Server {Id = id, Name = serverName, Location = Path.Combine(settings.InstanceBasePath, id.ToString()) };
-            var options = Substitute.For<IAppSettingsRepository> ();
-            var repo = Substitute.For<IServerRepository>();
+            var server = new Server {Id = id, Name = serverName };
+            var options = Substitute.For<IDataRepository<AppSettings>> ();
+            var repo = Substitute.For<IDataRepository<Server>>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
 
-            options.Read().Returns(settings);
-            repo.New(serverName).Returns(server);
+            options.GetAllAsync().Returns(new List<AppSettings> {settings});
             directory.GetFiles(settings.ServerBasePath).Returns(files);
 
             var command = new CreateServerCommand(options, repo, directory, file);
 
             // Act
-            var returnServer = command.Execute(serverName);
+            var returnServer = await command.ExecuteAsync(serverName);
 
             // Assert
             Assert.That(returnServer, Is.Not.Null);
@@ -51,7 +49,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             Assert.That(returnServer.Id, Is.EqualTo(server.Id));
             
             directory.Received().GetFiles(settings.ServerBasePath);
-            repo.Received().Save(server);
+            await repo.Received().AddAsync(server);
 
             file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.1"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.1"));
             file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.2"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.2"));

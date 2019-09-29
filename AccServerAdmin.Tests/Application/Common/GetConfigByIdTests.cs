@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
@@ -12,7 +13,7 @@ namespace AccServerAdmin.Tests.Application.Common
     public class GetConfigByIdTests
     {
         [Test]
-        public void Executes() 
+        public async Task Executes() 
         {
             // Arrange
             var serverId = Guid.NewGuid();
@@ -22,14 +23,14 @@ namespace AccServerAdmin.Tests.Application.Common
             var command = new GetConfigByIdQuery<GameConfiguration>(resolver, repo);
             var config = new GameConfiguration();
 
-            resolver.Resolve(serverId).Returns(path);
+            resolver.ResolveAsync(serverId).Returns(path);
             repo.Read(path).Returns(config);
 
             // Act
-            var returnedConfig = command.Execute(serverId);
+            var returnedConfig = await command.ExecuteAsync(serverId);
 
             // Assert
-            resolver.Received().Resolve(serverId);
+            await resolver.Received().ResolveAsync(serverId);
             repo.Received().Read(path);
             Assert.That(returnedConfig, Is.EqualTo(config));
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AccServerAdmin.Service.Controllers.Api
 {
+    /*
     [Authorize]
     [Route("api/accServerConfig")]
     [ApiController]
@@ -39,6 +40,6 @@ namespace AccServerAdmin.Service.Controllers.Api
         {
             _saveConfigCommand.Execute(serverId, config);
         }
-
     }
+    */
 }

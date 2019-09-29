@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AccServerAdmin.Service.Controllers.Api
 {
+    /*
     [Authorize]
     [Route("api/server")]
     [ApiController]
@@ -37,45 +39,46 @@ namespace AccServerAdmin.Service.Controllers.Api
         /// GET api/server
         /// </summary>
         [HttpGet]
-        public IEnumerable<Server> GetServerList()
+        public async Task<IEnumerable<Server>> GetServerList()
         {
-            return _getServerListQuery.Execute();
+            return await _getServerListQuery.ExecuteAsync();
         }
 
         /// <summary>
         /// GET api/server/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public Server GetServerById([FromQuery] Guid serverId)
+        public async Task<Server> GetServerById([FromQuery] Guid serverId)
         {
-            return _getServerByIdQuery.Execute(serverId);
+            return await _getServerByIdQuery.ExecuteAsync(serverId);
         }
 
         /// <summary>
         /// POST api/Server
         /// </summary>
         [HttpPost("{serverName}")]
-        public Server CreateServer([FromQuery] string serverName)
+        public async Task<Server> CreateServer([FromQuery] string serverName)
         {
-            return _createServerCommand.Execute(serverName);
+            return await _createServerCommand.ExecuteAsync(serverName);
         }
 
         /// <summary>
         /// PUT api/server/{serverId}/{serverName} 
         /// </summary>
-        [HttpPut("{serverId}/{serverName}")]
-        public void UpdateServer([FromQuery] Guid serverId, [FromQuery] string serverName)
+        [HttpPut("{serverId}")]
+        public async Task UpdateServerAsync([FromQuery] Guid serverId, [FromBody] Server server)
         {
-            _updateServerCommand.Execute(serverId, serverName);
+            await _updateServerCommand.ExecuteAsync(server);
         }
 
         /// <summary>
         /// DELETE api/server/{serverId}
         /// </summary>
         [HttpDelete("{serverId}")]
-        public void DeleteServer([FromQuery] Guid serverId)
+        public async Task DeleteServer([FromQuery] Guid serverId)
         {
-            _deleteServerCommand.Execute(serverId);
+            await _deleteServerCommand.ExecuteAsync(serverId);
         }
     }
+    */
 }

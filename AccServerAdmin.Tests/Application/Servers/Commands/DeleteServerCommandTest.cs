@@ -10,6 +10,7 @@ using AccServerAdmin.Application.Servers.Commands;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {
+    /*
     [ExcludeFromCodeCoverage]
     public class DeleteServerCommandTest
     {
@@ -45,4 +46,5 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
 
         }
     }
+    */
 }

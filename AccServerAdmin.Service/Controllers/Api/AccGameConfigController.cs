@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AccServerAdmin.Service.Controllers.Api
 {
+    /*
     [Authorize]
     [Route("api/accGameConfig")]
     [ApiController]
@@ -28,17 +29,18 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet("{serverId}")]
         public GameConfiguration GetGameConfig([FromQuery] Guid serverId)
         {
-            return _getConfigQuery.Execute(serverId);
+            return await _getConfigQuery.ExecuteAsync(serverId);
         }
 
         /// <summary>
         /// PUT api/accGameConfig/{serverId}
         /// </summary>
         [HttpPut("{serverId}")]
-        public void SaveGameConfig([FromQuery] Guid serverId, [FromBody] GameConfiguration config)
+        public async Task SaveGameConfig([FromQuery] Guid serverId, [FromBody] GameConfiguration config)
         {
-            _saveConfigCommand.Execute(serverId, config);
+            _saveConfigCommand.ExecuteAsync(serverId, config);
         }
 
     }
+    */
 }
