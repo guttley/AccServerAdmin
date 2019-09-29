@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Extensions.Options;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Infrastructure.Helpers;
+using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Persistence.Server
 {
@@ -20,12 +21,12 @@ namespace AccServerAdmin.Persistence.Server
         private const string Filename = "AccAdmin.json";
 
         public ServerRepository(
-            IOptions<AppSettings> settings,
+            IAppSettingsRepository settings,
             IDirectory directory,
             IFile file,
             IJsonConverter jsonConverter)
         {
-            _settings = settings.Value;
+            _settings = settings.Read();
             _directory = directory;
             _file = file;
             _jsonConverter = jsonConverter;

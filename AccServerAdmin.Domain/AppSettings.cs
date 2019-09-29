@@ -17,15 +17,5 @@ namespace AccServerAdmin.Domain
         /// Base path to where each instance server will be created
         /// </summary>
         public string InstanceBasePath { get; set; }
-
-        /// <summary>
-        /// Admin user name
-        /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        /// Admin user password
-        /// </summary>
-        public string Password { get; set; }
     }
 }

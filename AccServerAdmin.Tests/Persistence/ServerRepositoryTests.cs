@@ -4,6 +4,7 @@ using System.IO;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Server;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -21,12 +22,12 @@ namespace AccServerAdmin.Tests.Persistence
             var serverName = "Wibble Server";
             var settings = new AppSettings
                 {ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath"};
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
 
             var repo = new ServerRepository(options, directory, file, converter);
 
@@ -45,7 +46,7 @@ namespace AccServerAdmin.Tests.Persistence
             var serverId = Guid.NewGuid();
             var settings = new AppSettings {ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath"};
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
@@ -57,7 +58,7 @@ namespace AccServerAdmin.Tests.Persistence
                 Location = testPath
             };
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             file.Exists(testPath).Returns(true);
             converter.DeserializeObject<Server>(Arg.Any<string>()).Returns(server);
 
@@ -79,7 +80,7 @@ namespace AccServerAdmin.Tests.Persistence
             var serverId = Guid.NewGuid();
             var settings = new AppSettings { ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath" };
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
@@ -91,7 +92,7 @@ namespace AccServerAdmin.Tests.Persistence
                 Location = testPath
             };
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             file.Exists(testPath).Returns(false);
             converter.DeserializeObject<Server>(Arg.Any<string>()).Returns(server);
 
@@ -107,7 +108,7 @@ namespace AccServerAdmin.Tests.Persistence
             var serverId = Guid.NewGuid();
             var settings = new AppSettings { ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath" };
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
@@ -119,7 +120,7 @@ namespace AccServerAdmin.Tests.Persistence
                 Location = testPath
             };
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             file.Exists(testPath).Returns(true);
             converter.DeserializeObject<Server>(Arg.Any<string>()).Returns(server);
             directory.Exists(Arg.Any<string>()).Returns(false);

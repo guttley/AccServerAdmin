@@ -5,6 +5,7 @@ using System.IO;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Server;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -32,11 +33,11 @@ namespace AccServerAdmin.Tests.Application.Servers.Queries
                 serverPath
             };
 
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository> ();
             var repo = Substitute.For<IServerRepository>();
             var directory = Substitute.For<IDirectory>();
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             directory.GetDirectories(settings.InstanceBasePath).Returns(dirs);
             repo.Read(serverPath).Returns(server);
 

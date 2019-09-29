@@ -2,6 +2,7 @@
 using System.IO;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Server;
 
 
@@ -15,12 +16,12 @@ namespace AccServerAdmin.Application.Servers.Commands
         private readonly IFile _file;
 
         public CreateServerCommand(
-            IOptions<AppSettings> options,
+            IAppSettingsRepository appSettingsRepository,
             IServerRepository serverRepository,
             IDirectory directory,
             IFile file)
         {
-            _settings = options.Value;
+            _settings = appSettingsRepository.Read();
             _serverRepository = serverRepository;
             _directory = directory;
             _file = file;

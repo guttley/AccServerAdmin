@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Servers.Queries
 {
@@ -16,11 +17,11 @@ namespace AccServerAdmin.Application.Servers.Queries
         private readonly Regex _guidRegex;
 
         public GetServerListQuery(
-            IOptions<AppSettings> options,
+            IAppSettingsRepository appSettingsRepository,
             IServerRepository serverRepository,
             IDirectory directory)
         {
-            _settings = options.Value;
+            _settings = appSettingsRepository.Read();
             _serverRepository = serverRepository;
             _directory = directory;
             _guidRegex = new Regex("(\\{){0,1}[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}(\\}){0,1}");

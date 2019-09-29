@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Resouce;
 using Microsoft.Extensions.Options;
 
@@ -14,10 +15,10 @@ namespace AccServerAdmin.Application.Common
         private readonly IDirectory _directory;
 
         public ServerDirectoryResolver(
-            IOptions<AppSettings> options,
+            IAppSettingsRepository appSettingsRepository,
             IDirectory directory)
         {
-            _settings = options.Value;
+            _settings = appSettingsRepository.Read();
             _directory = directory;
         }
 

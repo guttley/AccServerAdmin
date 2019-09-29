@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AccServerAdmin.Application.Common;
+using AccServerAdmin.Application.Helpers;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -14,14 +11,15 @@ using AccServerAdmin.Persistence.EventConfig;
 using AccServerAdmin.Persistence.GameConfig;
 using AccServerAdmin.Persistence.Server;
 using AccServerAdmin.Persistence.ServerConfig;
-using AccServerAdmin.Service.Middleware;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
+using AccServerAdmin.Service.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ZNetCS.AspNetCore.Authentication.Basic;
+using Microsoft.AspNetCore.Http;
 
 namespace AccServerAdmin.Service
 {
@@ -37,47 +35,58 @@ namespace AccServerAdmin.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddControllersWithViews();
-            services.AddScoped<AuthenticationEvents>();
+            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>(o => o.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services
-                .AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
-                .AddBasicAuthentication(
-                    options =>
-                    {
-                        options.Realm = "ACC Server Admin";
-                        options.EventsType = typeof(AuthenticationEvents);
-                    });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential 
+                // cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
+            services.AddRazorPages()
+                .AddRazorPagesOptions(o =>
+                {
+                    o.Conventions.AuthorizePage("/Index");
+                });
 
             RegisterApplicationComponents(services);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseMiddleware<ExceptionMiddleware>();
-            app.UseAuthorization();
+            app.UseCookiePolicy();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
+
+
+            dbContext.Database.Migrate();
         }
 
         private void RegisterApplicationComponents(IServiceCollection services)
@@ -97,6 +106,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
 
             // Config components
+            services.AddSingleton<IAppSettingsRepository, AppSettingsRepository>();
             services.AddTransient<IGetConfigByIdQuery<ServerConfiguration>, GetConfigByIdQuery<ServerConfiguration>>();
             services.AddTransient<ISaveConfigCommand<ServerConfiguration>, SaveConfigCommand<ServerConfiguration>>();
             services.AddTransient<IGetConfigByIdQuery<GameConfiguration>, GetConfigByIdQuery<GameConfiguration>>();

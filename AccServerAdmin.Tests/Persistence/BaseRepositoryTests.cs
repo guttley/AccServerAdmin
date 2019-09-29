@@ -33,14 +33,14 @@ namespace AccServerAdmin.Tests.Persistence
             var serverId = Guid.NewGuid();
             var settings = new AppSettings {ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath"};
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
             var testPath = Path.Combine(serverPath, "cfg", "test.json");
             var obj = new object();
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             file.Exists(testPath).Returns(true);
             converter.DeserializeObject<object>(Arg.Any<string>()).Returns(obj);
 
@@ -62,14 +62,14 @@ namespace AccServerAdmin.Tests.Persistence
             var serverId = Guid.NewGuid();
             var settings = new AppSettings { ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath" };
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository> ();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
             var testPath = Path.Combine(serverPath, "cfg", "test.json");
             var obj = new object();
             
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             file.Exists(testPath).Returns(false);
             converter.DeserializeObject<object>(Arg.Any<string>()).Returns(obj);
 
@@ -85,14 +85,14 @@ namespace AccServerAdmin.Tests.Persistence
             var serverId = Guid.NewGuid();
             var settings = new AppSettings { ServerBasePath = "C:\\FakeBasePath", InstanceBasePath = "C:\\FakeInstancePath" };
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository> ();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
             var testPath = Path.Combine(serverPath, "AccAdmin.json");
             var obj = new object();
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             file.Exists(testPath).Returns(true);
             converter.DeserializeObject<object>(Arg.Any<string>()).Returns(obj);
             directory.Exists(Arg.Any<string>()).Returns(false);

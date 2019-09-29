@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using AccServerAdmin.Application.Helpers;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
@@ -19,8 +21,8 @@ namespace AccServerAdmin.Tests.Service.Helpers
             var file = Substitute.For<IFile>();
             var directory = Substitute.For<IDirectory>();
             var settings = new AppSettings { InstanceBasePath = "C:\\MyInstances", ServerBasePath = "C:\\ServerBase"};
-            var options = Substitute.For<IOptions<AppSettings>>();
-            options.Value.Returns(settings);
+            var options = Substitute.For<IAppSettingsRepository>();
+            options.Read().Returns(settings);
             var validator = new ConfigValidator(directory, file, options);
             file.Exists(Arg.Any<string>()).Returns(true);
             directory.Exists(Arg.Any<string>()).Returns(false);
@@ -41,8 +43,8 @@ namespace AccServerAdmin.Tests.Service.Helpers
             var file = Substitute.For<IFile>();
             var directory = Substitute.For<IDirectory>();
             var settings = new AppSettings { InstanceBasePath = "C:\\MyInstances", ServerBasePath = "C:\\ServerBase"};
-            var options = Substitute.For<IOptions<AppSettings>>();
-            options.Value.Returns(settings);
+            var options = Substitute.For<IAppSettingsRepository>();
+            options.Read().Returns(settings);
             var validator = new ConfigValidator(directory, file, options);
             file.Exists(Arg.Any<string>()).Returns(true);
             directory.Exists(Arg.Any<string>()).Returns(true);
@@ -63,8 +65,8 @@ namespace AccServerAdmin.Tests.Service.Helpers
             var file = Substitute.For<IFile>();
             var directory = Substitute.For<IDirectory>();
             var settings = new AppSettings { InstanceBasePath = "C:\\MyInstances", ServerBasePath = "C:\\ServerBase"};
-            var options = Substitute.For<IOptions<AppSettings>>();
-            options.Value.Returns(settings);
+            var options = Substitute.For<IAppSettingsRepository>();
+            options.Read().Returns(settings);
             var validator = new ConfigValidator(directory, file, options);
             file.Exists(Arg.Any<string>()).Returns(true);
             directory.Exists(Arg.Any<string>()).Returns(true);
@@ -84,9 +86,9 @@ namespace AccServerAdmin.Tests.Service.Helpers
             var file = Substitute.For<IFile>();
             var directory = Substitute.For<IDirectory>();
             var settings = new AppSettings { InstanceBasePath = "C:\\MyInstances", ServerBasePath = "C:\\ServerBase"};
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var path = Path.Combine(settings.ServerBasePath, "accServer.exe");
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             var validator = new ConfigValidator(directory, file, options);
             file.Exists(Arg.Any<string>()).Returns(true);
             file.Exists(path).Returns(false);
@@ -103,9 +105,9 @@ namespace AccServerAdmin.Tests.Service.Helpers
             var file = Substitute.For<IFile>();
             var directory = Substitute.For<IDirectory>();
             var settings = new AppSettings { InstanceBasePath = "C:\\MyInstances", ServerBasePath = "C:\\ServerBase"};
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository>();
             var path = Path.Combine(settings.ServerBasePath, "accServer.pdb");
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             var validator = new ConfigValidator(directory, file, options);
             file.Exists(Arg.Any<string>()).Returns(true);
             file.Exists(path).Returns(false);

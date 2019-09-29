@@ -2,18 +2,37 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <UserSecretsId>e98aa887-fe4d-4e7e-93ec-e2e90b8111ab</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>aspnet-AccServerAdmin.Service-199D1665-C68D-4F6C-BCC8-1708A1367869</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
-    <PackageReference Include="ZNetCS.AspNetCore.Authentication.Basic" Version="3.0.1" />
+    <None Remove="accServerAdmin.db3" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\AccServerAdmin.Application\AccServerAdmin.Application.csproj" />
     <ProjectReference Include="..\AccServerAdmin.Domain\AccServerAdmin.Domain.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="wwwroot\favicon.ico">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

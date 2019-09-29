@@ -1,10 +1,10 @@
-{
+﻿{
   "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
+    "windowsAuthentication": false, 
+    "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:50986",
-      "sslPort": 44354
+      "applicationUrl": "http://localhost:49525",
+      "sslPort": 44383
     }
   },
   "profiles": {
@@ -18,22 +18,10 @@
     "AccServerAdmin.Service": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "https://+:443;http://+:80",
-        "ASPNETCORE_HTTPS_PORT": "44355"
-      },
-      "httpPort": 50987,
-      "useSSL": true,
-      "sslPort": 44355
+      }
     }
   }
 }

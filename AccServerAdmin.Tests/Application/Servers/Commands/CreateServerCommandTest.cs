@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {
@@ -30,12 +31,12 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             };
 
             var server = new Server {Id = id, Name = serverName, Location = Path.Combine(settings.InstanceBasePath, id.ToString()) };
-            var options = Substitute.For<IOptions<AppSettings>>();
+            var options = Substitute.For<IAppSettingsRepository> ();
             var repo = Substitute.For<IServerRepository>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
 
-            options.Value.Returns(settings);
+            options.Read().Returns(settings);
             repo.New(serverName).Returns(server);
             directory.GetFiles(settings.ServerBasePath).Returns(files);
 
