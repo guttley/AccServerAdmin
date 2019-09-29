@@ -60,66 +60,6 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventConfigurations",
-                columns: table => new
-                {
-                    ServerId = table.Column<Guid>(nullable: false),
-                    Track = table.Column<string>(nullable: true),
-                    EventType = table.Column<string>(nullable: true),
-                    PreRaceWaitingTimeSeconds = table.Column<int>(nullable: false),
-                    SessionOverTimeSeconds = table.Column<int>(nullable: false),
-                    AmbientTemp = table.Column<int>(nullable: false),
-                    TrackTemp = table.Column<int>(nullable: false),
-                    CloudLevel = table.Column<double>(nullable: false),
-                    Rain = table.Column<double>(nullable: false),
-                    WeatherRandomness = table.Column<int>(nullable: false),
-                    Version = table.Column<int>(nullable: false),
-                    PostQualySeconds = table.Column<int>(nullable: false),
-                    PostRaceSeconds = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventConfigurations", x => x.ServerId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameConfigurations",
-                columns: table => new
-                {
-                    ServerId = table.Column<Guid>(nullable: false),
-                    ServerName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    AdminPassword = table.Column<string>(nullable: true),
-                    TrackMedalsRequirement = table.Column<int>(nullable: false),
-                    Version = table.Column<int>(nullable: false),
-                    RacecraftRatingRequirement = table.Column<int>(nullable: false),
-                    SpectatorSlots = table.Column<int>(nullable: false),
-                    SpectatorPassword = table.Column<string>(nullable: true),
-                    DumpLeaderboards = table.Column<int>(nullable: false),
-                    IsRaceLocked = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameConfigurations", x => x.ServerId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServerConfigurations",
-                columns: table => new
-                {
-                    ServerId = table.Column<Guid>(nullable: false),
-                    UdpPort = table.Column<ushort>(nullable: false),
-                    TcpPort = table.Column<ushort>(nullable: false),
-                    MaxClients = table.Column<int>(nullable: false),
-                    Version = table.Column<int>(nullable: false),
-                    RegisterToLobby = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServerConfigurations", x => x.ServerId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Servers",
                 columns: table => new
                 {
@@ -238,25 +178,107 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EventConfigurations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ServerId = table.Column<Guid>(nullable: false),
+                    Track = table.Column<string>(nullable: true),
+                    EventType = table.Column<string>(nullable: true),
+                    PreRaceWaitingTimeSeconds = table.Column<int>(nullable: false),
+                    SessionOverTimeSeconds = table.Column<int>(nullable: false),
+                    AmbientTemp = table.Column<int>(nullable: false),
+                    TrackTemp = table.Column<int>(nullable: false),
+                    CloudLevel = table.Column<double>(nullable: false),
+                    Rain = table.Column<double>(nullable: false),
+                    WeatherRandomness = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    PostQualySeconds = table.Column<int>(nullable: false),
+                    PostRaceSeconds = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventConfigurations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventConfigurations_Servers_ServerId",
+                        column: x => x.ServerId,
+                        principalTable: "Servers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameConfigurations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ServerId = table.Column<Guid>(nullable: false),
+                    ServerName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    AdminPassword = table.Column<string>(nullable: true),
+                    TrackMedalsRequirement = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    RacecraftRatingRequirement = table.Column<int>(nullable: false),
+                    SpectatorSlots = table.Column<int>(nullable: false),
+                    SpectatorPassword = table.Column<string>(nullable: true),
+                    DumpLeaderboards = table.Column<int>(nullable: false),
+                    IsRaceLocked = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameConfigurations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameConfigurations_Servers_ServerId",
+                        column: x => x.ServerId,
+                        principalTable: "Servers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NetworkConfigurations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ServerId = table.Column<Guid>(nullable: false),
+                    UdpPort = table.Column<ushort>(nullable: false),
+                    TcpPort = table.Column<ushort>(nullable: false),
+                    MaxClients = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    RegisterToLobby = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NetworkConfigurations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NetworkConfigurations_Servers_ServerId",
+                        column: x => x.ServerId,
+                        principalTable: "Servers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SessionConfiguration",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(nullable: false),
                     EventId = table.Column<Guid>(nullable: false),
                     HourOfDay = table.Column<int>(nullable: false),
                     DayOfWeekend = table.Column<int>(nullable: false),
                     TimeMultiplier = table.Column<int>(nullable: false),
                     SessionType = table.Column<string>(nullable: true),
                     SessionDurationMinutes = table.Column<int>(nullable: false),
-                    EventConfigurationServerId = table.Column<Guid>(nullable: true)
+                    EventConfigurationId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SessionConfiguration", x => x.EventId);
+                    table.PrimaryKey("PK_SessionConfiguration", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SessionConfiguration_EventConfigurations_EventConfigurationServerId",
-                        column: x => x.EventConfigurationServerId,
+                        name: "FK_SessionConfiguration_EventConfigurations_EventConfigurationId",
+                        column: x => x.EventConfigurationId,
                         principalTable: "EventConfigurations",
-                        principalColumn: "ServerId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -298,9 +320,27 @@ namespace AccServerAdmin.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SessionConfiguration_EventConfigurationServerId",
+                name: "IX_EventConfigurations_ServerId",
+                table: "EventConfigurations",
+                column: "ServerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameConfigurations_ServerId",
+                table: "GameConfigurations",
+                column: "ServerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NetworkConfigurations_ServerId",
+                table: "NetworkConfigurations",
+                column: "ServerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SessionConfiguration_EventConfigurationId",
                 table: "SessionConfiguration",
-                column: "EventConfigurationServerId");
+                column: "EventConfigurationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -327,10 +367,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "GameConfigurations");
 
             migrationBuilder.DropTable(
-                name: "ServerConfigurations");
-
-            migrationBuilder.DropTable(
-                name: "Servers");
+                name: "NetworkConfigurations");
 
             migrationBuilder.DropTable(
                 name: "SessionConfiguration");
@@ -343,6 +380,9 @@ namespace AccServerAdmin.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "EventConfigurations");
+
+            migrationBuilder.DropTable(
+                name: "Servers");
         }
     }
 }

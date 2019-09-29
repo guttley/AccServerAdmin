@@ -7,8 +7,17 @@
         <li>
             <a asp-page="/Drivers"><i class="icon-home"></i>Drivers</a>
         </li>
+        
+        <li><a href="#configDropDown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Configuration</a>
+            <ul id="configDropDown" class="collapse list-unstyled ">
+                <li><a asp-area="Configuration" asp-page="/Servers/List"><i class="icon-settings"></i>Servers</a></li>
+                <li><a asp-area="Configuration" asp-page="/Drivers/List"><i class="icon-settings"></i>Drivers</a></li>
+                <li><a asp-area="Configuration" asp-page="/Settings"><i class="icon-settings"></i>Settings</a></li>
+            </ul>
+        </li>
+
         <li>
-            <a asp-area="Configuration" asp-page="/Settings"><i class="icon-settings"></i>Settings</a>
+            
         </li>
         <li>
             <a asp-page="/Acknowledgments"><i class="icon-form"></i>Acknowledgments</a>

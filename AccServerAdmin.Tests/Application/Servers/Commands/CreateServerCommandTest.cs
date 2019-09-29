@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
+using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
@@ -31,17 +32,18 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
 
             var server = new Server {Id = id, Name = serverName };
             var options = Substitute.For<IDataRepository<AppSettings>> ();
-            var repo = Substitute.For<IDataRepository<Server>>();
+            var repo = Substitute.For<IServerRepository>();
+            var getAppSettingsCommand = Substitute.For<IGetAppSettingsQuery>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
 
             options.GetAllAsync().Returns(new List<AppSettings> {settings});
             directory.GetFiles(settings.ServerBasePath).Returns(files);
 
-            var command = new CreateServerCommand(options, repo, directory, file);
+            var command = new CreateServerCommand(getAppSettingsCommand, repo, directory, file);
 
             // Act
-            var returnServer = await command.ExecuteAsync(serverName);
+            var returnServer = await command.ExecuteAsync(serverName).ConfigureAwait(false);
 
             // Assert
             Assert.That(returnServer, Is.Not.Null);
@@ -49,7 +51,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             Assert.That(returnServer.Id, Is.EqualTo(server.Id));
             
             directory.Received().GetFiles(settings.ServerBasePath);
-            await repo.Received().AddAsync(server);
+            await repo.Received().AddAsync(server).ConfigureAwait(false);
 
             file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.1"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.1"));
             file.Received().Copy(Path.Combine(settings.ServerBasePath, "File.2"), Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "File.2"));

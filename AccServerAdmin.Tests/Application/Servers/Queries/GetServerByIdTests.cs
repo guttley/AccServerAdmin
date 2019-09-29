@@ -23,7 +23,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Queries
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
             var server = new Server {Id = serverId, Name = serverName};
             var serverResolver = Substitute.For<IServerDirectoryResolver>();
-            var repo = Substitute.For<IDataRepository<Server>>();
+            var repo = Substitute.For<IServerRepository>();
 
             serverResolver.Resolve(serverId).Returns(serverPath);
             repo.Read(serverPath).Returns(server);

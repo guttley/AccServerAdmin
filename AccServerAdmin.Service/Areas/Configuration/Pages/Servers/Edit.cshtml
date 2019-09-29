@@ -1,0 +1,116 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+@{
+    ViewData["Title"] = "Edit Server";
+}
+
+<section class="forms">
+    <div class="container-fluid">
+
+        <header>
+            <h1 class="h3 display"></h1>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Edit Server - @Model.Server.Name</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form method="post" class="form-horizontal">
+                            <div class="form-group row">
+                                <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.Name" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.Name" type="text" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+    
+server
+/// {
+///   "udpPort": 9431,
+///   "tcpPort": 9432,
+///   "maxClients": 10,
+///   "configVersion": 1,
+///   "registerToLobby": 1
+/// }
+    
+game    
+///   "serverName": "My Server Name",
+///   "password": "",
+///   "adminPassword": "",
+///   "trackMedalsRequirement": 0,
+///   "safetyRatingRequirement": -1,
+///   "configVersion": 1,
+///   "racecraftRatingRequirement": 0,
+///   "spectatorSlots": 0,
+///   "spectatorPassword": "",
+///   "dumpLeaderboards": 0,
+///   "isRaceLocked": 0
+
+event
+///  "track": "misano",
+///  "eventType": "E_3h",
+///  "preRaceWaitingTimeSeconds": 15,
+///  "sessionOverTimeSeconds": 120,
+///  "ambientTemp": 26,
+///  "trackTemp": 30,
+///  "cloudLevel": 0.3,
+///  "rain": 0,
+///  "weatherRandomness": 1,
+///  "configVersion": 1,
+///  "sessions": [
+///   {
+///     "hourOfDay": 10,
+///     "dayOfWeekend": 1,
+///     "timeMultiplier": 1,
+///     "sessionType": "P",
+///     "sessionDurationMinutes": 20
+///   },
+///   {
+///     "hourOfDay": 17,
+///     "dayOfWeekend": 2,
+///     "timeMultiplier": 8,
+///     "sessionType": "Q",
+///     "sessionDurationMinutes": 10
+///   },
+///   {
+///     "hourOfDay": 16,
+///     "dayOfWeekend": 3,
+///     "timeMultiplier": 3,
+///     "sessionType": "Q",
+///     "sessionDurationMinutes": 20
+///   }
+///  ],
+///  "postQualySeconds": 0,
+///  "postRaceSeconds": 0    
+
+    
+-->

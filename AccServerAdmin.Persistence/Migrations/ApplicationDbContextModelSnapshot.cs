@@ -18,7 +18,7 @@ namespace AccServerAdmin.Persistence.Migrations
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventConfiguration", b =>
                 {
-                    b.Property<Guid>("ServerId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -43,6 +43,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<double>("Rain")
                         .HasColumnType("REAL");
 
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("SessionOverTimeSeconds")
                         .HasColumnType("INTEGER");
 
@@ -58,14 +61,17 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("WeatherRandomness")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ServerId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
 
                     b.ToTable("EventConfigurations");
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameConfiguration", b =>
                 {
-                    b.Property<Guid>("ServerId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -84,6 +90,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("RacecraftRatingRequirement")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ServerName")
                         .HasColumnType("TEXT");
 
@@ -99,14 +108,17 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("Version")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ServerId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
 
                     b.ToTable("GameConfigurations");
                 });
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.ServerConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.NetworkConfiguration", b =>
                 {
-                    b.Property<Guid>("ServerId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -115,6 +127,9 @@ namespace AccServerAdmin.Persistence.Migrations
 
                     b.Property<int>("RegisterToLobby")
                         .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("TEXT");
 
                     b.Property<ushort>("TcpPort")
                         .HasColumnType("INTEGER");
@@ -125,21 +140,27 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("Version")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ServerId");
+                    b.HasKey("Id");
 
-                    b.ToTable("ServerConfigurations");
+                    b.HasIndex("ServerId")
+                        .IsUnique();
+
+                    b.ToTable("NetworkConfigurations");
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.SessionConfiguration", b =>
                 {
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("DayOfWeekend")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("EventConfigurationServerId")
+                    b.Property<Guid?>("EventConfigurationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("EventId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("HourOfDay")
@@ -154,9 +175,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("TimeMultiplier")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("EventId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("EventConfigurationServerId");
+                    b.HasIndex("EventConfigurationId");
 
                     b.ToTable("SessionConfiguration");
                 });
@@ -390,11 +411,38 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventConfiguration", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.Server", null)
+                        .WithOne("EventConfiguration")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.EventConfiguration", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameConfiguration", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.Server", null)
+                        .WithOne("GameConfiguration")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.GameConfiguration", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.NetworkConfiguration", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.Server", null)
+                        .WithOne("NetworkConfiguration")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.NetworkConfiguration", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.SessionConfiguration", b =>
                 {
                     b.HasOne("AccServerAdmin.Domain.AccConfig.EventConfiguration", null)
                         .WithMany("Sessions")
-                        .HasForeignKey("EventConfigurationServerId");
+                        .HasForeignKey("EventConfigurationId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

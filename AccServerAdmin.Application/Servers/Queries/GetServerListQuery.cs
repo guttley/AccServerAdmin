@@ -7,9 +7,9 @@ namespace AccServerAdmin.Application.Servers.Queries
 {
     public class GetServerListQuery : IGetServerListQuery
     {
-        private readonly IDataRepository<Server> _serverRepository;
+        private readonly IServerRepository _serverRepository;
 
-        public GetServerListQuery(IDataRepository<Server> serverRepository)
+        public GetServerListQuery(IServerRepository serverRepository)
         {
             _serverRepository = serverRepository;
         }

@@ -70,7 +70,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
                         return Page();
                 }
 
-                await _saveAppSettingsCommand.ExecuteAsync(Settings);
+                await _saveAppSettingsCommand.ExecuteAsync(Settings).ConfigureAwait(false);
                 _directory.CreateDirectory(Settings.ServerBasePath);
                 _directory.CreateDirectory(Settings.InstanceBasePath);
             }

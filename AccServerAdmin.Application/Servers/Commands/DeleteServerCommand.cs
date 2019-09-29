@@ -20,7 +20,7 @@ namespace AccServerAdmin.Application.Servers.Commands
 
         public async Task ExecuteAsync(Guid serverId)
         {
-            var path = await _serverResolver.ResolveAsync(serverId);
+            var path = await _serverResolver.ResolveAsync(serverId).ConfigureAwait(false);
             _directory.Delete(path, true);
         }
     }

@@ -9,12 +9,12 @@ namespace AccServerAdmin.Application.Common
     {
         private readonly IConfigRepository<T> _configRepository;
         private readonly IDataRepository<T> _dataRepository;
-        private readonly IDataRepository<Server> _serverRepository;
+        private readonly IServerRepository _serverRepository;
 
         public SaveConfigCommand(
             IConfigRepository<T> configRepository,
             IDataRepository<T> dataRepository,
-            IDataRepository<Server> serverRepository)
+            IServerRepository serverRepository)
         {
             _configRepository = configRepository;
             _dataRepository = dataRepository;
@@ -23,7 +23,7 @@ namespace AccServerAdmin.Application.Common
 
         public async Task ExecuteAsync(Guid serverId, T config)
         {
-            var server = await _serverRepository.GetAsync(serverId);
+            var server = await _serverRepository.GetAsync(serverId).ConfigureAwait(false); 
             
             /*
             _configRepository.Save();

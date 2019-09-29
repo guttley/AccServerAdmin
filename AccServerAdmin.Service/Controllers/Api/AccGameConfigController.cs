@@ -29,7 +29,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet("{serverId}")]
         public GameConfiguration GetGameConfig([FromQuery] Guid serverId)
         {
-            return await _getConfigQuery.ExecuteAsync(serverId);
+            return await _getConfigQuery.ExecuteAsync(serverId).ConfigureAwait(false);
         }
 
         /// <summary>

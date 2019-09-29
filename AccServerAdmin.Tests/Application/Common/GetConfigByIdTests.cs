@@ -27,10 +27,10 @@ namespace AccServerAdmin.Tests.Application.Common
             repo.Read(path).Returns(config);
 
             // Act
-            var returnedConfig = await command.ExecuteAsync(serverId);
+            var returnedConfig = await command.ExecuteAsync(serverId).ConfigureAwait(false);
 
             // Assert
-            await resolver.Received().ResolveAsync(serverId);
+            await resolver.Received().ResolveAsync(serverId).ConfigureAwait(false);
             repo.Received().Read(path);
             Assert.That(returnedConfig, Is.EqualTo(config));
         }

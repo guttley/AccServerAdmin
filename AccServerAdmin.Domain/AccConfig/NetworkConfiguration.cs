@@ -18,11 +18,30 @@ namespace AccServerAdmin.Domain.AccConfig
     /// }
     /// </example>
     [ExcludeFromCodeCoverage]
-    public class ServerConfiguration
+    public class NetworkConfiguration
     {
+        public const int DefaultMaxClients = 30;
+        public const int DefaultUdpPort = 9331;
+        public const int DefaultTcpPort = 9332;
+        public const int DefaultConfigVersion = 1;
+        public const int DefaultRegisterToLobby = 1;
+
+        public NetworkConfiguration()
+        {
+            MaxClients = DefaultMaxClients;
+            TcpPort = DefaultTcpPort;
+            UdpPort = DefaultUdpPort;
+            Version = DefaultConfigVersion;
+            RegisterToLobby = DefaultRegisterToLobby;
+        }
+
         [Key]
         [JsonIgnore]
+        public Guid Id { get; set; }
+
+        [JsonIgnore]
         public Guid ServerId { get; set; }
+
 
         [JsonProperty("udpPort")]
         public ushort UdpPort { get; set; }

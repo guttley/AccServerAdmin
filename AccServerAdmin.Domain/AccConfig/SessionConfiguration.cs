@@ -38,6 +38,9 @@ namespace AccServerAdmin.Domain.AccConfig
     {
         [Key]
         [JsonIgnore]
+        public Guid Id { get; set; }
+
+        [JsonIgnore]
         public Guid EventId { get; set; }
 
         [JsonProperty("hourOfDay")]

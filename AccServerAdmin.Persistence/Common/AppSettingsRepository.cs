@@ -33,13 +33,14 @@ namespace AccServerAdmin.Persistence.Common
         }
 
         /// <inheritdoc />
-        public async Task AddAsync(AppSettings entity)
+        public async Task<AppSettings> AddAsync(AppSettings entity)
         {
             if (_dbContext.AppSettings.Any())
                 throw new InvalidOperationException("Cannot add a second app settings record");
 
             _dbContext.AppSettings.Add(entity);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
         }
 
         /// <inheritdoc />

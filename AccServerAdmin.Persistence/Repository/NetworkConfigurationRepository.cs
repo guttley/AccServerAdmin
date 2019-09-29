@@ -8,36 +8,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccServerAdmin.Persistence.Repository
 {
-    public class ServerConfigurationRepository : IDataRepository<ServerConfiguration>
+    public class NetworkConfigurationRepository : IDataRepository<NetworkConfiguration>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public ServerConfigurationRepository(ApplicationDbContext dbContext)
+        public NetworkConfigurationRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<ServerConfiguration>> GetAllAsync()
+        public async Task<IEnumerable<NetworkConfiguration>> GetAllAsync()
         {
-            return await _dbContext.ServerConfigurations.ToListAsync().ConfigureAwait(false);
+            return await _dbContext.NetworkConfigurations.ToListAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task<ServerConfiguration> GetAsync(Guid serverId)
+        public async Task<NetworkConfiguration> GetAsync(Guid serverId)
         {
-            return await _dbContext.ServerConfigurations.FirstOrDefaultAsync(s => s.ServerId == serverId);
+            return await _dbContext.NetworkConfigurations.FirstOrDefaultAsync(s => s.ServerId == serverId).ConfigureAwait(false); ;
         }
 
         /// <inheritdoc />
-        public async Task AddAsync(ServerConfiguration entity)
+        public async Task<NetworkConfiguration> AddAsync(NetworkConfiguration entity)
         {
-            _dbContext.ServerConfigurations.Add(entity);
+            _dbContext.NetworkConfigurations.Add(entity);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
         }
 
         /// <inheritdoc />
-        public async Task UpdateAsync(ServerConfiguration dbEntity, ServerConfiguration entity)
+        public async Task UpdateAsync(NetworkConfiguration dbEntity, NetworkConfiguration entity)
         {
             dbEntity.MaxClients = entity.MaxClients;
             dbEntity.RegisterToLobby = entity.RegisterToLobby;
@@ -49,9 +50,9 @@ namespace AccServerAdmin.Persistence.Repository
         }
 
         /// <inheritdoc />
-        public async Task DeleteAsync(ServerConfiguration entity)
+        public async Task DeleteAsync(NetworkConfiguration entity)
         {
-            _dbContext.ServerConfigurations.Remove(entity);
+            _dbContext.NetworkConfigurations.Remove(entity);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }

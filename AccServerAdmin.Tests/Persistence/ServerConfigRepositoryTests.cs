@@ -18,18 +18,18 @@ namespace AccServerAdmin.Tests.Persistence
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
 
-            var repo = new ServerConfigRepository(directory, file, converter);
+            var repo = new NetworkConfigRepository(directory, file, converter);
 
             // Act 
             var config = repo.New();
 
             // Assert
             Assert.That(config, Is.Not.Null);
-            Assert.That(config.MaxClients, Is.EqualTo(ServerConfigRepository.DefaultMaxClients));
-            Assert.That(config.RegisterToLobby, Is.EqualTo(ServerConfigRepository.DefaultRegisterToLobby));
-            Assert.That(config.TcpPort, Is.EqualTo(ServerConfigRepository.DefaultTcpPort));
-            Assert.That(config.UdpPort, Is.EqualTo(ServerConfigRepository.DefaultUdpPort));
-            Assert.That(config.Version, Is.EqualTo(ServerConfigRepository.DefaultConfigVersion));
+            Assert.That(config.MaxClients, Is.EqualTo(NetworkConfigRepository.DefaultMaxClients));
+            Assert.That(config.RegisterToLobby, Is.EqualTo(NetworkConfigRepository.DefaultRegisterToLobby));
+            Assert.That(config.TcpPort, Is.EqualTo(NetworkConfigRepository.DefaultTcpPort));
+            Assert.That(config.UdpPort, Is.EqualTo(NetworkConfigRepository.DefaultUdpPort));
+            Assert.That(config.Version, Is.EqualTo(NetworkConfigRepository.DefaultConfigVersion));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace AccServerAdmin.Tests.Persistence
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
             var converter = Substitute.For<IJsonConverter>();
-            var repo = new ServerConfigRepository(directory, file, converter);
+            var repo = new NetworkConfigRepository(directory, file, converter);
 
             file.Exists(Arg.Any<string>()).Returns(false);
 
@@ -49,11 +49,11 @@ namespace AccServerAdmin.Tests.Persistence
 
             // Assert
             Assert.That(config, Is.Not.Null);
-            Assert.That(config.MaxClients, Is.EqualTo(ServerConfigRepository.DefaultMaxClients));
-            Assert.That(config.RegisterToLobby, Is.EqualTo(ServerConfigRepository.DefaultRegisterToLobby));
-            Assert.That(config.TcpPort, Is.EqualTo(ServerConfigRepository.DefaultTcpPort));
-            Assert.That(config.UdpPort, Is.EqualTo(ServerConfigRepository.DefaultUdpPort));
-            Assert.That(config.Version, Is.EqualTo(ServerConfigRepository.DefaultConfigVersion));
+            Assert.That(config.MaxClients, Is.EqualTo(NetworkConfigRepository.DefaultMaxClients));
+            Assert.That(config.RegisterToLobby, Is.EqualTo(NetworkConfigRepository.DefaultRegisterToLobby));
+            Assert.That(config.TcpPort, Is.EqualTo(NetworkConfigRepository.DefaultTcpPort));
+            Assert.That(config.UdpPort, Is.EqualTo(NetworkConfigRepository.DefaultUdpPort));
+            Assert.That(config.Version, Is.EqualTo(NetworkConfigRepository.DefaultConfigVersion));
         }
     }
 }

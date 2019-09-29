@@ -9,7 +9,7 @@ namespace AccServerAdmin.Persistence.ServerConfig
     /// <summary>
     /// Implements IServerConfigRepository
     /// </summary>
-    public class ServerConfigRepository : BaseConfigRepository<ServerConfiguration>
+    public class NetworkConfigRepository : BaseConfigRepository<NetworkConfiguration>
     {
         private const string ConfigDir = "cfg";
         private const string Filename = "configuration.json";
@@ -20,7 +20,7 @@ namespace AccServerAdmin.Persistence.ServerConfig
         public const int DefaultConfigVersion = 1;
         public const int DefaultRegisterToLobby = 1;
 
-        public ServerConfigRepository(
+        public NetworkConfigRepository(
             IDirectory directory,
             IFile file,
             IJsonConverter converter)
@@ -30,9 +30,9 @@ namespace AccServerAdmin.Persistence.ServerConfig
         }
 
         /// <inheritdoc />
-        public override ServerConfiguration New()
+        public override NetworkConfiguration New()
         {
-            return new ServerConfiguration
+            return new NetworkConfiguration
             {
                 MaxClients = DefaultMaxClients,
                 TcpPort =  DefaultTcpPort,

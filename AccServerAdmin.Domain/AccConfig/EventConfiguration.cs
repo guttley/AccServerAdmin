@@ -53,7 +53,11 @@ namespace AccServerAdmin.Domain.AccConfig
     {
         [Key]
         [JsonIgnore]
+        public Guid Id { get; set; }
+        
+        [JsonIgnore]
         public Guid ServerId { get; set; }
+
 
         [JsonProperty("track")]
         public string Track { get; set; }

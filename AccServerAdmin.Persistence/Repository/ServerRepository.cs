@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccServerAdmin.Persistence.Repository
 {
-    public class ServerRepository : IDataRepository<Server>
+    public class ServerRepository : IServerRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -26,14 +26,20 @@ namespace AccServerAdmin.Persistence.Repository
         /// <inheritdoc />
         public async Task<Server> GetAsync(Guid id)
         {
-            return await _dbContext.Servers.FirstOrDefaultAsync(s => s.Id == id).ConfigureAwait(false);
+            return await _dbContext.Servers
+                .Include(s => s.NetworkConfiguration)
+                .Include(s => s.GameConfiguration)
+                .Include(s => s.EventConfiguration)
+                .ThenInclude(e => e.Sessions)
+                .FirstOrDefaultAsync(s => s.Id == id).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task AddAsync(Server entity)
+        public async Task<Server> AddAsync(Server entity)
         {
             _dbContext.Servers.Add(entity);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
         }
 
         /// <inheritdoc />
@@ -48,6 +54,12 @@ namespace AccServerAdmin.Persistence.Repository
         {
             _dbContext.Servers.Remove(entity);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> IsUniqueNameAsync(string serverName)
+        {
+            return await _dbContext.Servers.AnyAsync(s => s.Name == serverName).ConfigureAwait(false);
         }
     }
 }

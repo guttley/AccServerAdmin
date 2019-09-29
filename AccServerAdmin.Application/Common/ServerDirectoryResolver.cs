@@ -26,7 +26,7 @@ namespace AccServerAdmin.Application.Common
 
         public async Task<string> ResolveAsync(Guid serverId)
         {
-            var settings = (await _appSettingsRepository.GetAllAsync()).FirstOrDefault();
+            var settings = (await _appSettingsRepository.GetAllAsync().ConfigureAwait(false)).FirstOrDefault();
 
             var path = _directory.GetDirectories(settings.InstanceBasePath)
                                  .FirstOrDefault(d => d.Contains(serverId.ToString()));

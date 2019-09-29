@@ -28,7 +28,11 @@ namespace AccServerAdmin.Domain.AccConfig
     {
         [Key]
         [JsonIgnore]
+        public Guid Id { get; set; }
+
+        [JsonIgnore]
         public Guid ServerId { get; set; }
+
 
         [JsonProperty("serverName")]
         public string ServerName { get; set; }

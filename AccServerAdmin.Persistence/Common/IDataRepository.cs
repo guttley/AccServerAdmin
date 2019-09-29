@@ -21,9 +21,9 @@ namespace AccServerAdmin.Persistence.Common
         Task<TEntity> GetAsync(Guid id);
 
         /// <summary>
-        /// Adds a new instance of TEntity
+        /// Adds a new instance of TEntity, returning the saved record
         /// </summary>
-        Task AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
 
         /// <summary>
         /// Updates an existing instance of TEntity

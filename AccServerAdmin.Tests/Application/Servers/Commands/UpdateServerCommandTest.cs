@@ -26,14 +26,14 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var serverPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
             var server = new Server {Id = serverId, Name = serverName};
             var updatedServer = new Server {Id = serverId, Name = "New Test"};
-            var repo = Substitute.For<IDataRepository<Server>>();
+            var repo = Substitute.For<IServerRepository>();
             
             repo.GetAsync(serverId).Returns(server);
 
             var command = new UpdateServerCommand(repo);
 
             // Act
-            await command.ExecuteAsync(updatedServer);
+            await command.ExecuteAsync(updatedServer).ConfigureAwait(false);
 
             // Assert
             serverResolver.Received().Resolve(serverId);

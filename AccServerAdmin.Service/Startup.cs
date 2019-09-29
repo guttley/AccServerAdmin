@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Application.Servers.Commands;
@@ -35,8 +37,7 @@ namespace AccServerAdmin.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(o => o.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+            ConfigureDatabase(services);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -56,7 +57,7 @@ namespace AccServerAdmin.Service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -82,6 +83,22 @@ namespace AccServerAdmin.Service
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void ConfigureDatabase(IServiceCollection services)
+        {
+            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AccServerAdmin");
+
+            if (!Directory.Exists(dbPath))
+                Directory.CreateDirectory(dbPath);
+
+            dbPath = Path.Combine(dbPath, "AccServerAdmin.db3");
+
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite($"DataSource={dbPath}"));
+            services.AddDefaultIdentity<IdentityUser>(o => o.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            var provider = services.BuildServiceProvider();
+            var dbContext = provider.GetService<ApplicationDbContext>();
 
             dbContext.Database.Migrate();
         }
@@ -94,16 +111,24 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDirectory, DirectoryApiWrapper>();
             services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
             
+            // Repositories
+            services.AddScoped<IServerRepository, ServerRepository>();
+            services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
+            services.AddScoped<IDataRepository<NetworkConfiguration>, NetworkConfigurationRepository>();
+
+            services.AddTransient<IConfigRepository<NetworkConfiguration>, NetworkConfigRepository>();
+            services.AddTransient<IConfigRepository<GameConfiguration>, GameConfigRepository>();
+            services.AddTransient<IConfigRepository<EventConfiguration>, EventConfigRepository>();
+
             // CQRS components
             services.AddScoped<IGetAppSettingsQuery, GetAppSettingsQuery>();
             services.AddScoped<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
             services.AddTransient<ICreateServerCommand, CreateServerCommand>();
-            //services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
+            services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
             //services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
             services.AddScoped<IGetServerListQuery, GetServerListQuery>();
-            //services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
+            services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
 
-            
             //services.AddScoped<IGetConfigByIdQuery<ServerConfiguration>, GetConfigByIdQuery<ServerConfiguration>>();
             //services.AddScoped<ISaveConfigCommand<ServerConfiguration>, SaveConfigCommand<ServerConfiguration>>();
             //services.AddScoped<IGetConfigByIdQuery<GameConfiguration>, GetConfigByIdQuery<GameConfiguration>>();
@@ -111,14 +136,6 @@ namespace AccServerAdmin.Service
             //services.AddScoped<IGetConfigByIdQuery<EventConfiguration>, GetConfigByIdQuery<EventConfiguration>>();
             //services.AddScoped<ISaveConfigCommand<EventConfiguration>, SaveConfigCommand<EventConfiguration>>();
 
-            // repositories
-            services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
-            services.AddScoped<IDataRepository<Server>, ServerRepository>();
-            services.AddScoped<IDataRepository<ServerConfiguration>, ServerConfigurationRepository>();
-
-            services.AddTransient<IConfigRepository<ServerConfiguration>, ServerConfigRepository>();
-            services.AddTransient<IConfigRepository<GameConfiguration>, GameConfigRepository>();
-            services.AddTransient<IConfigRepository<EventConfiguration>, EventConfigRepository>();
 
         }
     }

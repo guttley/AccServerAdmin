@@ -19,7 +19,7 @@ namespace AccServerAdmin.Application.Common
 
         public async Task<T> ExecuteAsync(Guid serverId)
         {
-            var path = await _serverResolver.ResolveAsync(serverId);
+            var path = await _serverResolver.ResolveAsync(serverId).ConfigureAwait(false); 
             var config = _configRepository.Read(path);
             return config;
         }

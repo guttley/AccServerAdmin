@@ -33,7 +33,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Queries
             };
 
             var options = Substitute.For<IDataRepository<AppSettings>> ();
-            var repo = Substitute.For<IDataRepository<Server>>();
+            var repo = Substitute.For<IServerRepository>();
             var directory = Substitute.For<IDirectory>();
 
             options.GetAll().Returns(new List<AppSettings> {settings});

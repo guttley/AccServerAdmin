@@ -6,17 +6,17 @@ namespace AccServerAdmin.Application.Servers.Commands
 {
     public class UpdateServerCommand : IUpdateServerCommand
     {
-        private readonly IDataRepository<Server> _serverRepository;
+        private readonly IServerRepository _serverRepository;
 
-        public UpdateServerCommand(IDataRepository<Server> serverRepository)
+        public UpdateServerCommand(IServerRepository serverRepository)
         {
             _serverRepository = serverRepository;
         }
 
         public async Task ExecuteAsync(Server server)
         {
-            var dbServer = await _serverRepository.GetAsync(server.Id);
-            await _serverRepository.UpdateAsync(dbServer, server);
+            var dbServer = await _serverRepository.GetAsync(server.Id).ConfigureAwait(false);
+            await _serverRepository.UpdateAsync(dbServer, server).ConfigureAwait(false);
         }
     }
 }
