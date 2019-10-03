@@ -29,19 +29,189 @@
                                 </div>
                             </div>
 
+                            <!-- Game server settings -->
                             <div class="line"></div>
 
                             <div class="form-group row">
-                                <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
+                                <label asp-for="Server.GameConfiguration.Password" class="col-sm-2 form-control-label">Password</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Server.Name" type="text" class="form-control">
+                                    <input asp-for="Server.GameConfiguration.Password" type="text" class="form-control">
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.AdminPassword" class="col-sm-2 form-control-label">Admin Password</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.AdminPassword" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.SpectatorPassword" class="col-sm-2 form-control-label">Admin Password</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.SpectatorPassword" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.TrackMedalsRequirement" class="col-sm-2 form-control-label">Track Medal Req</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.TrackMedalsRequirement" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.SafetyRatingRequirement" class="col-sm-2 form-control-label">Safety Rating Req</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.SafetyRatingRequirement" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.RacecraftRatingRequirement" class="col-sm-2 form-control-label">Racecraft Rating Req</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.RacecraftRatingRequirement" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.SpectatorSlots" class="col-sm-2 form-control-label">Spectator Slots</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.SpectatorSlots" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.DumpLeaderboards" class="col-sm-2 form-control-label">Dump Leaderboards</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.DumpLeaderboards" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.GameConfiguration.IsRaceLocked" class="col-sm-2 form-control-label">Race Locked</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.GameConfiguration.IsRaceLocked" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Network settings -->
+                            <div class="line"></div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.NetworkConfiguration.UdpPort" class="col-sm-2 form-control-label">UDP Port</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.NetworkConfiguration.UdpPort" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.NetworkConfiguration.TcpPort" class="col-sm-2 form-control-label">TCP Port</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.NetworkConfiguration.TcpPort" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.NetworkConfiguration.MaxClients" class="col-sm-2 form-control-label">Max Clients</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.NetworkConfiguration.MaxClients" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <label asp-for="Server.NetworkConfiguration.RegisterToLobby" class="label-material">Register to Lobby</label>
+                                    <input asp-for="Server.NetworkConfiguration.RegisterToLobby" type="checkbox" class="col-sm-2 form-control-custom">
+                                </div>
+                            </div>
+
+                            <!-- Event settings -->
+                            <div class="line"></div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.Track" class="col-sm-2 form-control-label">Track</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.Track" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.EventType" class="col-sm-2 form-control-label">Event Type</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.EventType" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.PreRaceWaitingTimeSeconds" class="col-sm-2 form-control-label">Pre Race Wait (Seconds)</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.PreRaceWaitingTimeSeconds" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.SessionOverTimeSeconds" class="col-sm-2 form-control-label">Session Over Wait (Seconds)</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.SessionOverTimeSeconds" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.PostQualySeconds" class="col-sm-2 form-control-label">Qually Over Wait (Seconds)</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.PostQualySeconds" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.PostRaceSeconds" class="col-sm-2 form-control-label">Race Over Wait (Seconds)</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.PostRaceSeconds" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.AmbientTemp" class="col-sm-2 form-control-label">Ambient Temp</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.AmbientTemp" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.TrackTemp" class="col-sm-2 form-control-label">Track Temp</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.TrackTemp" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.CloudLevel" class="col-sm-2 form-control-label">Cloud Level</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.CloudLevel" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.Rain" class="col-sm-2 form-control-label">Rain</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.Rain" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Server.EventConfiguration.WeatherRandomness" class="col-sm-2 form-control-label">Weather Randomness</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.EventConfiguration.WeatherRandomness" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
 
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary">
                             </div>
+
                         </form>
 
                     </div>
@@ -51,37 +221,8 @@
     </div>
 </section>
 
-<!--
-    
-server
-/// {
-///   "udpPort": 9431,
-///   "tcpPort": 9432,
-///   "maxClients": 10,
-///   "configVersion": 1,
-///   "registerToLobby": 1
-/// }
-    
-game    
-///   "serverName": "My Server Name",
-///   "password": "",
-///   "adminPassword": "",
-///   "trackMedalsRequirement": 0,
-///   "safetyRatingRequirement": -1,
-///   "configVersion": 1,
-///   "racecraftRatingRequirement": 0,
-///   "spectatorSlots": 0,
-///   "spectatorPassword": "",
-///   "dumpLeaderboards": 0,
-///   "isRaceLocked": 0
-
+   
 event
-///  "track": "misano",
-///  "eventType": "E_3h",
-///  "preRaceWaitingTimeSeconds": 15,
-///  "sessionOverTimeSeconds": 120,
-///  "ambientTemp": 26,
-///  "trackTemp": 30,
 ///  "cloudLevel": 0.3,
 ///  "rain": 0,
 ///  "weatherRandomness": 1,

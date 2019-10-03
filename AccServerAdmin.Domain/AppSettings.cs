@@ -8,7 +8,7 @@ namespace AccServerAdmin.Domain
     /// Config data for this admin application
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class AppSettings
+    public class AppSettings : IKeyedEntity
     {
         [Key]
         public Guid Id { get; set; }

@@ -10,7 +10,7 @@ namespace AccServerAdmin.Domain
     /// This class holds the data for the server instance
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class Server
+    public class Server : IKeyedEntity
     {
         /// <summary>
         /// Unique Id of the server instance
@@ -22,22 +22,26 @@ namespace AccServerAdmin.Domain
         /// <summary>
         /// Name of the server
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => GameConfiguration.ServerName;
+            set => GameConfiguration.ServerName = value;
+        }
 
         /// <summary>
         /// Network settings
         /// </summary>
-        public NetworkConfiguration NetworkConfiguration { get; set; }
+        public NetworkConfiguration NetworkConfiguration { get; set; } = new NetworkConfiguration();
 
         /// <summary>
         /// Game settings
         /// </summary>
-        public GameConfiguration GameConfiguration { get; set; }
+        public GameConfiguration GameConfiguration { get; set; } = new GameConfiguration();
 
         /// <summary>
         /// Event settings
         /// </summary>
-        public EventConfiguration EventConfiguration { get; set; }
+        public EventConfiguration EventConfiguration { get; set; } = new EventConfiguration();
 
 
     }

@@ -5,18 +5,18 @@ using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Common
 {
-    public class SaveConfigCommand<T> : ISaveConfigCommand<T> where T : new()
+    public class SaveConfigCommand<T> : ISaveConfigCommand<T> where T : class, IKeyedEntity
     {
-        private readonly IConfigRepository<T> _configRepository;
+        //private readonly IConfigRepository<T> _configRepository;
         private readonly IDataRepository<T> _dataRepository;
         private readonly IServerRepository _serverRepository;
 
         public SaveConfigCommand(
-            IConfigRepository<T> configRepository,
+            //IConfigRepository<T> configRepository,
             IDataRepository<T> dataRepository,
             IServerRepository serverRepository)
         {
-            _configRepository = configRepository;
+            ///_configRepository = configRepository;
             _dataRepository = dataRepository;
             _serverRepository = serverRepository;
         }

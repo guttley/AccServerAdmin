@@ -106,7 +106,7 @@ namespace AccServerAdmin.Service
         private void RegisterApplicationComponents(IServiceCollection services)
         {
             // Application components
-            services.AddTransient<IJsonConverter, JsonConverter>();
+            services.AddTransient<IJsonConverter, JsonDotNetConverter>();
             services.AddTransient<IFile, FileApiWrapper>();
             services.AddTransient<IDirectory, DirectoryApiWrapper>();
             services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
@@ -114,7 +114,7 @@ namespace AccServerAdmin.Service
             // Repositories
             services.AddScoped<IServerRepository, ServerRepository>();
             services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
-            services.AddScoped<IDataRepository<NetworkConfiguration>, NetworkConfigurationRepository>();
+            
 
             services.AddTransient<IConfigRepository<NetworkConfiguration>, NetworkConfigRepository>();
             services.AddTransient<IConfigRepository<GameConfiguration>, GameConfigRepository>();

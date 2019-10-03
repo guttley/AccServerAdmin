@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AccServerAdmin.Persistence.Common
@@ -8,8 +9,13 @@ namespace AccServerAdmin.Persistence.Common
     /// Generic repository for access data
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public interface IDataRepository<TEntity>
+    public interface IDataRepository<TEntity> where TEntity : class
     {
+        /// <summary>
+        /// Returns a queryable of TEntity
+        /// </summary>
+        IQueryable<TEntity> GetQueryable();
+
         /// <summary>
         /// Returns all instances of TEntity
         /// </summary>
@@ -23,16 +29,22 @@ namespace AccServerAdmin.Persistence.Common
         /// <summary>
         /// Adds a new instance of TEntity, returning the saved record
         /// </summary>
-        Task<TEntity> AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity);
 
         /// <summary>
         /// Updates an existing instance of TEntity
         /// </summary>
-        Task UpdateAsync(TEntity dbEntity, TEntity entity);
+        void Update(TEntity entity);
 
         /// <summary>
-        /// Removes an instance of TEntity
+        /// Removes an instance of TEntity referenced by the Id
         /// </summary>
-        Task DeleteAsync(TEntity entity);
+        Task DeleteAsync(Guid id);
+
+        /// <summary>
+        /// Saves any changes made to the repository
+        /// </summary>
+        /// <returns></returns>
+        Task SaveAsync();
     }
 }

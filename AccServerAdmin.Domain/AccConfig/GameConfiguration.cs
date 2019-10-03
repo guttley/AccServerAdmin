@@ -33,7 +33,6 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonIgnore]
         public Guid ServerId { get; set; }
 
-
         [JsonProperty("serverName")]
         public string ServerName { get; set; }
 
@@ -45,6 +44,9 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [JsonProperty("trackMedalsRequirement")]
         public int TrackMedalsRequirement { get; set; }
+
+        [JsonProperty("safetyRatingRequirement")]
+        public int SafetyRatingRequirement { get; set; }
 
         [JsonProperty("configVersion")]
         public int Version { get; set; }

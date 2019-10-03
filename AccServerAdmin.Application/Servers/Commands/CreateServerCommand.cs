@@ -48,7 +48,8 @@ namespace AccServerAdmin.Application.Servers.Commands
             }
 
             var destinationPath = Path.Combine(settings.ServerBasePath, server.Id.ToString());
-            server = await _serverRepository.AddAsync(server).ConfigureAwait(false);
+            await _serverRepository.AddAsync(server);
+            await _serverRepository.SaveAsync();
 
             if (!_directory.Exists(destinationPath))
             {

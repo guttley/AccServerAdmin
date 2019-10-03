@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace AccServerAdmin.Infrastructure.Helpers
 {
     [ExcludeFromCodeCoverage]
-    public class JsonConverter : IJsonConverter
+    public class JsonDotNetConverter : IJsonConverter
     {
         /// <inheritdoc/>
         public T DeserializeObject<T>(string json)

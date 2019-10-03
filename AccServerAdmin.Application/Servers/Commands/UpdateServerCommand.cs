@@ -15,8 +15,8 @@ namespace AccServerAdmin.Application.Servers.Commands
 
         public async Task ExecuteAsync(Server server)
         {
-            var dbServer = await _serverRepository.GetAsync(server.Id).ConfigureAwait(false);
-            await _serverRepository.UpdateAsync(dbServer, server).ConfigureAwait(false);
+            _serverRepository.Update(server);
+            await _serverRepository.SaveAsync().ConfigureAwait(false);
         }
     }
 }

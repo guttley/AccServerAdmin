@@ -18,7 +18,7 @@ namespace AccServerAdmin.Persistence.ServerConfig
         public const int DefaultUdpPort = 9331;
         public const int DefaultTcpPort = 9332;
         public const int DefaultConfigVersion = 1;
-        public const int DefaultRegisterToLobby = 1;
+        public const bool DefaultRegisterToLobby = true;
 
         public NetworkConfigRepository(
             IDirectory directory,

@@ -90,6 +90,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("RacecraftRatingRequirement")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("SafetyRatingRequirement")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("ServerId")
                         .HasColumnType("TEXT");
 
@@ -125,7 +128,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("MaxClients")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RegisterToLobby")
+                    b.Property<bool>("RegisterToLobby")
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid>("ServerId")

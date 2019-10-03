@@ -24,7 +24,7 @@ namespace AccServerAdmin.Domain.AccConfig
         public const int DefaultUdpPort = 9331;
         public const int DefaultTcpPort = 9332;
         public const int DefaultConfigVersion = 1;
-        public const int DefaultRegisterToLobby = 1;
+        public const bool DefaultRegisterToLobby = true;
 
         public NetworkConfiguration()
         {
@@ -56,6 +56,7 @@ namespace AccServerAdmin.Domain.AccConfig
         public int Version { get; set; }
 
         [JsonProperty("registerToLobby")]
-        public int RegisterToLobby { get; set; }
+        [JsonConverter(typeof(BoolConverter))]
+        public bool RegisterToLobby { get; set; }
     }
 }

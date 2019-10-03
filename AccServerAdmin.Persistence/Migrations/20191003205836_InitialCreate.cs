@@ -217,6 +217,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     Password = table.Column<string>(nullable: true),
                     AdminPassword = table.Column<string>(nullable: true),
                     TrackMedalsRequirement = table.Column<int>(nullable: false),
+                    SafetyRatingRequirement = table.Column<int>(nullable: false),
                     Version = table.Column<int>(nullable: false),
                     RacecraftRatingRequirement = table.Column<int>(nullable: false),
                     SpectatorSlots = table.Column<int>(nullable: false),
@@ -245,7 +246,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     TcpPort = table.Column<ushort>(nullable: false),
                     MaxClients = table.Column<int>(nullable: false),
                     Version = table.Column<int>(nullable: false),
-                    RegisterToLobby = table.Column<int>(nullable: false)
+                    RegisterToLobby = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

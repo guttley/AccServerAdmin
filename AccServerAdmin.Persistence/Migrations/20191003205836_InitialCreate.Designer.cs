@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190929220053_InitialCreate")]
+    [Migration("20191003205836_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("RacecraftRatingRequirement")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("SafetyRatingRequirement")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("ServerId")
                         .HasColumnType("TEXT");
 
@@ -127,7 +130,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("MaxClients")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RegisterToLobby")
+                    b.Property<bool>("RegisterToLobby")
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid>("ServerId")
