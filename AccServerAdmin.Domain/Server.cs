@@ -12,6 +12,15 @@ namespace AccServerAdmin.Domain
     [ExcludeFromCodeCoverage]
     public class Server : IKeyedEntity
     {
+        private string _name;
+
+        public Server()
+        {
+            NetworkConfiguration = new NetworkConfiguration();
+            GameConfiguration = new GameConfiguration();
+            EventConfiguration = new EventConfiguration();
+        }
+
         /// <summary>
         /// Unique Id of the server instance
         /// </summary>
@@ -24,24 +33,28 @@ namespace AccServerAdmin.Domain
         /// </summary>
         public string Name
         {
-            get => GameConfiguration.ServerName;
-            set => GameConfiguration.ServerName = value;
+            get => _name;
+            set
+            {
+                _name = value;
+                GameConfiguration.ServerName = value;
+            }
         }
 
         /// <summary>
         /// Network settings
         /// </summary>
-        public NetworkConfiguration NetworkConfiguration { get; set; } = new NetworkConfiguration();
+        public NetworkConfiguration NetworkConfiguration { get; set; } 
 
         /// <summary>
         /// Game settings
         /// </summary>
-        public GameConfiguration GameConfiguration { get; set; } = new GameConfiguration();
+        public GameConfiguration GameConfiguration { get; set; }
 
         /// <summary>
         /// Event settings
         /// </summary>
-        public EventConfiguration EventConfiguration { get; set; } = new EventConfiguration();
+        public EventConfiguration EventConfiguration { get; set; } 
 
 
     }

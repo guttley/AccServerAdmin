@@ -1,0 +1,34 @@
+﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+
+<div class="form-group row">
+    <label asp-for="Server.NetworkConfiguration.UdpPort" class="col-sm-2 form-control-label">UDP Port</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.NetworkConfiguration.UdpPort" type="text" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.NetworkConfiguration.TcpPort" class="col-sm-2 form-control-label">TCP Port</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.NetworkConfiguration.TcpPort" type="text" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.NetworkConfiguration.MaxClients" class="col-sm-2 form-control-label">Max Clients</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.NetworkConfiguration.MaxClients" type="text" class="form-control">
+    </div>
+</div>
+
+
+<div class="form-group row">
+    <label class="col-sm-2 form-control-label">&nbsp;</label>
+    <div class="col-sm-10">
+        <div class="i-checks">
+            <input asp-for="Server.NetworkConfiguration.RegisterToLobby" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.NetworkConfiguration.RegisterToLobby" class="label-material">Register to Lobby</label>
+        </div>
+    </div>
+</div>
+

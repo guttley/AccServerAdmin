@@ -40,6 +40,30 @@ namespace AccServerAdmin.Persistence.Repository
                 .ConfigureAwait(false);
         }
 
+        public override void Update(Guid id, Server updated)
+        {
+            base.Update(id, updated);
+
+            var existingNs = DbContext.Set<NetworkConfiguration>().Find(updated.NetworkConfiguration.Id);
+            var existingGs = DbContext.Set<GameConfiguration>().Find(updated.GameConfiguration.Id);
+            var existingEs = DbContext.Set<EventConfiguration>().Find(updated.EventConfiguration.Id);
+
+            if (existingNs != null)
+            {
+                DbContext.Entry(existingNs).CurrentValues.SetValues(updated.NetworkConfiguration);
+            }
+
+            if (existingGs != null)
+            {
+                DbContext.Entry(existingGs).CurrentValues.SetValues(updated.GameConfiguration);
+            }
+
+            if (existingEs != null)
+            {
+                DbContext.Entry(existingEs).CurrentValues.SetValues(updated.EventConfiguration);
+            }
+        }
+
         /// <inheritdoc />
         public async Task<bool> IsUniqueNameAsync(string serverName)
         {

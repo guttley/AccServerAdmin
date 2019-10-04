@@ -34,17 +34,11 @@ namespace AccServerAdmin.Persistence.Common
         /// <summary>
         /// Updates an existing instance of TEntity
         /// </summary>
-        TEntity Update(Guid id, TEntity entity);
+        void Update(Guid id, TEntity entity);
 
         /// <summary>
         /// Removes an instance of TEntity referenced by the Id
         /// </summary>
         Task DeleteAsync(Guid id);
-
-        /// <summary>
-        /// Saves any changes made to the repository
-        /// </summary>
-        /// <returns></returns>
-        Task SaveAsync();
     }
 }

@@ -34,13 +34,14 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var options = Substitute.For<IDataRepository<AppSettings>> ();
             var repo = Substitute.For<IServerRepository>();
             var getAppSettingsCommand = Substitute.For<IGetAppSettingsQuery>();
+            var unitOfWork = Substitute.For<IUnitOfWork>();
             var directory = Substitute.For<IDirectory>();
             var file = Substitute.For<IFile>();
 
             options.GetAllAsync().Returns(new List<AppSettings> {settings});
             directory.GetFiles(settings.ServerBasePath).Returns(files);
 
-            var command = new CreateServerCommand(getAppSettingsCommand, repo, directory, file);
+            var command = new CreateServerCommand(getAppSettingsCommand, repo, unitOfWork, directory, file);
 
             // Act
             var returnServer = await command.ExecuteAsync(serverName).ConfigureAwait(false);
@@ -49,7 +50,8 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             Assert.That(returnServer, Is.Not.Null);
             Assert.That(returnServer.Name, Is.EqualTo(serverName));
             Assert.That(returnServer.Id, Is.EqualTo(server.Id));
-            
+
+            await unitOfWork.Received().SaveChangesAsync();
             directory.Received().GetFiles(settings.ServerBasePath);
             await repo.Received().AddAsync(server).ConfigureAwait(false);
 

@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Exceptions;
+using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.ServerConfig;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
@@ -15,17 +17,20 @@ namespace AccServerAdmin.Application.Servers.Commands
     {
         private readonly IGetAppSettingsQuery _getAppSettingsQuery;
         private readonly IServerRepository _serverRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IDirectory _directory;
         private readonly IFile _file;
 
         public CreateServerCommand(
             IGetAppSettingsQuery getAppSettingsQuery,
             IServerRepository serverRepository,
+            IUnitOfWork unitOfWork,
             IDirectory directory,
             IFile file)
         {
             _getAppSettingsQuery = getAppSettingsQuery;
             _serverRepository = serverRepository;
+            _unitOfWork = unitOfWork;
             _directory = directory;
             _file = file;
         }
@@ -44,12 +49,14 @@ namespace AccServerAdmin.Application.Servers.Commands
 
             if (!sourceFiles.Any())
             {
-                throw new EmptyDirectoryException($"The source directory \"{settings.ServerBasePath}\" is empty, it must be populated with the ACC server files");
+                throw new EmptyDirectoryException(
+                    $"The source directory \"{settings.ServerBasePath}\" is empty, it must be populated with the ACC server files");
             }
 
             var destinationPath = Path.Combine(settings.ServerBasePath, server.Id.ToString());
             await _serverRepository.AddAsync(server);
-            await _serverRepository.SaveAsync();
+            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
 
             if (!_directory.Exists(destinationPath))
             {

@@ -1,0 +1,96 @@
+﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.Password" class="col-sm-2 form-control-label">Password</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.GameConfiguration.Password" type="text" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.AdminPassword" class="col-sm-2 form-control-label">Admin Password</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.GameConfiguration.AdminPassword" type="text" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.SpectatorPassword" class="col-sm-2 form-control-label">Admin Password</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.GameConfiguration.SpectatorPassword" type="text" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.SpectatorSlots" class="col-sm-2 form-control-label">Spectator Slots</label>
+    <div class="col-sm-10">
+        <input asp-for="Server.GameConfiguration.SpectatorSlots" type="text" class="form-control">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.TrackMedalsRequirement" class="col-sm-2 form-control-label">Track Medal Requirement</label>
+    <div class="col-sm-10">
+        <select asp-for="Server.GameConfiguration.TrackMedalsRequirement" asp-items="Model.TrackMedals" class="form-control">
+            <option value="">Select a track medal requirement</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.SafetyRatingRequirement" class="col-sm-2 form-control-label">Safety Medal Requirement</label>
+    <div class="col-sm-10">
+        <select asp-for="Server.GameConfiguration.SafetyRatingRequirement" asp-items="Model.SafetyRatings" class="form-control">
+            <option value="">Select a safety requirement</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label asp-for="Server.GameConfiguration.RacecraftRatingRequirement" class="col-sm-2 form-control-label">Racecraft Requirement</label>
+    <div class="col-sm-10">
+        <select asp-for="Server.GameConfiguration.RacecraftRatingRequirement" asp-items="Model.RacecraftRatings" class="form-control">
+            <option value="">Select a racecraft requirement</option>
+        </select>
+    </div>
+</div>
+
+
+
+<div class="form-group row">
+    <label class="col-sm-2 form-control-label">&nbsp;</label>
+    <div class="col-sm-10">
+        <div class="i-checks">
+            <input asp-for="Server.GameConfiguration.ShortFormationLap" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.GameConfiguration.ShortFormationLap" class="label-material">Short Formation Lap</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.GameConfiguration.AllowAutoDisqualification" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.GameConfiguration.AllowAutoDisqualification" class="label-material">Allow Auto DQ</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.GameConfiguration.DumpLeaderboards" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.GameConfiguration.DumpLeaderboards" class="label-material">Dump Leaderboards</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.GameConfiguration.DumpEntryList" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.GameConfiguration.DumpEntryList" class="label-material">Dump Entry List</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.GameConfiguration.IsRaceLocked" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.GameConfiguration.IsRaceLocked" class="label-material">Race Locked</label>
+        </div>
+        
+        <div class="i-checks">
+            <input asp-for="Server.GameConfiguration.RandomizeTrackWhenEmpty" type="checkbox" class="col-sm-2 form-control-custom">
+            <label asp-for="Server.GameConfiguration.RandomizeTrackWhenEmpty" class="label-material">Random Track When Empty</label>
+        </div>
+
+    </div>
+</div>
+

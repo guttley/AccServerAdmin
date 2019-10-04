@@ -44,10 +44,10 @@ namespace AccServerAdmin.Persistence.Common
             await _dbContext.Set<TEntity>().AddAsync(entity);
         }
 
-        public virtual TEntity Update(Guid id, TEntity updated)
+        public virtual void Update(Guid id, TEntity updated)
         {
             if (updated is null)
-                return null;
+                return;
 
             var existing = _dbContext.Set<TEntity>().Find(id);
 
@@ -55,19 +55,12 @@ namespace AccServerAdmin.Persistence.Common
             {
                 _dbContext.Entry(existing).CurrentValues.SetValues(updated);
             }
-            return existing;
         }
 
-        
         public virtual async Task DeleteAsync(Guid id)
         {
             var entity = await GetAsync(id).ConfigureAwait(false);
             _dbContext.Set<TEntity>().Remove(entity);
-        }
-
-        public async Task SaveAsync()
-        {
-            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

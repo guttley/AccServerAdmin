@@ -9,10 +9,14 @@ namespace AccServerAdmin.Application.AppSettings
     public class SaveAppSettingsCommand : ISaveAppSettingsCommand
     {
         private readonly IDataRepository<AppSettings> _appSettingsRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SaveAppSettingsCommand(IDataRepository<AppSettings> appSettingsRepository)
+        public SaveAppSettingsCommand(
+            IDataRepository<AppSettings> appSettingsRepository,
+            IUnitOfWork unitOfWork)
         {
             _appSettingsRepository = appSettingsRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task ExecuteAsync(AppSettings appSettings)
@@ -28,7 +32,7 @@ namespace AccServerAdmin.Application.AppSettings
                 _appSettingsRepository.Update(dbSettings.Id, appSettings);
             }
 
-            await _appSettingsRepository.SaveAsync().ConfigureAwait(true);
+            await _unitOfWork.SaveChangesAsync().ConfigureAwait(true);
         }
     }
 }

@@ -17,9 +17,14 @@ namespace AccServerAdmin.Persistence.GameConfig
         public const int DefaultTrackMedalsRequirement = 3;
         public const int DefaultConfigVersion = 1;
         public const int DefaultRacecraftRatingRequirement = 70;
+        public const int DefaultSafteyRatingRequirement = 0;
         public const int DefaultSpectatorSlots = 0;
-        public const int DefaultDumpLeaderboards = 1;
-        public const int DefaultIsRaceLocked = 1;
+        public const bool DefaultDumpLeaderboards = false;
+        public const bool DefaultDumpEntryList = false;
+        public const bool DefaultIsRaceLocked = false;
+        public const bool DefaultAutoDq = false;
+        public const bool DefaultShortFormationLap = false;
+        public const bool DefaultRandomTrackWhenEmpty = false;
 
         public GameConfigRepository(
             IDirectory directory,
@@ -40,10 +45,15 @@ namespace AccServerAdmin.Persistence.GameConfig
                 TrackMedalsRequirement = DefaultTrackMedalsRequirement,
                 Version = DefaultConfigVersion,
                 RacecraftRatingRequirement = DefaultRacecraftRatingRequirement,
+                SafetyRatingRequirement = DefaultSafteyRatingRequirement,
                 SpectatorSlots = DefaultSpectatorSlots,
                 SpectatorPassword = string.Empty,
                 DumpLeaderboards = DefaultDumpLeaderboards,
-                IsRaceLocked = DefaultIsRaceLocked
+                DumpEntryList = DefaultDumpEntryList,
+                IsRaceLocked = DefaultIsRaceLocked,
+                AllowAutoDisqualification = DefaultAutoDq,
+                ShortFormationLap = DefaultShortFormationLap,
+                RandomizeTrackWhenEmpty = DefaultRandomTrackWhenEmpty
             };
         }
     }

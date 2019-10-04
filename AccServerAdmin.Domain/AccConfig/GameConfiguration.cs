@@ -9,20 +9,6 @@ namespace AccServerAdmin.Domain.AccConfig
     /// Model for the settings.json file
     /// </summary>
     /// <example>
-    /// {
-    ///   "serverName": "My Server Name",
-    ///   "password": "",
-    ///   "adminPassword": "",
-    ///   "trackMedalsRequirement": 0,
-    ///   "safetyRatingRequirement": -1,
-    ///   "configVersion": 1,
-    ///   "racecraftRatingRequirement": 0,
-    ///   "spectatorSlots": 0,
-    ///   "spectatorPassword": "",
-    ///   "dumpLeaderboards": 0,
-    ///   "isRaceLocked": 0
-    /// }
-    /// </example>
     [ExcludeFromCodeCoverage]
     public class GameConfiguration : IKeyedEntity
     {
@@ -60,11 +46,28 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("spectatorPassword")]
         public string SpectatorPassword { get; set; }
 
-        [JsonProperty("dumpLeaderboards")]
-        public int DumpLeaderboards { get; set; }
+        [JsonProperty("allowAutoDQ")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool AllowAutoDisqualification { get; set; }
+
+        [JsonProperty("randomizeTrackWhenEmpty")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool RandomizeTrackWhenEmpty { get; set; }
+
+        [JsonProperty("shortFormationLap")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool ShortFormationLap { get; set; }
 
         [JsonProperty("isRaceLocked")]
-        public int IsRaceLocked { get; set; }
+        [JsonConverter(typeof(BoolConverter))]
+        public bool IsRaceLocked { get; set; }
 
+        [JsonProperty("dumpEntryList")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool DumpEntryList { get; set; }
+
+        [JsonProperty("dumpLeaderboards")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool DumpLeaderboards { get; set; }
     }
 }

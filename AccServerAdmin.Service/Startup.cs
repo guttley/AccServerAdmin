@@ -110,12 +110,12 @@ namespace AccServerAdmin.Service
             services.AddTransient<IFile, FileApiWrapper>();
             services.AddTransient<IDirectory, DirectoryApiWrapper>();
             services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
-            
+
             // Repositories
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IServerRepository, ServerRepository>();
             services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
             services.AddScoped<IDataRepository<GameConfiguration>, DataRepository<GameConfiguration>>();
-            
 
             services.AddTransient<IConfigRepository<NetworkConfiguration>, NetworkConfigRepository>();
             services.AddTransient<IConfigRepository<GameConfiguration>, GameConfigRepository>();

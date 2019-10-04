@@ -7,17 +7,20 @@ namespace AccServerAdmin.Application.Servers.Commands
     public class UpdateServerCommand : IUpdateServerCommand
     {
         private readonly IServerRepository _serverRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UpdateServerCommand(
-            IServerRepository serverRepository)
+            IServerRepository serverRepository,
+            IUnitOfWork unitOfWork)
         {
             _serverRepository = serverRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task ExecuteAsync(Server server)
         {
             _serverRepository.Update(server.Id, server);
-            await _serverRepository.SaveAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

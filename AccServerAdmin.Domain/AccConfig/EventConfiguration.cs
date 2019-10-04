@@ -9,45 +9,6 @@ namespace AccServerAdmin.Domain.AccConfig
     /// <summary>
     /// Model for the event.json file
     /// </summary>
-    /// <example>
-    ///{
-    ///  "track": "misano",
-    ///  "eventType": "E_3h",
-    ///  "preRaceWaitingTimeSeconds": 15,
-    ///  "sessionOverTimeSeconds": 120,
-    ///  "ambientTemp": 26,
-    ///  "trackTemp": 30,
-    ///  "cloudLevel": 0.3,
-    ///  "rain": 0,
-    ///  "weatherRandomness": 1,
-    ///  "configVersion": 1,
-    ///  "sessions": [
-    ///   {
-    ///     "hourOfDay": 10,
-    ///     "dayOfWeekend": 1,
-    ///     "timeMultiplier": 1,
-    ///     "sessionType": "P",
-    ///     "sessionDurationMinutes": 20
-    ///   },
-    ///   {
-    ///     "hourOfDay": 17,
-    ///     "dayOfWeekend": 2,
-    ///     "timeMultiplier": 8,
-    ///     "sessionType": "Q",
-    ///     "sessionDurationMinutes": 10
-    ///   },
-    ///   {
-    ///     "hourOfDay": 16,
-    ///     "dayOfWeekend": 3,
-    ///     "timeMultiplier": 3,
-    ///     "sessionType": "Q",
-    ///     "sessionDurationMinutes": 20
-    ///   }
-    ///  ],
-    ///  "postQualySeconds": 0,
-    ///  "postRaceSeconds": 0
-    ///}
-    /// </example>
     [ExcludeFromCodeCoverage]
     public class EventConfiguration
     {
@@ -57,7 +18,6 @@ namespace AccServerAdmin.Domain.AccConfig
         
         [JsonIgnore]
         public Guid ServerId { get; set; }
-
 
         [JsonProperty("track")]
         public string Track { get; set; }

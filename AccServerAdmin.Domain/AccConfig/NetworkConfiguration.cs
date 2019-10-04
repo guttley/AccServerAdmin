@@ -8,15 +8,6 @@ namespace AccServerAdmin.Domain.AccConfig
     /// <summary>
     /// Model for the configuration.json file
     /// </summary>
-    /// <example>
-    /// {
-    ///   "udpPort": 9431,
-    ///   "tcpPort": 9432,
-    ///   "maxClients": 10,
-    ///   "configVersion": 1,
-    ///   "registerToLobby": 1
-    /// }
-    /// </example>
     [ExcludeFromCodeCoverage]
     public class NetworkConfiguration
     {
@@ -44,10 +35,10 @@ namespace AccServerAdmin.Domain.AccConfig
 
 
         [JsonProperty("udpPort")]
-        public ushort UdpPort { get; set; }
+        public int UdpPort { get; set; }
 
         [JsonProperty("tcpPort")]
-        public ushort TcpPort { get; set; }
+        public int TcpPort { get; set; }
 
         [JsonProperty("maxClients")]
         public int MaxClients { get; set; }
