@@ -13,12 +13,13 @@ namespace AccServerAdmin.Persistence.DbContext
         {
         }
 
+        
         public DbSet<AppSettings> AppSettings { get; set; }
         public DbSet<Server> Servers { get; set; }
 
         public DbSet<NetworkConfiguration> NetworkConfigurations { get; set; }
         public DbSet<GameConfiguration> GameConfigurations { get; set; }
         public DbSet<EventConfiguration> EventConfigurations { get; set; }
-
+        
     }
 }

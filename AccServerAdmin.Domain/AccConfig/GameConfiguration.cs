@@ -24,7 +24,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// }
     /// </example>
     [ExcludeFromCodeCoverage]
-    public class GameConfiguration
+    public class GameConfiguration : IKeyedEntity
     {
         [Key]
         [JsonIgnore]

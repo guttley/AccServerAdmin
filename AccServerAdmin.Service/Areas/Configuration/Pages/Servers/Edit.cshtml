@@ -20,12 +20,18 @@
                     </div>
 
                     <div class="card-body">
-
+                        
                         <form method="post" class="form-horizontal">
+
+                            <input asp-for="Server.Id" type="hidden" />
+                            <input asp-for="Server.GameConfiguration.Id" type="hidden" />
+                            <input asp-for="Server.NetworkConfiguration.Id" type="hidden" />
+                            <input asp-for="Server.EventConfiguration.Id" type="hidden" />
+
                             <div class="form-group row">
                                 <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Server.Name" type="text" class="form-control">
+                                    <input asp-for="Server.Name" type="text" class="form-control" />
                                 </div>
                             </div>
 

@@ -34,7 +34,7 @@ namespace AccServerAdmin.Persistence.Common
         /// <summary>
         /// Updates an existing instance of TEntity
         /// </summary>
-        void Update(TEntity entity);
+        TEntity Update(Guid id, TEntity entity);
 
         /// <summary>
         /// Removes an instance of TEntity referenced by the Id

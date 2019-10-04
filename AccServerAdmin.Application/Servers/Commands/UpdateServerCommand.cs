@@ -8,14 +8,15 @@ namespace AccServerAdmin.Application.Servers.Commands
     {
         private readonly IServerRepository _serverRepository;
 
-        public UpdateServerCommand(IServerRepository serverRepository)
+        public UpdateServerCommand(
+            IServerRepository serverRepository)
         {
             _serverRepository = serverRepository;
         }
 
         public async Task ExecuteAsync(Server server)
         {
-            _serverRepository.Update(server);
+            _serverRepository.Update(server.Id, server);
             await _serverRepository.SaveAsync().ConfigureAwait(false);
         }
     }

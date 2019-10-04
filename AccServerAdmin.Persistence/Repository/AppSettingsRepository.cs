@@ -27,7 +27,7 @@ namespace AccServerAdmin.Persistence.Repository
         /// <inheritdoc />
         public override async Task AddAsync(AppSettings entity)
         {
-            if (DbContext.AppSettings.Any())
+            if (DbContext.Set<AppSettings>().Any())
                 throw new InvalidOperationException("Cannot add a second app settings record");
 
             await base.AddAsync(entity);

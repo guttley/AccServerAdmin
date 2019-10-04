@@ -28,5 +28,14 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             Server = await _getServerByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
         }
+
+        public async Task OnPostAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                await _updateServerCommand.ExecuteAsync(Server).ConfigureAwait(false);
+            }
+        }
+
     }
 }

@@ -114,6 +114,7 @@ namespace AccServerAdmin.Service
             // Repositories
             services.AddScoped<IServerRepository, ServerRepository>();
             services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
+            services.AddScoped<IDataRepository<GameConfiguration>, DataRepository<GameConfiguration>>();
             
 
             services.AddTransient<IConfigRepository<NetworkConfiguration>, NetworkConfigRepository>();

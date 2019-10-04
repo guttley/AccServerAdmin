@@ -44,10 +44,18 @@ namespace AccServerAdmin.Persistence.Common
             await _dbContext.Set<TEntity>().AddAsync(entity);
         }
 
-        public void Update(TEntity entity)
+        public virtual TEntity Update(Guid id, TEntity updated)
         {
-            _dbContext.Set<TEntity>().Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            if (updated is null)
+                return null;
+
+            var existing = _dbContext.Set<TEntity>().Find(id);
+
+            if (existing != null)
+            {
+                _dbContext.Entry(existing).CurrentValues.SetValues(updated);
+            }
+            return existing;
         }
 
         

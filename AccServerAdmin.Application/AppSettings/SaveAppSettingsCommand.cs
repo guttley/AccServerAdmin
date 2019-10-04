@@ -25,8 +25,7 @@ namespace AccServerAdmin.Application.AppSettings
             }
             else
             {
-                appSettings.Id = dbSettings.Id;
-                _appSettingsRepository.Update(appSettings);
+                _appSettingsRepository.Update(dbSettings.Id, appSettings);
             }
 
             await _appSettingsRepository.SaveAsync().ConfigureAwait(true);
