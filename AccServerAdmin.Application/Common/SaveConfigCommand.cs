@@ -16,14 +16,13 @@ namespace AccServerAdmin.Application.Common
             IDataRepository<T> dataRepository,
             IServerRepository serverRepository)
         {
-            ///_configRepository = configRepository;
+            //_configRepository = configRepository;
             _dataRepository = dataRepository;
             _serverRepository = serverRepository;
         }
 
         public async Task ExecuteAsync(Guid serverId, T config)
         {
-            var server = await _serverRepository.GetAsync(serverId).ConfigureAwait(false); 
             
             /*
             _configRepository.Save();

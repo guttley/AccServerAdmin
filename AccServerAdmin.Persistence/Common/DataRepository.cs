@@ -57,9 +57,9 @@ namespace AccServerAdmin.Persistence.Common
             }
         }
 
-        public virtual async Task DeleteAsync(Guid id)
+        public virtual void Delete(Guid id)
         {
-            var entity = await GetAsync(id).ConfigureAwait(false);
+            var entity = _dbContext.Set<TEntity>().Find(id);
             _dbContext.Set<TEntity>().Remove(entity);
         }
     }

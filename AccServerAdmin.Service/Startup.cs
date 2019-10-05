@@ -10,10 +10,7 @@ using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.DbContext;
-using AccServerAdmin.Persistence.EventConfig;
-using AccServerAdmin.Persistence.GameConfig;
 using AccServerAdmin.Persistence.Repository;
-using AccServerAdmin.Persistence.ServerConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -110,6 +107,8 @@ namespace AccServerAdmin.Service
             services.AddTransient<IFile, FileApiWrapper>();
             services.AddTransient<IDirectory, DirectoryApiWrapper>();
             services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
+            services.AddTransient<IServerConfigWriter, ServerConfigWriter>();
+            services.AddTransient<IServerInstanceCreator, ServerInstanceCreator>();
 
             // Repositories
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -117,16 +116,12 @@ namespace AccServerAdmin.Service
             services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
             services.AddScoped<IDataRepository<GameConfiguration>, DataRepository<GameConfiguration>>();
 
-            services.AddTransient<IConfigRepository<NetworkConfiguration>, NetworkConfigRepository>();
-            services.AddTransient<IConfigRepository<GameConfiguration>, GameConfigRepository>();
-            services.AddTransient<IConfigRepository<EventConfiguration>, EventConfigRepository>();
-
-            // CQRS components
+            // Components
             services.AddScoped<IGetAppSettingsQuery, GetAppSettingsQuery>();
             services.AddScoped<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
             services.AddTransient<ICreateServerCommand, CreateServerCommand>();
             services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
-            //services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
+            services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
             services.AddScoped<IGetServerListQuery, GetServerListQuery>();
             services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
 
@@ -136,8 +131,6 @@ namespace AccServerAdmin.Service
             //services.AddScoped<ISaveConfigCommand<GameConfiguration>, SaveConfigCommand<GameConfiguration>>();
             //services.AddScoped<IGetConfigByIdQuery<EventConfiguration>, GetConfigByIdQuery<EventConfiguration>>();
             //services.AddScoped<ISaveConfigCommand<EventConfiguration>, SaveConfigCommand<EventConfiguration>>();
-
-
         }
     }
 }

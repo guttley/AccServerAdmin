@@ -8,10 +8,41 @@ namespace AccServerAdmin.Domain.AccConfig
     /// <summary>
     /// Model for the settings.json file
     /// </summary>
-    /// <example>
     [ExcludeFromCodeCoverage]
     public class GameConfiguration : IKeyedEntity
     {
+        public const string DefaultServerName = "New Server";
+        public const int DefaultTrackMedalsRequirement = 3;
+        public const int DefaultConfigVersion = 1;
+        public const int DefaultRacecraftRatingRequirement = 70;
+        public const int DefaultSafteyRatingRequirement = 0;
+        public const int DefaultSpectatorSlots = 0;
+        public const bool DefaultDumpLeaderboards = true;
+        public const bool DefaultDumpEntryList = true;
+        public const bool DefaultIsRaceLocked = false;
+        public const bool DefaultAutoDq = false;
+        public const bool DefaultShortFormationLap = false;
+        public const bool DefaultRandomTrackWhenEmpty = false;
+
+        public GameConfiguration()
+        {
+            ServerName = DefaultServerName;
+            Password = string.Empty;
+            AdminPassword = string.Empty;
+            TrackMedalsRequirement = DefaultTrackMedalsRequirement;
+            Version = DefaultConfigVersion;
+            RacecraftRatingRequirement = DefaultRacecraftRatingRequirement;
+            SafetyRatingRequirement = DefaultSafteyRatingRequirement;
+            SpectatorSlots = DefaultSpectatorSlots;
+            SpectatorPassword = string.Empty;
+            DumpLeaderboards = DefaultDumpLeaderboards;
+            DumpEntryList = DefaultDumpEntryList;
+            IsRaceLocked = DefaultIsRaceLocked;
+            AllowAutoDisqualification = DefaultAutoDq;
+            ShortFormationLap = DefaultShortFormationLap;
+            RandomizeTrackWhenEmpty = DefaultRandomTrackWhenEmpty;
+        }
+
         [Key]
         [JsonIgnore]
         public Guid Id { get; set; }

@@ -1,38 +1,26 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AccServerAdmin.Application.AppSettings;
+﻿using System.Threading.Tasks;
+using AccServerAdmin.Application.Common;
 using AccServerAdmin.Application.Exceptions;
-using AccServerAdmin.Domain.AccConfig;
-using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Persistence.Common;
-using AccServerAdmin.Persistence.ServerConfig;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
     using AccServerAdmin.Domain;
-    using System.IO;
 
     public class CreateServerCommand : ICreateServerCommand
     {
-        private readonly IGetAppSettingsQuery _getAppSettingsQuery;
         private readonly IServerRepository _serverRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IDirectory _directory;
-        private readonly IFile _file;
+        private readonly IServerInstanceCreator _serverInstanceCreator;
 
         public CreateServerCommand(
-            IGetAppSettingsQuery getAppSettingsQuery,
             IServerRepository serverRepository,
             IUnitOfWork unitOfWork,
-            IDirectory directory,
-            IFile file)
+            IServerInstanceCreator serverInstanceCreator)
         {
-            _getAppSettingsQuery = getAppSettingsQuery;
             _serverRepository = serverRepository;
             _unitOfWork = unitOfWork;
-            _directory = directory;
-            _file = file;
+            _serverInstanceCreator = serverInstanceCreator;
         }
 
         public async Task<Server> ExecuteAsync(string serverName)
@@ -44,30 +32,9 @@ namespace AccServerAdmin.Application.Servers.Commands
                 throw new NonUniqueNameException("Server names must be unique");
             }
 
-            var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
-            var sourceFiles = _directory.GetFiles(settings.ServerBasePath);
-
-            if (!sourceFiles.Any())
-            {
-                throw new EmptyDirectoryException(
-                    $"The source directory \"{settings.ServerBasePath}\" is empty, it must be populated with the ACC server files");
-            }
-
-            var destinationPath = Path.Combine(settings.ServerBasePath, server.Id.ToString());
             await _serverRepository.AddAsync(server);
+            await _serverInstanceCreator.ExecuteAsync(server);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
-
-
-            if (!_directory.Exists(destinationPath))
-            {
-                _directory.CreateDirectory(destinationPath);
-            }
-
-            foreach (var sourceFile in sourceFiles)
-            {
-                var destinationFile = Path.Combine(destinationPath, Path.GetFileName(sourceFile));
-                _file.Copy(sourceFile, destinationFile);
-            }
 
             return server;
         }

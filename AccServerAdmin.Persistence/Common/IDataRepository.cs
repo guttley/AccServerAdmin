@@ -39,6 +39,6 @@ namespace AccServerAdmin.Persistence.Common
         /// <summary>
         /// Removes an instance of TEntity referenced by the Id
         /// </summary>
-        Task DeleteAsync(Guid id);
+        void Delete(Guid id);
     }
 }

@@ -1,0 +1,45 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.DeleteServerModel
+@{
+    ViewData["Title"] = "Delete Server";
+}
+
+<section class="forms">
+    <div class="container-fluid">
+
+        <header>
+            <h1 class="h3 display"></h1>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Delete Server - @Model.Server.Name</h4>
+                    </div>
+
+                    <div class="card-body">
+                        
+                        <form method="post" class="form-horizontal">
+
+                            <input asp-for="Server.Id" type="hidden" />
+
+                            
+                            <div class="form-group-material">
+                                <div class="text-danger">Are you sure you wish to delete this server?</div>
+                            </div>                            
+
+                            <div class="form-group">
+                                <input type="submit" value="Delete" class="btn btn-primary">
+                                <button type="button" onclick="location.href='/Configuration/Servers/List'" class="btn btn-primary">Cancel</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

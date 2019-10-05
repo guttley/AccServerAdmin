@@ -8,31 +8,6 @@ namespace AccServerAdmin.Domain.AccConfig
     /// <summary>
     /// Model for the session of the session list from the event.json file
     /// </summary>
-    /// <example>
-    /// [
-    ///   {
-    ///     "hourOfDay": 10,
-    ///     "dayOfWeekend": 1,
-    ///     "timeMultiplier": 1,
-    ///     "sessionType": "P",
-    ///     "sessionDurationMinutes": 20
-    ///   },
-    ///   {
-    ///     "hourOfDay": 17,
-    ///     "dayOfWeekend": 2,
-    ///     "timeMultiplier": 8,
-    ///     "sessionType": "Q",
-    ///     "sessionDurationMinutes": 10
-    ///   },
-    ///   {
-    ///     "hourOfDay": 16,
-    ///     "dayOfWeekend": 3,
-    ///     "timeMultiplier": 3,
-    ///     "sessionType": "Q",
-    ///     "sessionDurationMinutes": 20
-    ///   }
-    /// ]
-    /// </example>
     [ExcludeFromCodeCoverage]
     public class SessionConfiguration
     {
