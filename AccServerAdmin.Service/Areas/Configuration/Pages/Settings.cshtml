@@ -21,6 +21,9 @@
                     <div class="card-body">
                         <p></p>
                         <form method="post">
+                            
+                            <input type="hidden" asp-for="Settings.Id"/>
+
                             <div class="form-group">
                                 <label asp-for="Settings.ServerBasePath" class="label-material">Base Server Directory</label>
                                 <input asp-for="Settings.ServerBasePath" type="text" class="form-control">

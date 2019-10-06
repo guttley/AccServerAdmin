@@ -11,12 +11,14 @@ namespace AccServerAdmin.Domain.AccConfig
     [ExcludeFromCodeCoverage]
     public class SessionConfiguration
     {
+        public SessionConfiguration()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
         [JsonIgnore]
         public Guid Id { get; set; }
-
-        [JsonIgnore]
-        public Guid EventId { get; set; }
 
         [JsonProperty("hourOfDay")]
         public int HourOfDay { get; set; }

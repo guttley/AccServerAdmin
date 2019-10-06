@@ -14,10 +14,13 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
     {
         private readonly IUpdateServerCommand _updateServerCommand;
         private readonly IGetServerByIdQuery _getServerByIdQuery;
+
         private readonly Dictionary<string, string> _tracks;
         private readonly Dictionary<string, string> _eventTypes;
         private readonly Dictionary<int, string> _trackMedals;
         private readonly Dictionary<int, string> _ratings;
+        private readonly Dictionary<string, string> _sessionTypes;
+        private readonly Dictionary<int, string> _sessionDays;
 
         public EditServerModel(
             IGetServerByIdQuery getServerByIdQuery,
@@ -57,10 +60,25 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             };
 
             _ratings = new Dictionary<int, string>();
+
             for (int i = -1; i < 100; i++)
             {
                 _ratings.Add(i, i.ToString());
             }
+
+            _sessionTypes = new Dictionary<string, string>
+            {
+                { "P", "Practice" },
+                { "Q", "Qualification" },
+                { "R", "Race" },
+            };
+
+            _sessionDays = new Dictionary<int, string>
+            {
+                { 1, "Friday" },
+                { 2, "Saturday" },
+                { 3, "Sunday" },
+            };
         }
 
         [BindProperty]
@@ -76,14 +94,14 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public SelectList RacecraftRatings { get; set; }
 
+        public SelectList SessionTypes { get; set; }
+
+        public SelectList SessionDays { get; set; }
+
         public async Task OnGetAsync(Guid id)
         {
             Server = await _getServerByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
-            Tracks = new SelectList(_tracks, "Key", "Value", Server.EventConfiguration.Track);
-            EventTypes = new SelectList(_eventTypes, "Key", "Value", Server.EventConfiguration.EventType);
-            TrackMedals = new SelectList(_trackMedals, "Key", "Value", Server.GameConfiguration.TrackMedalsRequirement);
-            SafetyRatings = new SelectList(_ratings, "Key", "Value", Server.GameConfiguration.SafetyRatingRequirement);
-            RacecraftRatings = new SelectList(_ratings, "Key", "Value", Server.GameConfiguration.RacecraftRatingRequirement);
+            BuildBindingLists();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -92,15 +110,27 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             {
                 ValidateNetworkConfiguration();
                 ValidateGameConfiguration();
-            } 
+            }
 
             if (!ModelState.IsValid)
             {
+                BuildBindingLists();
                 return Page();
             }
 
             await _updateServerCommand.ExecuteAsync(Server).ConfigureAwait(false);
             return RedirectToPage("./List");
+        }
+
+        private void BuildBindingLists()
+        {
+            Tracks = new SelectList(_tracks, "Key", "Value", Server.EventConfiguration.Track);
+            EventTypes = new SelectList(_eventTypes, "Key", "Value", Server.EventConfiguration.EventType);
+            TrackMedals = new SelectList(_trackMedals, "Key", "Value", Server.GameConfiguration.TrackMedalsRequirement);
+            SafetyRatings = new SelectList(_ratings, "Key", "Value", Server.GameConfiguration.SafetyRatingRequirement);
+            RacecraftRatings = new SelectList(_ratings, "Key", "Value", Server.GameConfiguration.RacecraftRatingRequirement);
+            SessionTypes = new SelectList(_sessionTypes, "Key", "Value", null);
+            SessionDays = new SelectList(_sessionDays, "Key", "Value", null);
         }
 
         private void ValidateNetworkConfiguration()

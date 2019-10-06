@@ -35,7 +35,6 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkConfiguration)
                 .Include(s => s.GameConfiguration)
                 .Include(s => s.EventConfiguration)
-                .ThenInclude(e => e.Sessions)
                 .FirstOrDefaultAsync(s => s.Id == id)
                 .ConfigureAwait(false);
         }

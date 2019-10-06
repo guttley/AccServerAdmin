@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.IO;
+using AccServerAdmin.Persistence.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,6 +14,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
     {
         private readonly IGetAppSettingsQuery _getAppSettingsQuery;
         private readonly ISaveAppSettingsCommand _saveAppSettingsCommand;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IDirectory _directory;
 
         [BindProperty]
@@ -27,10 +29,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
         public SettingsModel(
             IGetAppSettingsQuery getAppSettingsQuery,
             ISaveAppSettingsCommand saveAppSettingsCommand,
+            IUnitOfWork unitOfWork,
             IDirectory directory)
         {
             _getAppSettingsQuery = getAppSettingsQuery;
             _saveAppSettingsCommand = saveAppSettingsCommand;
+            _unitOfWork = unitOfWork;
             _directory = directory;
         }
 
@@ -71,11 +75,15 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
                 }
 
                 await _saveAppSettingsCommand.ExecuteAsync(Settings).ConfigureAwait(false);
+                await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
                 _directory.CreateDirectory(Settings.ServerBasePath);
                 _directory.CreateDirectory(Settings.InstanceBasePath);
+                Globals.NeedsConfiguring = false;
+
+                return RedirectToPage("Index", new { Area = "Dashboard"});
             }
 
-            return Page();            
+            return Page();
         }
 
     }

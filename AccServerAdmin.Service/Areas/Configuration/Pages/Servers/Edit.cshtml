@@ -41,7 +41,7 @@
                                
                             <ul role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center">
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-network" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active"> 
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-network" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active">
                                         Network Settings
                                     </a>
                                 </li>
@@ -53,6 +53,11 @@
                                 <li class="nav-item flex-sm-fill">
                                     <a data-toggle="tab" role="tab" href="#nav-tab-event" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
                                         Event Settings
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-sm-fill">
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-sessions" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
+                                        Session Settings
                                     </a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
@@ -75,6 +80,10 @@
                                 <div id="nav-tab-event" role="tabpanel" aria-labelledby="event-tab" class="tab-pane fade px-4 py-5">
                                     <!-- Event settings -->
                                     <partial name="_EditEventPartial"/>
+                                </div>
+                                <div id="nav-tab-sessions" role="tabpanel" aria-labelledby="sessions-tab" class="tab-pane fade px-4 py-5">
+                                    <!-- Sessions settings -->
+                                    <partial name="_EditSessionsPartial"/>
                                 </div>
                                 <div id="nav-tab-weather" role="tabpanel" aria-labelledby="weather-tab" class="tab-pane fade px-4 py-5">
                                     <!-- Weather settings -->

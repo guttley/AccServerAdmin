@@ -22,16 +22,12 @@ namespace AccServerAdmin.Service.Areas.Dashboard.Pages
         }
 
         [BindProperty]
-        public bool NeedsConfiguring { get; private set; }
-
-        [BindProperty]
         public IEnumerable<Server> Servers { get; private set; }
 
         public async Task OnGetAsync()
         {
             var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
-            NeedsConfiguring = (settings is null);
-
+            Globals.NeedsConfiguring = settings is null;
             Servers = await _getServerListQuery.ExecuteAsync().ConfigureAwait(false);
         }
     }
