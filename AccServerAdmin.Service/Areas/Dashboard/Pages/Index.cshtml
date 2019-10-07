@@ -5,14 +5,14 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<section class="forms">
+<section class="statistics">
     <div class="container-fluid">
 
         <header>
             <h1 class="h3 display">Dashboard </h1>
         </header>
-
-        <div class="row">
+        
+        <div class="row d-flex">
 
             @if (Globals.NeedsConfiguring)
             {
@@ -39,6 +39,15 @@
                         </div>
                     </div>
                 </div>
+            }
+            else
+            {
+                @foreach (var server in Model.Servers)
+                {
+                    <partial name="_ServerCardPartial" model="@server" />
+                }
+
+
             }
 
 

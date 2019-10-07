@@ -175,9 +175,6 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<Guid?>("EventConfigurationId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("HourOfDay")
                         .HasColumnType("INTEGER");
 

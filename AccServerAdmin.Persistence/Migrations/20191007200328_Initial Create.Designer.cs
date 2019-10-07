@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191006154805_Initial Create")]
+    [Migration("20191007200328_Initial Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,9 +175,6 @@ namespace AccServerAdmin.Persistence.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid?>("EventConfigurationId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("EventId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("HourOfDay")
