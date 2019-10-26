@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
+using AccServerAdmin.Application.Sessions.Queries;
 
 namespace AccServerAdmin.Service
 {
@@ -111,26 +112,22 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerInstanceCreator, ServerInstanceCreator>();
 
             // Repositories
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IServerRepository, ServerRepository>();
-            services.AddScoped<IDataRepository<AppSettings>, AppSettingsRepository>();
-            services.AddScoped<IDataRepository<GameConfiguration>, DataRepository<GameConfiguration>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IServerRepository, ServerRepository>();
+            services.AddTransient<IDataRepository<AppSettings>, AppSettingsRepository>();
+            services.AddTransient<IDataRepository<GameConfiguration>, DataRepository<GameConfiguration>>();
+            services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
 
             // Components
-            services.AddScoped<IGetAppSettingsQuery, GetAppSettingsQuery>();
-            services.AddScoped<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
+            services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
+            services.AddTransient<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
             services.AddTransient<ICreateServerCommand, CreateServerCommand>();
-            services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
+            services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
             services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
-            services.AddScoped<IGetServerListQuery, GetServerListQuery>();
+            services.AddTransient<IGetServerListQuery, GetServerListQuery>();
             services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
-
-            //services.AddScoped<IGetConfigByIdQuery<ServerConfiguration>, GetConfigByIdQuery<ServerConfiguration>>();
-            //services.AddScoped<ISaveConfigCommand<ServerConfiguration>, SaveConfigCommand<ServerConfiguration>>();
-            //services.AddScoped<IGetConfigByIdQuery<GameConfiguration>, GetConfigByIdQuery<GameConfiguration>>();
-            //services.AddScoped<ISaveConfigCommand<GameConfiguration>, SaveConfigCommand<GameConfiguration>>();
-            //services.AddScoped<IGetConfigByIdQuery<EventConfiguration>, GetConfigByIdQuery<EventConfiguration>>();
-            //services.AddScoped<ISaveConfigCommand<EventConfiguration>, SaveConfigCommand<EventConfiguration>>();
+            services.AddTransient<IGetSessionByIdQuery, GetSessionByIdQuery>();
+            services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
         }
     }
 }

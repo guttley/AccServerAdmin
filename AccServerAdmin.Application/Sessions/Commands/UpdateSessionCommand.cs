@@ -1,31 +1,32 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AccServerAdmin.Application.Common;
-using AccServerAdmin.Domain;
+using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
 
-namespace AccServerAdmin.Application.Servers.Commands
+namespace AccServerAdmin.Application.Sessions.Commands
 {
     public class UpdateSessionCommand : IUpdateSessionCommand
     {
-        private readonly IServerRepository _serverRepository;
+        private readonly IDataRepository<SessionConfiguration> _sessionRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IServerConfigWriter _serverConfigWriter;
 
         public UpdateSessionCommand(
-            IServerRepository serverRepository,
+            IDataRepository<SessionConfiguration> sessionRepository,
             IUnitOfWork unitOfWork,
             IServerConfigWriter serverConfigWriter)
         {
-            _serverRepository = serverRepository;
+            _sessionRepository = sessionRepository;
             _unitOfWork = unitOfWork;
             _serverConfigWriter = serverConfigWriter;
         }
 
-        public async Task ExecuteAsync(Server server)
+        public async Task ExecuteAsync(Guid serverId, SessionConfiguration session)
         {
-            _serverRepository.Update(server.Id, server);
+            _sessionRepository.Update(session.Id, session);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
-            await _serverConfigWriter.ExecuteAsync(server.Id);
+            await _serverConfigWriter.ExecuteAsync(serverId);
         }
     }
 }

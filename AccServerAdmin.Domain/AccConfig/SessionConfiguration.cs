@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
@@ -9,7 +10,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// Model for the session of the session list from the event.json file
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class SessionConfiguration
+    public class SessionConfiguration : IKeyedEntity
     {
         public SessionConfiguration()
         {
@@ -18,6 +19,7 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [Key]
         [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         public Guid Id { get; set; }
 
         [JsonProperty("hourOfDay")]

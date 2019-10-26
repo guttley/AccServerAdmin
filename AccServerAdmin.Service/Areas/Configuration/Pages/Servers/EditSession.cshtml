@@ -1,0 +1,97 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditSessionModel
+@{
+    ViewData["Title"] = "Edit Session";
+}
+
+<section class="forms">
+    <div class="container-fluid">
+
+        <header>
+            <h1 class="h3 display"></h1>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Edit Session</h4>
+                    </div>
+
+                    <div class="card-body">
+                        
+                        <form method="post" class="form-horizontal">
+
+                            <input asp-for="ServerId" type="hidden" />
+
+
+                            <!--
+                                <div class="form-group row">
+                                <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Server.Name" type="text" class="form-control" />
+                                </div>
+                            </div>
+                                --->
+
+                            <p>
+                                <div class="form-group row">
+                                    <label asp-for="Session.SessionType" class="col-sm-2 form-control-label">Session Type</label>
+                                    <div class="col-sm-10">
+                                        <select asp-for="Session.SessionType" asp-items="Model.SessionTypes" class="form-control">
+                                            <option value="">Select a Session Type</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label asp-for="Session.DayOfWeekend" class="col-sm-2 form-control-label">Session Day</label>
+                                    <div class="col-sm-10">
+                                        <select asp-for="Session.DayOfWeekend" asp-items="Model.SessionDays" class="form-control">
+                                            <option value="">Select a Day</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label">Hour Of Day</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="Session.HourOfDay" type="number" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label">Time multiplier</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="Session.TimeMultiplier" type="number" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label">Duration (Minutes)</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="Session.SessionDurationMinutes" type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </p>
+
+                            <div class="line"></div>
+
+                            <div class="form-group-material">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                                <button type="button" onclick="location.href='/Configuration/Servers/List'" class="btn btn-primary">Cancel</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

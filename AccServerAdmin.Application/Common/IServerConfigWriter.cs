@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using AccServerAdmin.Domain;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace AccServerAdmin.Application.Common
 {
     public interface IServerConfigWriter
     {
-        Task ExecuteAsync(Server server);
+        Task ExecuteAsync(Guid serverId);
     }
 }

@@ -1,7 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.AppSettings;
-using AccServerAdmin.Domain;
+using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 
@@ -9,12 +10,14 @@ namespace AccServerAdmin.Application.Common
 {
     public class ServerConfigWriter : IServerConfigWriter
     {
-        private readonly IGetAppSettingsQuery _getAppSettingsQuery;
+        private readonly IGetServerByIdQuery _getServerByIdQuery;
+        private readonly IGetAppSettingsQuery _getAppSettingsQuery;        
         private readonly IFile _file;
         private readonly IJsonConverter _jsonConverter;
 
         public ServerConfigWriter(
-            IGetAppSettingsQuery getAppSettingsQuery,
+            IGetServerByIdQuery getServerByIdQuery,
+            IGetAppSettingsQuery getAppSettingsQuery,            
             IFile file,
             IJsonConverter jsonConverter)
         {
@@ -23,8 +26,9 @@ namespace AccServerAdmin.Application.Common
             _jsonConverter = jsonConverter;
         }
 
-        public async Task ExecuteAsync(Server server)
+        public async Task ExecuteAsync(Guid serverId)
         {
+            var server = await _getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
             var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
             var cfgPath = Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "cfg");
             
