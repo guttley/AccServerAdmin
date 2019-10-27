@@ -178,7 +178,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventConfigurations",
+                name: "EventCfgs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -198,9 +198,9 @@ namespace AccServerAdmin.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventConfigurations", x => x.Id);
+                    table.PrimaryKey("PK_EventCfgs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventConfigurations_Servers_ServerId",
+                        name: "FK_EventCfgs_Servers_ServerId",
                         column: x => x.ServerId,
                         principalTable: "Servers",
                         principalColumn: "Id",
@@ -208,7 +208,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GameConfigurations",
+                name: "GameCfgs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -231,9 +231,9 @@ namespace AccServerAdmin.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameConfigurations", x => x.Id);
+                    table.PrimaryKey("PK_GameCfgs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GameConfigurations_Servers_ServerId",
+                        name: "FK_GameCfgs_Servers_ServerId",
                         column: x => x.ServerId,
                         principalTable: "Servers",
                         principalColumn: "Id",
@@ -241,7 +241,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NetworkConfigurations",
+                name: "NetworkCfgs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -254,9 +254,9 @@ namespace AccServerAdmin.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NetworkConfigurations", x => x.Id);
+                    table.PrimaryKey("PK_NetworkCfgs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NetworkConfigurations_Servers_ServerId",
+                        name: "FK_NetworkCfgs_Servers_ServerId",
                         column: x => x.ServerId,
                         principalTable: "Servers",
                         principalColumn: "Id",
@@ -268,22 +268,22 @@ namespace AccServerAdmin.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EventCfgId = table.Column<Guid>(nullable: false),
                     HourOfDay = table.Column<int>(nullable: false),
                     DayOfWeekend = table.Column<int>(nullable: false),
                     TimeMultiplier = table.Column<int>(nullable: false),
                     SessionType = table.Column<string>(nullable: true),
-                    SessionDurationMinutes = table.Column<int>(nullable: false),
-                    EventConfigurationId = table.Column<Guid>(nullable: true)
+                    SessionDurationMinutes = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SessionConfiguration", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SessionConfiguration_EventConfigurations_EventConfigurationId",
-                        column: x => x.EventConfigurationId,
-                        principalTable: "EventConfigurations",
+                        name: "FK_SessionConfiguration_EventCfgs_EventCfgId",
+                        column: x => x.EventCfgId,
+                        principalTable: "EventCfgs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -324,27 +324,27 @@ namespace AccServerAdmin.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventConfigurations_ServerId",
-                table: "EventConfigurations",
+                name: "IX_EventCfgs_ServerId",
+                table: "EventCfgs",
                 column: "ServerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameConfigurations_ServerId",
-                table: "GameConfigurations",
+                name: "IX_GameCfgs_ServerId",
+                table: "GameCfgs",
                 column: "ServerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_NetworkConfigurations_ServerId",
-                table: "NetworkConfigurations",
+                name: "IX_NetworkCfgs_ServerId",
+                table: "NetworkCfgs",
                 column: "ServerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SessionConfiguration_EventConfigurationId",
+                name: "IX_SessionConfiguration_EventCfgId",
                 table: "SessionConfiguration",
-                column: "EventConfigurationId");
+                column: "EventCfgId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -368,10 +368,10 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "GameConfigurations");
+                name: "GameCfgs");
 
             migrationBuilder.DropTable(
-                name: "NetworkConfigurations");
+                name: "NetworkCfgs");
 
             migrationBuilder.DropTable(
                 name: "SessionConfiguration");
@@ -383,7 +383,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "EventConfigurations");
+                name: "EventCfgs");
 
             migrationBuilder.DropTable(
                 name: "Servers");

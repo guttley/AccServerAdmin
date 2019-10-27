@@ -3,7 +3,7 @@ using AccServerAdmin.Domain;
 
 namespace AccServerAdmin.Application.Servers.Commands
 {
-    public interface IUpdateSessionCommand
+    public interface IUpdateServerCommand
     {
         Task ExecuteAsync(Server server);
     }

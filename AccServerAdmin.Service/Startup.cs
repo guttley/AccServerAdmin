@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using AccServerAdmin.Application;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Application.Servers.Commands;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using AccServerAdmin.Application.Sessions.Queries;
+using AccServerAdmin.Application.Sessions.Commands;
 
 namespace AccServerAdmin.Service
 {
@@ -110,24 +112,27 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
             services.AddTransient<IServerConfigWriter, ServerConfigWriter>();
             services.AddTransient<IServerInstanceCreator, ServerInstanceCreator>();
+            services.AddSingleton<IProcessManager, ProcessManager>();
 
             // Repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IServerRepository, ServerRepository>();
             services.AddTransient<IDataRepository<AppSettings>, AppSettingsRepository>();
-            services.AddTransient<IDataRepository<GameConfiguration>, DataRepository<GameConfiguration>>();
+            services.AddTransient<IDataRepository<GameCfg>, DataRepository<GameCfg>>();
             services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
 
             // Components
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
             services.AddTransient<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
             services.AddTransient<ICreateServerCommand, CreateServerCommand>();
-            services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
+            services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
             services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
             services.AddTransient<IGetServerListQuery, GetServerListQuery>();
             services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
             services.AddTransient<IGetSessionByIdQuery, GetSessionByIdQuery>();
+            services.AddTransient<ICreateSessionCommand, CreateSessionCommand>();
             services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
+            services.AddTransient<IDeleteSessionCommand, DeleteSessionCommand>();
         }
     }
 }

@@ -24,23 +24,15 @@
                         <form method="post" class="form-horizontal">
 
                             <input asp-for="ServerId" type="hidden" />
-
-
-                            <!--
-                                <div class="form-group row">
-                                <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
-                                <div class="col-sm-10">
-                                    <input asp-for="Server.Name" type="text" class="form-control" />
-                                </div>
-                            </div>
-                                --->
+                            <input asp-for="Session.Id" type="hidden" />
+                            <input asp-for="Session.EventCfgId" type="hidden" />
 
                             <p>
                                 <div class="form-group row">
                                     <label asp-for="Session.SessionType" class="col-sm-2 form-control-label">Session Type</label>
                                     <div class="col-sm-10">
                                         <select asp-for="Session.SessionType" asp-items="Model.SessionTypes" class="form-control">
-                                            <option value="">Select a Session Type</option>
+                                            <option value="">-- Select a Session Type --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -49,7 +41,7 @@
                                     <label asp-for="Session.DayOfWeekend" class="col-sm-2 form-control-label">Session Day</label>
                                     <div class="col-sm-10">
                                         <select asp-for="Session.DayOfWeekend" asp-items="Model.SessionDays" class="form-control">
-                                            <option value="">Select a Day</option>
+                                            <option value="">-- Select a Day --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -84,7 +76,7 @@
 
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary">
-                                <button type="button" onclick="location.href='/Configuration/Servers/List'" class="btn btn-primary">Cancel</button>
+                                <button type="button" onclick="location.href='/Configuration/Servers/Edit?Id=@Model.ServerId'" class="btn btn-primary">Cancel</button>
                             </div>
 
                         </form>

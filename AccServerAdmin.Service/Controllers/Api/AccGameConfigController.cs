@@ -12,12 +12,12 @@ namespace AccServerAdmin.Service.Controllers.Api
     [ApiController]
     public class AccGameConfigController : ControllerBase
     {
-        private readonly ISaveConfigCommand<GameConfiguration> _saveConfigCommand;
-        private readonly IGetConfigByIdQuery<GameConfiguration> _getConfigQuery;
+        private readonly ISaveConfigCommand<GameCfg> _saveConfigCommand;
+        private readonly IGetConfigByIdQuery<GameCfg> _getConfigQuery;
 
         public AccGameConfigController(
-            ISaveConfigCommand<GameConfiguration> saveConfigCommand,
-            IGetConfigByIdQuery<GameConfiguration> getConfigQuery)
+            ISaveConfigCommand<GameCfg> saveConfigCommand,
+            IGetConfigByIdQuery<GameCfg> getConfigQuery)
         {
             _saveConfigCommand = saveConfigCommand;
             _getConfigQuery = getConfigQuery;
@@ -27,7 +27,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         /// GET api/accGameConfig/{serverId}
         /// </summary>
         [HttpGet("{serverId}")]
-        public GameConfiguration GetGameConfig([FromQuery] Guid serverId)
+        public GameCfg GetGameConfig([FromQuery] Guid serverId)
         {
             return await _getConfigQuery.ExecuteAsync(serverId).ConfigureAwait(false);
         }
@@ -36,7 +36,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         /// PUT api/accGameConfig/{serverId}
         /// </summary>
         [HttpPut("{serverId}")]
-        public async Task SaveGameConfig([FromQuery] Guid serverId, [FromBody] GameConfiguration config)
+        public async Task SaveGameConfig([FromQuery] Guid serverId, [FromBody] GameCfg config)
         {
             _saveConfigCommand.ExecuteAsync(serverId, config);
         }

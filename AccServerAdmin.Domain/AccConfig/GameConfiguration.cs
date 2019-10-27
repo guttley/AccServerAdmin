@@ -9,7 +9,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// Model for the settings.json file
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class GameConfiguration : IKeyedEntity
+    public class GameCfg : IKeyedEntity
     {
         public const string DefaultServerName = "New Server";
         public const int DefaultTrackMedalsRequirement = 3;
@@ -23,25 +23,6 @@ namespace AccServerAdmin.Domain.AccConfig
         public const bool DefaultAutoDq = false;
         public const bool DefaultShortFormationLap = false;
         public const bool DefaultRandomTrackWhenEmpty = false;
-
-        public GameConfiguration()
-        {
-            ServerName = DefaultServerName;
-            Password = string.Empty;
-            AdminPassword = string.Empty;
-            TrackMedalsRequirement = DefaultTrackMedalsRequirement;
-            Version = DefaultConfigVersion;
-            RacecraftRatingRequirement = DefaultRacecraftRatingRequirement;
-            SafetyRatingRequirement = DefaultSafteyRatingRequirement;
-            SpectatorSlots = DefaultSpectatorSlots;
-            SpectatorPassword = string.Empty;
-            DumpLeaderboards = DefaultDumpLeaderboards;
-            DumpEntryList = DefaultDumpEntryList;
-            IsRaceLocked = DefaultIsRaceLocked;
-            AllowAutoDisqualification = DefaultAutoDq;
-            ShortFormationLap = DefaultShortFormationLap;
-            RandomizeTrackWhenEmpty = DefaultRandomTrackWhenEmpty;
-        }
 
         [Key]
         [JsonIgnore]
@@ -100,5 +81,30 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("dumpLeaderboards")]
         [JsonConverter(typeof(BoolConverter))]
         public bool DumpLeaderboards { get; set; }
+
+        public static GameCfg CreateDefault()
+        {
+            var gameCfg = new GameCfg
+            {
+                ServerName = DefaultServerName,
+                Password = string.Empty,
+                AdminPassword = string.Empty,
+                TrackMedalsRequirement = DefaultTrackMedalsRequirement,
+                Version = DefaultConfigVersion,
+                RacecraftRatingRequirement = DefaultRacecraftRatingRequirement,
+                SafetyRatingRequirement = DefaultSafteyRatingRequirement,
+                SpectatorSlots = DefaultSpectatorSlots,
+                SpectatorPassword = string.Empty,
+                DumpLeaderboards = DefaultDumpLeaderboards,
+                DumpEntryList = DefaultDumpEntryList,
+                IsRaceLocked = DefaultIsRaceLocked,
+                AllowAutoDisqualification = DefaultAutoDq,
+                ShortFormationLap = DefaultShortFormationLap,
+                RandomizeTrackWhenEmpty = DefaultRandomTrackWhenEmpty,
+            };
+
+            return gameCfg;
+        }
+
     }
 }

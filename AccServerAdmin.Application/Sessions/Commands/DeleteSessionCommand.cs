@@ -5,12 +5,12 @@ using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Sessions.Commands
 {
-    public class UpdateSessionCommand : IUpdateSessionCommand
+    public class DeleteSessionCommand : IDeleteSessionCommand
     {
         private readonly IDataRepository<SessionConfiguration> _sessionRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateSessionCommand(
+        public DeleteSessionCommand(
             IDataRepository<SessionConfiguration> sessionRepository,
             IUnitOfWork unitOfWork)
         {
@@ -18,9 +18,9 @@ namespace AccServerAdmin.Application.Sessions.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Guid serverId, SessionConfiguration session)
+        public async Task ExecuteAsync(Guid sessionId)
         {
-            _sessionRepository.Update(session.Id, session);
+            _sessionRepository.Delete(sessionId);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
     }

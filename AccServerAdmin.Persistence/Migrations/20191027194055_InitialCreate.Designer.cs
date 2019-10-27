@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191007200328_Initial Create")]
+    [Migration("20191027194055_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace AccServerAdmin.Persistence.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.0.0");
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventCfg", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,10 +68,10 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasIndex("ServerId")
                         .IsUnique();
 
-                    b.ToTable("EventConfigurations");
+                    b.ToTable("EventCfgs");
                 });
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameCfg", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,10 +130,10 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasIndex("ServerId")
                         .IsUnique();
 
-                    b.ToTable("GameConfigurations");
+                    b.ToTable("GameCfgs");
                 });
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.NetworkConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.NetworkCfg", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasIndex("ServerId")
                         .IsUnique();
 
-                    b.ToTable("NetworkConfigurations");
+                    b.ToTable("NetworkCfgs");
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.SessionConfiguration", b =>
@@ -174,7 +174,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("DayOfWeekend")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("EventConfigurationId")
+                    b.Property<Guid>("EventCfgId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("HourOfDay")
@@ -191,7 +191,7 @@ namespace AccServerAdmin.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventConfigurationId");
+                    b.HasIndex("EventCfgId");
 
                     b.ToTable("SessionConfiguration");
                 });
@@ -425,38 +425,40 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventCfg", b =>
                 {
                     b.HasOne("AccServerAdmin.Domain.Server", null)
-                        .WithOne("EventConfiguration")
-                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.EventConfiguration", "ServerId")
+                        .WithOne("EventCfg")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.EventCfg", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameCfg", b =>
                 {
                     b.HasOne("AccServerAdmin.Domain.Server", null)
-                        .WithOne("GameConfiguration")
-                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.GameConfiguration", "ServerId")
+                        .WithOne("GameCfg")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.GameCfg", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.NetworkConfiguration", b =>
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.NetworkCfg", b =>
                 {
                     b.HasOne("AccServerAdmin.Domain.Server", null)
-                        .WithOne("NetworkConfiguration")
-                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.NetworkConfiguration", "ServerId")
+                        .WithOne("NetworkCfg")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.NetworkCfg", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.SessionConfiguration", b =>
                 {
-                    b.HasOne("AccServerAdmin.Domain.AccConfig.EventConfiguration", null)
+                    b.HasOne("AccServerAdmin.Domain.AccConfig.EventCfg", null)
                         .WithMany("Sessions")
-                        .HasForeignKey("EventConfigurationId");
+                        .HasForeignKey("EventCfgId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

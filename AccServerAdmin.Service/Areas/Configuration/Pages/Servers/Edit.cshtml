@@ -24,12 +24,12 @@
                         <form method="post" class="form-horizontal">
 
                             <input asp-for="Server.Id" type="hidden" />
-                            <input asp-for="Server.GameConfiguration.ServerId" type="hidden" />
-                            <input asp-for="Server.GameConfiguration.Id" type="hidden" />
-                            <input asp-for="Server.NetworkConfiguration.ServerId" type="hidden" />
-                            <input asp-for="Server.NetworkConfiguration.Id" type="hidden" />
-                            <input asp-for="Server.EventConfiguration.ServerId" type="hidden" />
-                            <input asp-for="Server.EventConfiguration.Id" type="hidden" />
+                            <input asp-for="Server.GameCfg.ServerId" type="hidden" />
+                            <input asp-for="Server.GameCfg.Id" type="hidden" />
+                            <input asp-for="Server.NetworkCfg.ServerId" type="hidden" />
+                            <input asp-for="Server.NetworkCfg.Id" type="hidden" />
+                            <input asp-for="Server.EventCfg.ServerId" type="hidden" />
+                            <input asp-for="Server.EventCfg.Id" type="hidden" />
 
                             <div class="form-group row">
                                 <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>

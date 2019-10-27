@@ -10,7 +10,7 @@ namespace AccServerAdmin.Domain.AccConfig
     /// Model for the event.json file
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class EventConfiguration
+    public class EventCfg
     {
         public const string DefaultTrack = "misano";
         public const string DefaultEventType = "E_3h";
@@ -24,49 +24,6 @@ namespace AccServerAdmin.Domain.AccConfig
         public const int DefaultConfigVersion = 1;
         public const int DefaultPostQuallySeconds = 90;
         public const int DefaultPostRaceSeconds = 125;
-
-        public EventConfiguration()
-        {
-            Track = DefaultTrack;
-            EventType = DefaultEventType;
-            PreRaceWaitingTimeSeconds = DefaultPreRaceWaitingTimeSeconds;
-            SessionOverTimeSeconds = DefaultSessionOverTimeSeconds;
-            AmbientTemp = DefaultAmbientTemp;
-            TrackTemp = DefaultTrackTemp;
-            CloudLevel = DefaultCloudLevel;
-            Rain = DefaultRain;
-            WeatherRandomness = DefaultWeatherRandomness;
-            Version = DefaultConfigVersion;
-            PostQualySeconds = DefaultPostQuallySeconds;
-            PostRaceSeconds = DefaultPostRaceSeconds;
-            Sessions = new List<SessionConfiguration>
-            {
-                new SessionConfiguration
-                {
-                    SessionType = SessionType.Practice,
-                    DayOfWeekend = 1,
-                    HourOfDay = 10,
-                    TimeMultiplier = 1,
-                    SessionDurationMinutes = 20
-                },
-                new SessionConfiguration
-                {
-                    SessionType = SessionType.Qually,
-                    DayOfWeekend = 2,
-                    HourOfDay = 15,
-                    TimeMultiplier = 1,
-                    SessionDurationMinutes = 10
-                },
-                new SessionConfiguration
-                {
-                    SessionType = SessionType.Race,
-                    DayOfWeekend = 3,
-                    HourOfDay = 14,
-                    TimeMultiplier = 1,
-                    SessionDurationMinutes = 20
-                },
-            };
-        }
 
         [Key]
         [JsonIgnore]
@@ -113,6 +70,54 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [JsonProperty("postRaceSeconds")]
         public int PostRaceSeconds { get; set; }
+
+        public static EventCfg CreateDefault()
+        {
+            var eventCfg = new EventCfg
+            {
+                Track = DefaultTrack,
+                EventType = DefaultEventType,
+                PreRaceWaitingTimeSeconds = DefaultPreRaceWaitingTimeSeconds,
+                SessionOverTimeSeconds = DefaultSessionOverTimeSeconds,
+                AmbientTemp = DefaultAmbientTemp,
+                TrackTemp = DefaultTrackTemp,
+                CloudLevel = DefaultCloudLevel,
+                Rain = DefaultRain,
+                WeatherRandomness = DefaultWeatherRandomness,
+                Version = DefaultConfigVersion,
+                PostQualySeconds = DefaultPostQuallySeconds,
+                PostRaceSeconds = DefaultPostRaceSeconds,
+                Sessions = new List<SessionConfiguration>
+                {
+                    new SessionConfiguration
+                    {
+                        SessionType = SessionType.Practice,
+                        DayOfWeekend = 1,
+                        HourOfDay = 10,
+                        TimeMultiplier = 1,
+                        SessionDurationMinutes = 20
+                    },
+                    new SessionConfiguration
+                    {
+                        SessionType = SessionType.Qually,
+                        DayOfWeekend = 2,
+                        HourOfDay = 15,
+                        TimeMultiplier = 1,
+                        SessionDurationMinutes = 10
+                    },
+                    new SessionConfiguration
+                    {
+                        SessionType = SessionType.Race,
+                        DayOfWeekend = 3,
+                        HourOfDay = 14,
+                        TimeMultiplier = 1,
+                        SessionDurationMinutes = 20
+                    },
+                }
+            };
+
+            return eventCfg;
+        }
 
     }
 }

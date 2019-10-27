@@ -20,9 +20,9 @@ namespace AccServerAdmin.Persistence.Repository
         public override async Task<IEnumerable<Server>> GetAllAsync()
         {
             return await DbContext.Set<Server>()
-                .Include(s => s.NetworkConfiguration)
-                .Include(s => s.GameConfiguration)
-                .Include(s => s.EventConfiguration)
+                .Include(s => s.NetworkCfg)
+                .Include(s => s.GameCfg)
+                .Include(s => s.EventCfg)
                 .ThenInclude(e => e.Sessions)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -32,9 +32,10 @@ namespace AccServerAdmin.Persistence.Repository
         public override async Task<Server> GetAsync(Guid id)
         {
             return await DbContext.Set<Server>()
-                .Include(s => s.NetworkConfiguration)
-                .Include(s => s.GameConfiguration)
-                .Include(s => s.EventConfiguration)
+                .Include(s => s.NetworkCfg)
+                .Include(s => s.GameCfg)
+                .Include(s => s.EventCfg)
+                .ThenInclude(e => e.Sessions)
                 .FirstOrDefaultAsync(s => s.Id == id)
                 .ConfigureAwait(false);
         }
@@ -43,23 +44,23 @@ namespace AccServerAdmin.Persistence.Repository
         {
             base.Update(id, updated);
 
-            var existingNs = DbContext.Set<NetworkConfiguration>().Find(updated.NetworkConfiguration.Id);
-            var existingGs = DbContext.Set<GameConfiguration>().Find(updated.GameConfiguration.Id);
-            var existingEs = DbContext.Set<EventConfiguration>().Find(updated.EventConfiguration.Id);
+            var existingNs = DbContext.Set<NetworkCfg>().Find(updated.NetworkCfg.Id);
+            var existingGs = DbContext.Set<GameCfg>().Find(updated.GameCfg.Id);
+            var existingEs = DbContext.Set<EventCfg>().Find(updated.EventCfg.Id);
 
             if (existingNs != null)
             {
-                DbContext.Entry(existingNs).CurrentValues.SetValues(updated.NetworkConfiguration);
+                DbContext.Entry(existingNs).CurrentValues.SetValues(updated.NetworkCfg);
             }
 
             if (existingGs != null)
             {
-                DbContext.Entry(existingGs).CurrentValues.SetValues(updated.GameConfiguration);
+                DbContext.Entry(existingGs).CurrentValues.SetValues(updated.GameCfg);
             }
 
             if (existingEs != null)
             {
-                DbContext.Entry(existingEs).CurrentValues.SetValues(updated.EventConfiguration);
+                DbContext.Entry(existingEs).CurrentValues.SetValues(updated.EventCfg);
             }
         }
 

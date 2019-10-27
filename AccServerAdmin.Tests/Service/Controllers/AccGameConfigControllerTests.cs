@@ -16,10 +16,10 @@ namespace AccServerAdmin.Tests.Service.Controllers
         {
             // Arrange
             var serverId = Guid.NewGuid();
-            var saveCommand = Substitute.For<ISaveConfigCommand<GameConfiguration>>();
-            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<GameConfiguration>>();
+            var saveCommand = Substitute.For<ISaveConfigCommand<GameCfg>>();
+            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<GameCfg>>();
             var controller = new AccGameConfigController(saveCommand, getByIdCommand);
-            var config = new GameConfiguration();
+            var config = new GameCfg();
 
             getByIdCommand.Execute(Arg.Is(serverId)).Returns(config);
 
@@ -36,10 +36,10 @@ namespace AccServerAdmin.Tests.Service.Controllers
         {
             // Arrange
             var serverId = Guid.NewGuid();
-            var saveCommand = Substitute.For<ISaveConfigCommand<GameConfiguration>>();
-            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<GameConfiguration>>();
+            var saveCommand = Substitute.For<ISaveConfigCommand<GameCfg>>();
+            var getByIdCommand = Substitute.For<IGetConfigByIdQuery<GameCfg>>();
             var controller = new AccGameConfigController(saveCommand, getByIdCommand);
-            var config = new GameConfiguration();
+            var config = new GameCfg();
 
             // Act
             controller.SaveGameConfig(serverId, config);

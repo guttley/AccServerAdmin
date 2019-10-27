@@ -12,15 +12,13 @@ namespace AccServerAdmin.Domain.AccConfig
     [ExcludeFromCodeCoverage]
     public class SessionConfiguration : IKeyedEntity
     {
-        public SessionConfiguration()
-        {
-            Id = Guid.NewGuid();
-        }
-
         [Key]
         [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         public Guid Id { get; set; }
+
+        [JsonIgnore]
+        public Guid EventCfgId { get; set; }
 
         [JsonProperty("hourOfDay")]
         public int HourOfDay { get; set; }

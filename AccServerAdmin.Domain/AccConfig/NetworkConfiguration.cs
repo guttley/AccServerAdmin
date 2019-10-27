@@ -9,22 +9,13 @@ namespace AccServerAdmin.Domain.AccConfig
     /// Model for the configuration.json file
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class NetworkConfiguration
+    public class NetworkCfg
     {
         public const int DefaultMaxClients = 30;
         public const int DefaultUdpPort = 9331;
         public const int DefaultTcpPort = 9332;
         public const int DefaultConfigVersion = 1;
         public const bool DefaultRegisterToLobby = true;
-
-        public NetworkConfiguration()
-        {
-            MaxClients = DefaultMaxClients;
-            TcpPort = DefaultTcpPort;
-            UdpPort = DefaultUdpPort;
-            Version = DefaultConfigVersion;
-            RegisterToLobby = DefaultRegisterToLobby;
-        }
 
         [Key]
         [JsonIgnore]
@@ -49,5 +40,20 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("registerToLobby")]
         [JsonConverter(typeof(BoolConverter))]
         public bool RegisterToLobby { get; set; }
+
+        public static NetworkCfg CreateDefault()
+        {
+            var networkCfg = new NetworkCfg
+            {
+                MaxClients = DefaultMaxClients,
+                TcpPort = DefaultTcpPort,
+                UdpPort = DefaultUdpPort,
+                Version = DefaultConfigVersion,
+                RegisterToLobby = DefaultRegisterToLobby
+            };
+
+            return networkCfg;
+        }
+
     }
 }

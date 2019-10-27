@@ -21,6 +21,7 @@ namespace AccServerAdmin.Application.Common
             IFile file,
             IJsonConverter jsonConverter)
         {
+            _getServerByIdQuery = getServerByIdQuery;
             _getAppSettingsQuery = getAppSettingsQuery;
             _file = file;
             _jsonConverter = jsonConverter;
@@ -32,9 +33,9 @@ namespace AccServerAdmin.Application.Common
             var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
             var cfgPath = Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "cfg");
             
-            Save(server.NetworkConfiguration,  cfgPath, "configuration.json");
-            Save(server.GameConfiguration, cfgPath, "settings.json");
-            Save(server.EventConfiguration, cfgPath, "event.json");
+            Save(server.NetworkCfg,  cfgPath, "configuration.json");
+            Save(server.GameCfg, cfgPath, "settings.json");
+            Save(server.EventCfg, cfgPath, "event.json");
         }
 
         private void Save<T>(T config, string cfgPath, string filename)

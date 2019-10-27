@@ -16,9 +16,9 @@ namespace AccServerAdmin.Domain
 
         public Server()
         {
-            NetworkConfiguration = new NetworkConfiguration();
-            GameConfiguration = new GameConfiguration();
-            EventConfiguration = new EventConfiguration();
+            NetworkCfg = NetworkCfg.CreateDefault();
+            GameCfg = GameCfg.CreateDefault();
+            EventCfg = EventCfg.CreateDefault();
         }
 
         /// <summary>
@@ -37,24 +37,24 @@ namespace AccServerAdmin.Domain
             set
             {
                 _name = value;
-                GameConfiguration.ServerName = value;
+                GameCfg.ServerName = value;
             }
         }
 
         /// <summary>
         /// Network settings
         /// </summary>
-        public NetworkConfiguration NetworkConfiguration { get; set; } 
+        public NetworkCfg NetworkCfg { get; set; } 
 
         /// <summary>
         /// Game settings
         /// </summary>
-        public GameConfiguration GameConfiguration { get; set; }
+        public GameCfg GameCfg { get; set; }
 
         /// <summary>
         /// Event settings
         /// </summary>
-        public EventConfiguration EventConfiguration { get; set; } 
+        public EventCfg EventCfg { get; set; } 
 
 
     }
