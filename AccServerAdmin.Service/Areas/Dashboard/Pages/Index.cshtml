@@ -27,7 +27,7 @@
                     </div>
                 </div>
             } 
-            else if (!Model.Servers.Any())
+            else if (!Model.DashItems.Any())
             {
                 <div class="col-lg-6">
                     <div class="card">
@@ -42,9 +42,9 @@
             }
             else
             {
-                @foreach (var server in Model.Servers)
+                @foreach (var item in Model.DashItems)
                 {
-                    <partial name="_ServerCardPartial" model="@server" />
+                    <partial name="_ServerCardPartial" model="@item" />
                 }
 
 
