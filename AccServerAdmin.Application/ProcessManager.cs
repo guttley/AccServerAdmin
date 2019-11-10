@@ -17,6 +17,7 @@ namespace AccServerAdmin.Application
         private readonly IServiceScope _scope;
         private readonly ILogger<ProcessManager> _logger;
         private readonly ConcurrentDictionary<Guid, ServerProcessInfo> _processes = new ConcurrentDictionary<Guid, ServerProcessInfo>();
+        private readonly Task _processCheckTask;
 
         public IReadOnlyList<ServerProcessInfo> ServerProcesses => _processes.Values.ToList();
 
@@ -26,26 +27,55 @@ namespace AccServerAdmin.Application
         {
             _scope = services.CreateScope();
             _logger = logger;
+            _processCheckTask = Task.Run(CheckProcesses);
         }
         
+        private void CheckProcesses()
+        {
+            while(_scope != null)
+            {
+                try
+                {
+                    var toCheck = new List<ServerProcessInfo>(_processes.Values);
+
+                    foreach (var process in toCheck)
+                    {
+                        if (Process.GetProcessById(process.ProcessInfo.Id) == null)
+                        {
+                            _logger.LogInformation($"Server found not to be running: {process.ServerId}");
+                            _processes.TryRemove(process.ServerId, out _);
+                        }
+                    }
+
+                    Task.Delay(1000);
+                } 
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "error caught in process checker");
+                }
+            }
+
+        }
+
         public async Task<ServerProcessInfo> StartServerAsync(Guid serverId)
         {
             var getServerByIdQuery = _scope.ServiceProvider.GetRequiredService<IGetServerByIdQuery>();
-            var serverDirectoryResolver = _scope.ServiceProvider.GetRequiredService<IServerDirectoryResolver>();
             var serverConfigWriter = _scope.ServiceProvider.GetRequiredService<IServerConfigWriter>();
-
+            var serverInstanceCreator = _scope.ServiceProvider.GetRequiredService<IServerInstanceCreator>();
             var server = await getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
-            var path = await serverDirectoryResolver.ResolveAsync(serverId).ConfigureAwait(false);
 
-            await serverConfigWriter.ExecuteAsync(serverId).ConfigureAwait(false);
+            var path = await serverInstanceCreator.ExecuteAsync(server).ConfigureAwait(false);
+
+            serverConfigWriter.Execute(server, path);
 
             var startInfo = new ProcessStartInfo
             {
                 CreateNoWindow = true,
-                UseShellExecute = false,
-                FileName = path,
+                FileName = "accServer.exe",
+                UseShellExecute = true,
+                Verb = "runas",
                 WindowStyle = ProcessWindowStyle.Hidden,
-                //Arguments
+                WorkingDirectory = path
             };
 
             _logger.LogInformation($"Starting server: {server.Name}");
@@ -59,22 +89,32 @@ namespace AccServerAdmin.Application
             _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");
 
             _processes.AddOrUpdate(serverId, processInfo, (k, v) => processInfo);
+
             return processInfo;
         }
 
-
         public void StopServer(Guid serverId)
         {
+            //var serverInstanceCleanUp = _scope.ServiceProvider.GetRequiredService<IServerInstanceCleanUp>();
+
             _processes.TryRemove(serverId, out var processInfo);
 
             _logger.LogInformation($"Stopping server PID: {processInfo.ProcessInfo.Id}");
             processInfo.ProcessInfo.Kill(true);
             _logger.LogInformation("Server stopped");
+
+            //await serverInstanceCleanUp.ExecuteAsync(serverId).ConfigureAwait(false);
         }
 
         public void Dispose()
         {
+            foreach (var process in ServerProcesses)
+            {
+                process.ProcessInfo.Kill(true);
+            }
+
             _scope?.Dispose();
+            _scope = null;
         }
     }
 }

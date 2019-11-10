@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
@@ -11,7 +12,7 @@ namespace AccServerAdmin.Domain.AccConfig
     [ExcludeFromCodeCoverage]
     public class NetworkCfg
     {
-        public const int DefaultMaxClients = 30;
+        public const int DefaultMaxConnections = 30;
         public const int DefaultUdpPort = 9331;
         public const int DefaultTcpPort = 9332;
         public const int DefaultConfigVersion = 1;
@@ -19,20 +20,20 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [Key]
         [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [JsonIgnore]
         public Guid ServerId { get; set; }
-
-
+        
         [JsonProperty("udpPort")]
         public int UdpPort { get; set; }
 
         [JsonProperty("tcpPort")]
         public int TcpPort { get; set; }
 
-        [JsonProperty("maxClients")]
-        public int MaxClients { get; set; }
+        [JsonProperty("maxConnections")]
+        public int MaxConnections { get; set; }
 
         [JsonProperty("configVersion")]
         public int Version { get; set; }
@@ -45,7 +46,7 @@ namespace AccServerAdmin.Domain.AccConfig
         {
             var networkCfg = new NetworkCfg
             {
-                MaxClients = DefaultMaxClients,
+                MaxConnections = DefaultMaxConnections,
                 TcpPort = DefaultTcpPort,
                 UdpPort = DefaultUdpPort,
                 Version = DefaultConfigVersion,

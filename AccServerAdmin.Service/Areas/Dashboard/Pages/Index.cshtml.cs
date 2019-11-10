@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Application;
@@ -40,8 +41,20 @@ namespace AccServerAdmin.Service.Areas.Dashboard.Pages
                 ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id)
             }).ToList();
 
-            
+
             Globals.NeedsConfiguring = settings is null;
+        }
+
+        public async Task<ActionResult> OnPostStartServerAsync(Guid serverId)
+        {
+            await _processManager.StartServerAsync(serverId);
+            return new RedirectResult("Dashboard/index");
+        }
+
+        public ActionResult OnPostStopServer(Guid serverId)
+        {
+            _processManager.StopServer(serverId);
+            return new RedirectResult("Dashboard/index");
         }
     }
 }

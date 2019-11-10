@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using AccServerAdmin.Application.AppSettings;
-using AccServerAdmin.Application.Servers.Queries;
+﻿using System.IO;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 
@@ -10,32 +7,25 @@ namespace AccServerAdmin.Application.Common
 {
     public class ServerConfigWriter : IServerConfigWriter
     {
-        private readonly IGetServerByIdQuery _getServerByIdQuery;
-        private readonly IGetAppSettingsQuery _getAppSettingsQuery;        
         private readonly IFile _file;
         private readonly IJsonConverter _jsonConverter;
 
         public ServerConfigWriter(
-            IGetServerByIdQuery getServerByIdQuery,
-            IGetAppSettingsQuery getAppSettingsQuery,            
             IFile file,
             IJsonConverter jsonConverter)
         {
-            _getServerByIdQuery = getServerByIdQuery;
-            _getAppSettingsQuery = getAppSettingsQuery;
             _file = file;
             _jsonConverter = jsonConverter;
         }
 
-        public async Task ExecuteAsync(Guid serverId)
+        public void Execute(Server server, string serverPath)
         {
-            var server = await _getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
-            var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
-            var cfgPath = Path.Combine(settings.InstanceBasePath, server.Id.ToString(), "cfg");
+            var cfgPath = Path.Combine(serverPath, "cfg");
             
             Save(server.NetworkCfg,  cfgPath, "configuration.json");
             Save(server.GameCfg, cfgPath, "settings.json");
             Save(server.EventCfg, cfgPath, "event.json");
+            Save(server.EventRules, cfgPath, "eventRules.json");
         }
 
         private void Save<T>(T config, string cfgPath, string filename)

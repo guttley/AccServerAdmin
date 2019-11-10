@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AccServerAdmin.Persistence.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -188,7 +188,6 @@ namespace AccServerAdmin.Persistence.Migrations
                     PreRaceWaitingTimeSeconds = table.Column<int>(nullable: false),
                     SessionOverTimeSeconds = table.Column<int>(nullable: false),
                     AmbientTemp = table.Column<int>(nullable: false),
-                    TrackTemp = table.Column<int>(nullable: false),
                     CloudLevel = table.Column<double>(nullable: false),
                     Rain = table.Column<double>(nullable: false),
                     WeatherRandomness = table.Column<int>(nullable: false),
@@ -208,6 +207,35 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EventRules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ServerId = table.Column<Guid>(nullable: false),
+                    QualifyType = table.Column<int>(nullable: false),
+                    PitWindowLength = table.Column<int>(nullable: false),
+                    DriverStintTime = table.Column<int>(nullable: false),
+                    MandatoryPitstopCount = table.Column<int>(nullable: false),
+                    MaxTotalDrivingTime = table.Column<int>(nullable: false),
+                    MaxDriversCount = table.Column<int>(nullable: false),
+                    RefuellingAllowedInRace = table.Column<bool>(nullable: false),
+                    RefuellingTimeFixed = table.Column<bool>(nullable: false),
+                    MandatoryPitstopRefuellingRequired = table.Column<bool>(nullable: false),
+                    MandatoryPitstopTyreChangeRequired = table.Column<bool>(nullable: false),
+                    MandatoryPitstopSwapDriverRequired = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventRules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventRules_Servers_ServerId",
+                        column: x => x.ServerId,
+                        principalTable: "Servers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GameCfgs",
                 columns: table => new
                 {
@@ -220,14 +248,15 @@ namespace AccServerAdmin.Persistence.Migrations
                     SafetyRatingRequirement = table.Column<int>(nullable: false),
                     Version = table.Column<int>(nullable: false),
                     RacecraftRatingRequirement = table.Column<int>(nullable: false),
-                    SpectatorSlots = table.Column<int>(nullable: false),
                     SpectatorPassword = table.Column<string>(nullable: true),
                     AllowAutoDisqualification = table.Column<bool>(nullable: false),
                     RandomizeTrackWhenEmpty = table.Column<bool>(nullable: false),
                     ShortFormationLap = table.Column<bool>(nullable: false),
                     IsRaceLocked = table.Column<bool>(nullable: false),
                     DumpEntryList = table.Column<bool>(nullable: false),
-                    DumpLeaderboards = table.Column<bool>(nullable: false)
+                    DumpLeaderboards = table.Column<bool>(nullable: false),
+                    MaxCarSlots = table.Column<int>(nullable: false),
+                    CentralEntryListPath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,7 +277,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     ServerId = table.Column<Guid>(nullable: false),
                     UdpPort = table.Column<int>(nullable: false),
                     TcpPort = table.Column<int>(nullable: false),
-                    MaxClients = table.Column<int>(nullable: false),
+                    MaxConnections = table.Column<int>(nullable: false),
                     Version = table.Column<int>(nullable: false),
                     RegisterToLobby = table.Column<bool>(nullable: false)
                 },
@@ -272,7 +301,7 @@ namespace AccServerAdmin.Persistence.Migrations
                     HourOfDay = table.Column<int>(nullable: false),
                     DayOfWeekend = table.Column<int>(nullable: false),
                     TimeMultiplier = table.Column<int>(nullable: false),
-                    SessionType = table.Column<string>(nullable: true),
+                    SessionType = table.Column<int>(nullable: false),
                     SessionDurationMinutes = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -330,6 +359,12 @@ namespace AccServerAdmin.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_EventRules_ServerId",
+                table: "EventRules",
+                column: "ServerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GameCfgs_ServerId",
                 table: "GameCfgs",
                 column: "ServerId",
@@ -366,6 +401,9 @@ namespace AccServerAdmin.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "EventRules");
 
             migrationBuilder.DropTable(
                 name: "GameCfgs");

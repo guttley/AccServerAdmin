@@ -21,7 +21,7 @@ namespace AccServerAdmin.Application.Common
             _serverRepository = serverRepository;
         }
 
-        public async Task ExecuteAsync(Guid serverId, T config)
+        public Task ExecuteAsync(Guid serverId, T config)
         {
             
             /*

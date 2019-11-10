@@ -52,9 +52,6 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<string>("Track")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TrackTemp")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Version")
                         .HasColumnType("INTEGER");
 
@@ -69,6 +66,56 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.ToTable("EventCfgs");
                 });
 
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventRules", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DriverStintTime")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MandatoryPitstopCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("MandatoryPitstopRefuellingRequired")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("MandatoryPitstopSwapDriverRequired")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("MandatoryPitstopTyreChangeRequired")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaxDriversCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaxTotalDrivingTime")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PitWindowLength")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QualifyType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("RefuellingAllowedInRace")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("RefuellingTimeFixed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
+
+                    b.ToTable("EventRules");
+                });
+
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.GameCfg", b =>
                 {
                     b.Property<Guid>("Id")
@@ -81,6 +128,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<bool>("AllowAutoDisqualification")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("CentralEntryListPath")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("DumpEntryList")
                         .HasColumnType("INTEGER");
 
@@ -88,6 +138,9 @@ namespace AccServerAdmin.Persistence.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsRaceLocked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaxCarSlots")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
@@ -114,9 +167,6 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<string>("SpectatorPassword")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SpectatorSlots")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TrackMedalsRequirement")
                         .HasColumnType("INTEGER");
 
@@ -137,7 +187,7 @@ namespace AccServerAdmin.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MaxClients")
+                    b.Property<int>("MaxConnections")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("RegisterToLobby")
@@ -181,8 +231,8 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("SessionDurationMinutes")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SessionType")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("SessionType")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TimeMultiplier")
                         .HasColumnType("INTEGER");
@@ -428,6 +478,15 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasOne("AccServerAdmin.Domain.Server", null)
                         .WithOne("EventCfg")
                         .HasForeignKey("AccServerAdmin.Domain.AccConfig.EventCfg", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventRules", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.Server", null)
+                        .WithOne("EventRules")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.EventRules", "ServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -19,6 +19,7 @@ namespace AccServerAdmin.Domain
             NetworkCfg = NetworkCfg.CreateDefault();
             GameCfg = GameCfg.CreateDefault();
             EventCfg = EventCfg.CreateDefault();
+            EventRules = EventRules.CreateDefault();
         }
 
         /// <summary>
@@ -56,6 +57,12 @@ namespace AccServerAdmin.Domain
         /// </summary>
         public EventCfg EventCfg { get; set; } 
 
+        /// <summary>
+        /// /Event Rules
+        /// </summary>
+        public EventRules EventRules { get; set; }
+
 
     }
 }
+

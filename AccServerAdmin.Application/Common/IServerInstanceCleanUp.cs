@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-
 namespace AccServerAdmin.Application.Common
 {
-    public interface IServerDirectoryResolver
+    public interface IServerInstanceCleanUp
     {
-        Task<string> ResolveAsync(Guid serverId);
+        Task ExecuteAsync(Guid serverId);
     }
 }

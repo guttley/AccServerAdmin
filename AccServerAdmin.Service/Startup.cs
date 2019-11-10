@@ -22,6 +22,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using AccServerAdmin.Application.Sessions.Queries;
 using AccServerAdmin.Application.Sessions.Commands;
+using FluffySpoon.AspNet.LetsEncrypt;
+using Certes;
 
 namespace AccServerAdmin.Service
 {
@@ -37,6 +39,27 @@ namespace AccServerAdmin.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#if (RELEASE)
+            services.AddFluffySpoonLetsEncryptRenewalService(new LetsEncryptOptions()
+            {
+                Email = "gav@differently.net",
+                UseStaging = false,
+                Domains = new[] { Program.DomainToUse },
+                TimeUntilExpiryBeforeRenewal = TimeSpan.FromDays(30),
+                CertificateSigningRequest = new CsrInfo()
+                {
+                    CountryName = "United Kingdom",
+                    Locality = "UK",
+                    Organization = "Simsport Racing",
+                    OrganizationUnit = "Simsport Racing",
+                    State = "UK"
+                }
+            });
+
+            services.AddFluffySpoonLetsEncryptFileCertificatePersistence();
+            services.AddFluffySpoonLetsEncryptFileChallengePersistence();
+#endif
+
             ConfigureDatabase(services);
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -69,7 +92,8 @@ namespace AccServerAdmin.Service
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
+                app.UseFluffySpoonLetsEncryptChallengeApprovalMiddleware();
+            }            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -109,7 +133,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IJsonConverter, JsonDotNetConverter>();
             services.AddTransient<IFile, FileApiWrapper>();
             services.AddTransient<IDirectory, DirectoryApiWrapper>();
-            services.AddTransient<IServerDirectoryResolver, ServerDirectoryResolver>();
+            services.AddTransient<IServerInstanceCleanUp, ServerInstanceCleanUp>();
             services.AddTransient<IServerConfigWriter, ServerConfigWriter>();
             services.AddTransient<IServerInstanceCreator, ServerInstanceCreator>();
             services.AddSingleton<IProcessManager, ProcessManager>();

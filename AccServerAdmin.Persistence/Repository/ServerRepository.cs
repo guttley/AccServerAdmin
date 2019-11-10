@@ -22,6 +22,7 @@ namespace AccServerAdmin.Persistence.Repository
             return await DbContext.Set<Server>()
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
+                .Include(s => s.EventRules)
                 .Include(s => s.EventCfg)
                 .ThenInclude(e => e.Sessions)
                 .ToListAsync()
@@ -34,7 +35,8 @@ namespace AccServerAdmin.Persistence.Repository
             return await DbContext.Set<Server>()
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
-                .Include(s => s.EventCfg)
+                .Include(s => s.EventRules)
+                .Include(s => s.EventCfg)                
                 .ThenInclude(e => e.Sessions)
                 .FirstOrDefaultAsync(s => s.Id == id)
                 .ConfigureAwait(false);
@@ -47,6 +49,7 @@ namespace AccServerAdmin.Persistence.Repository
             var existingNs = DbContext.Set<NetworkCfg>().Find(updated.NetworkCfg.Id);
             var existingGs = DbContext.Set<GameCfg>().Find(updated.GameCfg.Id);
             var existingEs = DbContext.Set<EventCfg>().Find(updated.EventCfg.Id);
+            var existingRs = DbContext.Set<EventRules>().Find(updated.EventRules.Id);
 
             if (existingNs != null)
             {
@@ -61,6 +64,11 @@ namespace AccServerAdmin.Persistence.Repository
             if (existingEs != null)
             {
                 DbContext.Entry(existingEs).CurrentValues.SetValues(updated.EventCfg);
+            }
+
+            if (existingRs != null)
+            {
+                DbContext.Entry(existingRs).CurrentValues.SetValues(updated.EventRules);
             }
         }
 

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
-using AccServerAdmin.Application.Common;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
@@ -34,11 +33,10 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var options = Substitute.For<IDataRepository<AppSettings>> ();
             var repo = Substitute.For<IServerRepository>();
             var unitOfWork = Substitute.For<IUnitOfWork>();
-            var serverCreator = Substitute.For<IServerInstanceCreator>();
-
+            
             options.GetAllAsync().Returns(new List<AppSettings> {settings});
 
-            var command = new CreateServerCommand(repo, unitOfWork, serverCreator);
+            var command = new CreateServerCommand(repo, unitOfWork);
 
             // Act
             var returnServer = await command.ExecuteAsync(serverName).ConfigureAwait(false);

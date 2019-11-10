@@ -24,7 +24,7 @@ namespace AccServerAdmin.Application.Common
             _file = file;
         }
 
-        public async Task ExecuteAsync(Server server)
+        public async Task<string> ExecuteAsync(Server server)
         {
             var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
             var sourceFiles = _directory.GetFiles(settings.ServerBasePath).ToList();
@@ -64,6 +64,8 @@ namespace AccServerAdmin.Application.Common
                 var destinationFile = Path.Combine(destinationPath, Path.GetFileName(sourceFile));
                 _file.Copy(sourceFile, destinationFile);
             }
+
+            return destinationPath;
         }
     }
 }

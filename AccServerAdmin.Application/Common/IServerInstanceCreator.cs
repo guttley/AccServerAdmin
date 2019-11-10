@@ -5,6 +5,11 @@ namespace AccServerAdmin.Application.Common
 {
     public interface IServerInstanceCreator
     {
-        Task ExecuteAsync(Server server);
+        /// <summary>
+        /// Executes the server instance creation process
+        /// </summary>
+        /// <param name="server">Server</param>
+        /// <returns>Path to the server instance</returns>
+        Task<string> ExecuteAsync(Server server);
     }
 }

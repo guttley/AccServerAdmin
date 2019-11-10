@@ -20,37 +20,26 @@
         <tbody>
             @foreach (var session in Model.Server.EventCfg.Sessions.OrderBy(s => s.SessionType))
             {
-                <tr>
-                    @if (@session.SessionType == "P")
-                    {
-                        <th scope="row">Practice</th>
-                    }
-                    else if (@session.SessionType == "Q")
-                    {
-                        <th scope="row">Qualification</th>
-                    }
-                    else
-                    {
-                        <th scope="row">Race</th>
-                    }
-                    @switch (session.DayOfWeekend)
-                    {
-                        case 1:
-                            <td>Friday</td>
-                            break;
-                        case 2:
-                            <td>Saturday</td>
-                            break;
-                        case 3:
-                            <td>Sunday</td>
-                            break;
-                    }
-                    <td>@session.HourOfDay</td>
-                    <td>@session.TimeMultiplier</td>
-                    <td>@session.SessionDurationMinutes</td>
-                    <td><a asp-area="Configuration" asp-page="/Servers/EditSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Edit</a></td>
-                    <td><a asp-area="Configuration" asp-page="/Servers/DeleteSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Delete</a></td>
-                </tr>
+            <tr>
+                <th scope="row">@session.SessionType</th>
+                @switch (session.DayOfWeekend)
+                {
+                    case 1:
+                        <td>Friday</td>
+                        break;
+                    case 2:
+                        <td>Saturday</td>
+                        break;
+                    case 3:
+                        <td>Sunday</td>
+                        break;
+                }
+                <td>@session.HourOfDay</td>
+                <td>@session.TimeMultiplier</td>
+                <td>@session.SessionDurationMinutes</td>
+                <td><a asp-area="Configuration" asp-page="/Servers/EditSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Edit</a></td>
+                <td><a asp-area="Configuration" asp-page="/Servers/DeleteSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Delete</a></td>
+            </tr>
             }
         </tbody>
     </table>

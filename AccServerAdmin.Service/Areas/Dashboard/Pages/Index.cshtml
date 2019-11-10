@@ -5,13 +5,21 @@
     ViewData["Title"] = "Dashboard";
 }
 
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken;
+    }
+}
+
 <section class="statistics">
     <div class="container-fluid">
 
         <header>
             <h1 class="h3 display">Dashboard </h1>
         </header>
-        
+
         <div class="row d-flex">
 
             @if (Globals.NeedsConfiguring)
@@ -26,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-            } 
+            }
             else if (!Model.DashItems.Any())
             {
                 <div class="col-lg-6">
@@ -46,11 +54,8 @@
                 {
                     <partial name="_ServerCardPartial" model="@item" />
                 }
-
-
             }
-
-
+                
         </div>
     </div>
 </section>

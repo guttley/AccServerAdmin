@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
@@ -12,11 +13,13 @@ namespace AccServerAdmin.Domain.AccConfig
     public class GameCfg : IKeyedEntity
     {
         public const string DefaultServerName = "New Server";
+        public const string DefaultServerPassword = "D3f@u1tAdm1n";
         public const int DefaultTrackMedalsRequirement = 3;
         public const int DefaultConfigVersion = 1;
         public const int DefaultRacecraftRatingRequirement = 70;
         public const int DefaultSafteyRatingRequirement = 0;
-        public const int DefaultSpectatorSlots = 0;
+        public const int DefaultCarSlots = 30;
+        public const string DefaultSpectatorPassword = "spectator";
         public const bool DefaultDumpLeaderboards = true;
         public const bool DefaultDumpEntryList = true;
         public const bool DefaultIsRaceLocked = false;
@@ -26,6 +29,7 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [Key]
         [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [JsonIgnore]
@@ -51,9 +55,6 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [JsonProperty("racecraftRatingRequirement")]
         public int RacecraftRatingRequirement { get; set; }
-
-        [JsonProperty("spectatorSlots")]
-        public int SpectatorSlots { get; set; }
 
         [JsonProperty("spectatorPassword")]
         public string SpectatorPassword { get; set; }
@@ -82,25 +83,32 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonConverter(typeof(BoolConverter))]
         public bool DumpLeaderboards { get; set; }
 
+        [JsonProperty("maxCarSlots")]
+        public int MaxCarSlots { get; set; }
+
+        [JsonProperty("CentralEntryListPath")]
+        public string CentralEntryListPath { get; set; }
+
         public static GameCfg CreateDefault()
         {
             var gameCfg = new GameCfg
             {
                 ServerName = DefaultServerName,
                 Password = string.Empty,
-                AdminPassword = string.Empty,
+                AdminPassword = DefaultServerPassword,
                 TrackMedalsRequirement = DefaultTrackMedalsRequirement,
                 Version = DefaultConfigVersion,
                 RacecraftRatingRequirement = DefaultRacecraftRatingRequirement,
                 SafetyRatingRequirement = DefaultSafteyRatingRequirement,
-                SpectatorSlots = DefaultSpectatorSlots,
-                SpectatorPassword = string.Empty,
+                SpectatorPassword = DefaultSpectatorPassword,
                 DumpLeaderboards = DefaultDumpLeaderboards,
                 DumpEntryList = DefaultDumpEntryList,
                 IsRaceLocked = DefaultIsRaceLocked,
                 AllowAutoDisqualification = DefaultAutoDq,
                 ShortFormationLap = DefaultShortFormationLap,
                 RandomizeTrackWhenEmpty = DefaultRandomTrackWhenEmpty,
+                MaxCarSlots = DefaultCarSlots,
+                CentralEntryListPath = string.Empty
             };
 
             return gameCfg;

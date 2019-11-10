@@ -14,7 +14,7 @@ namespace AccServerAdmin.Domain.AccConfig
     {
         [Key]
         [JsonIgnore]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [JsonIgnore]
@@ -30,7 +30,8 @@ namespace AccServerAdmin.Domain.AccConfig
         public int TimeMultiplier { get; set; }
 
         [JsonProperty("sessionType")]
-        public string SessionType { get; set; }
+        [JsonConverter(typeof(SessionTypeConverter))]
+        public SessionType SessionType { get; set; }
 
         [JsonProperty("sessionDurationMinutes")]
         public int SessionDurationMinutes { get; set; }

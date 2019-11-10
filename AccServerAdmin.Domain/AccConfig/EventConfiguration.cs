@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
@@ -17,7 +18,6 @@ namespace AccServerAdmin.Domain.AccConfig
         public const int DefaultPreRaceWaitingTimeSeconds = 15;
         public const int DefaultSessionOverTimeSeconds = 120;
         public const int DefaultAmbientTemp = 26;
-        public const int DefaultTrackTemp = 30;
         public const double DefaultCloudLevel = 0.3d;
         public const double DefaultRain = 0;
         public const int DefaultWeatherRandomness = 1;
@@ -27,6 +27,7 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [Key]
         [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         
         [JsonIgnore]
@@ -47,9 +48,6 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("ambientTemp")]
         public int AmbientTemp { get; set; }
 
-        [JsonProperty("trackTemp")]
-        public int TrackTemp { get; set; }
-
         [JsonProperty("cloudLevel")]
         public double CloudLevel { get; set; }
 
@@ -62,14 +60,15 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("configVersion")]
         public int Version { get; set; }
 
-        [JsonProperty("sessions")]
-        public List<SessionConfiguration> Sessions { get; set; }
-
         [JsonProperty("postQualySeconds")]
         public int PostQualySeconds { get; set; }
 
         [JsonProperty("postRaceSeconds")]
         public int PostRaceSeconds { get; set; }
+
+        [JsonProperty("sessions")]
+        public List<SessionConfiguration> Sessions { get; set; }
+
 
         public static EventCfg CreateDefault()
         {
@@ -80,7 +79,6 @@ namespace AccServerAdmin.Domain.AccConfig
                 PreRaceWaitingTimeSeconds = DefaultPreRaceWaitingTimeSeconds,
                 SessionOverTimeSeconds = DefaultSessionOverTimeSeconds,
                 AmbientTemp = DefaultAmbientTemp,
-                TrackTemp = DefaultTrackTemp,
                 CloudLevel = DefaultCloudLevel,
                 Rain = DefaultRain,
                 WeatherRandomness = DefaultWeatherRandomness,

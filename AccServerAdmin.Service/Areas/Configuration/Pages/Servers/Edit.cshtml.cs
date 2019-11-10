@@ -96,26 +96,33 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             if (Server.NetworkCfg.UdpPort < 1024 || Server.NetworkCfg.UdpPort > ushort.MaxValue)
                 ModelState.AddModelError("NetworkCfg.UdpPort", $"UdpPort must be greater than 1024 and less than {ushort.MaxValue}");
 
-            if (Server.NetworkCfg.MaxClients == 0 || Server.NetworkCfg.MaxClients > 32)
-                ModelState.AddModelError("NetworkCfg.MaxClients", "MaxClients must be between 1 and 32");
+            if (Server.NetworkCfg.MaxConnections == 0 || Server.NetworkCfg.MaxConnections > 64)
+                ModelState.AddModelError("NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
         }
 
         private void ValidateGameCfg()
         {
+            if (Server.GameCfg.Password is null)
+            {
+                Server.GameCfg.Password = string.Empty;
+            }
+
+            if (Server.GameCfg.SpectatorPassword is null)
+            {
+                Server.GameCfg.SpectatorPassword = string.Empty;
+            }
+
             if (string.IsNullOrEmpty(Server.GameCfg.AdminPassword))
                 ModelState.AddModelError("GameCfg.AdminPassword", "You must supply an Admin password!!");
 
             if (!string.IsNullOrEmpty(Server.GameCfg.Password))
             {
                 if (Server.GameCfg.Password == Server.GameCfg.AdminPassword)
-                    ModelState.AddModelError("GameCfg.Password", "You must supply a different password for the Admin password");
+                    ModelState.AddModelError("GameCfg.Password", "You must supply a different password for the server and admin passwords");
 
                 if (Server.GameCfg.Password == Server.GameCfg.SpectatorPassword)
-                    ModelState.AddModelError("GameCfg.Password", "You must supply a different password for the spectator password");
+                    ModelState.AddModelError("GameCfg.SpectatorPassword", "You must supply a different password for the spectator password");
             }
-
-            if (Server.GameCfg.SpectatorSlots > 32)
-                ModelState.AddModelError("GameCfg.SpectatorSlots", "Spectator Slots must be less than 32");
         }
 
         public async Task<IActionResult> OnPostAsync()

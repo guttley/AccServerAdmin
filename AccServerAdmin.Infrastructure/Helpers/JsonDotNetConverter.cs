@@ -15,7 +15,7 @@ namespace AccServerAdmin.Infrastructure.Helpers
         /// <inheritdoc/>
         public string SerializeObject<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 }
