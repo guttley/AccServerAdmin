@@ -4,25 +4,41 @@
     ViewData["Title"] = "Settings";
 }
 
-<section class="forms">
+<div class="page-header">
     <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Settings</h2>
+    </div>
+</div>
 
-        <header>
-            <h1 class="h3 display">Settings</h1>
-        </header>
-
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
         <div class="row">
+
             <div class="col-lg-6">
                 <div class="card">
 
-                    <div class="card-header d-flex align-items-center">
-                        <h4>Directory Settings</h4>
-                    </div>
-                    <div class="card-body">
-                        <p></p>
-                        <form method="post">
-                            
-                            <input type="hidden" asp-for="Settings.Id"/>
+                    <form method="post">
+
+                        <div class="card-header d-flex align-items-center">
+                            <h4>Security Settings</h4>
+                        </div>
+                        <div class="card-body">
+                            <p></p>
+
+                            <div class="form-group">
+                                <label asp-for="Settings.AdminPassphrase" class="label-material">Admin Passphrase (used when registering new admins)</label>
+                                <input asp-for="Settings.AdminPassphrase" type="text" class="form-control">
+                                <span asp-validation-for="Settings.AdminPassphrase" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="card-header d-flex align-items-center">
+                            <h4>Directory Settings</h4>
+                        </div>
+                        <div class="card-body">
+                            <p></p>
+
+                            <input type="hidden" asp-for="Settings.Id" />
 
                             <div class="form-group">
                                 <label asp-for="Settings.ServerBasePath" class="label-material">Base Server Directory</label>
@@ -53,9 +69,11 @@
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary">
                             </div>
-                        </form>
-                    </div>
 
+
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>

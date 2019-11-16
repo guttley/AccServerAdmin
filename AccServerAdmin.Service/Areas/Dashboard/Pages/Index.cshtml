@@ -13,14 +13,17 @@
     }
 }
 
-<section class="statistics">
+
+<div class="page-header">
     <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Dashboard</h2>
+    </div>
+</div>
 
-        <header>
-            <h1 class="h3 display">Dashboard </h1>
-        </header>
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
 
-        <div class="row d-flex">
 
             @if (Globals.NeedsConfiguring)
             {
@@ -52,10 +55,10 @@
             {
                 @foreach (var item in Model.DashItems)
                 {
-                    <partial name="_ServerCardPartial" model="@item" />
+                <partial name="_ServerCardPartial" model="@item" />
                 }
             }
-                
+
         </div>
     </div>
 </section>

@@ -250,6 +250,10 @@ namespace AccServerAdmin.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("AdminPassphrase")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("InstanceBasePath")
                         .IsRequired()
                         .HasColumnType("TEXT");

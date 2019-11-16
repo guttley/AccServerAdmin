@@ -26,5 +26,12 @@ namespace AccServerAdmin.Domain
         [Required]
         [DataType(DataType.Text)]
         public string InstanceBasePath { get; set; }
+
+        /// <summary>
+        /// Admin passphrase
+        /// </summary>
+        [Required]
+        [DataType(DataType.Text)]
+        public string AdminPassphrase { get; set; }
     }
 }

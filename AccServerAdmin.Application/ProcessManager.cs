@@ -14,7 +14,8 @@ namespace AccServerAdmin.Application
 {
     public class ProcessManager : IProcessManager
     {
-        private readonly IServiceScope _scope;
+        private volatile bool _disposed;
+        private readonly IServiceProvider _services;
         private readonly ILogger<ProcessManager> _logger;
         private readonly ConcurrentDictionary<Guid, ServerProcessInfo> _processes = new ConcurrentDictionary<Guid, ServerProcessInfo>();
         private readonly Task _processCheckTask;
@@ -25,14 +26,14 @@ namespace AccServerAdmin.Application
             IServiceProvider services,
             ILogger<ProcessManager> logger)
         {
-            _scope = services.CreateScope();
+            _services = services;            
             _logger = logger;
             _processCheckTask = Task.Run(CheckProcesses);
         }
         
         private void CheckProcesses()
         {
-            while(_scope != null)
+            while(!_disposed)
             {
                 try
                 {
@@ -40,14 +41,17 @@ namespace AccServerAdmin.Application
 
                     foreach (var process in toCheck)
                     {
-                        if (Process.GetProcessById(process.ProcessInfo.Id) == null)
+                        using (var processInfo = Process.GetProcessById(process.ProcessInfo.Id))
                         {
-                            _logger.LogInformation($"Server found not to be running: {process.ServerId}");
-                            _processes.TryRemove(process.ServerId, out _);
+                            if (processInfo == null)
+                            {
+                                _logger.LogInformation($"Server found not to be running: {process.ServerId}");
+                                _processes.TryRemove(process.ServerId, out _);
+                            }
                         }
                     }
 
-                    Task.Delay(1000);
+                    Task.Delay(3000).Wait();
                 } 
                 catch (Exception ex)
                 {
@@ -59,38 +63,40 @@ namespace AccServerAdmin.Application
 
         public async Task<ServerProcessInfo> StartServerAsync(Guid serverId)
         {
-            var getServerByIdQuery = _scope.ServiceProvider.GetRequiredService<IGetServerByIdQuery>();
-            var serverConfigWriter = _scope.ServiceProvider.GetRequiredService<IServerConfigWriter>();
-            var serverInstanceCreator = _scope.ServiceProvider.GetRequiredService<IServerInstanceCreator>();
-            var server = await getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
-
-            var path = await serverInstanceCreator.ExecuteAsync(server).ConfigureAwait(false);
-
-            serverConfigWriter.Execute(server, path);
-
-            var startInfo = new ProcessStartInfo
+            using (var scope = _services.CreateScope())
             {
-                CreateNoWindow = true,
-                FileName = "accServer.exe",
-                UseShellExecute = true,
-                Verb = "runas",
-                WindowStyle = ProcessWindowStyle.Hidden,
-                WorkingDirectory = path
-            };
+                var getServerByIdQuery = scope.ServiceProvider.GetRequiredService<IGetServerByIdQuery>();
+                var serverConfigWriter = scope.ServiceProvider.GetRequiredService<IServerConfigWriter>();
+                var serverInstanceCreator = scope.ServiceProvider.GetRequiredService<IServerInstanceCreator>();
+                var server = await getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
+                var path = await serverInstanceCreator.ExecuteAsync(server).ConfigureAwait(false);
 
-            _logger.LogInformation($"Starting server: {server.Name}");
+                serverConfigWriter.Execute(server, path);
 
-            var processInfo = new ServerProcessInfo
-            {
-                ProcessInfo = Process.Start(startInfo),
-                ServerId = serverId,
-            };
+                var startInfo = new ProcessStartInfo
+                {
+                    CreateNoWindow = true,
+                    FileName = "accServer.exe",
+                    UseShellExecute = true,
+                    Verb = "runas",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    WorkingDirectory = path
+                };
 
-            _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");
+                _logger.LogInformation($"Starting server: {server.Name}");
 
-            _processes.AddOrUpdate(serverId, processInfo, (k, v) => processInfo);
+                var processInfo = new ServerProcessInfo
+                {
+                    ProcessInfo = Process.Start(startInfo),
+                    ServerId = serverId,
+                };
 
-            return processInfo;
+                _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");
+
+                _processes.AddOrUpdate(serverId, processInfo, (k, v) => processInfo);
+
+                return processInfo;
+            }
         }
 
         public void StopServer(Guid serverId)
@@ -113,8 +119,7 @@ namespace AccServerAdmin.Application
                 process.ProcessInfo.Kill(true);
             }
 
-            _scope?.Dispose();
-            _scope = null;
+            _disposed = true;
         }
     }
 }

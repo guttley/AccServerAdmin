@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
@@ -21,7 +22,10 @@ namespace AccServerAdmin.Application.Common
         public void Execute(Server server, string serverPath)
         {
             var cfgPath = Path.Combine(serverPath, "cfg");
-            
+
+            // Must order the Sessions P, Q, R or the server will complain
+            server.EventCfg.Sessions = server.EventCfg.Sessions.OrderBy(s => s.SessionType).ToList();
+
             Save(server.NetworkCfg,  cfgPath, "configuration.json");
             Save(server.GameCfg, cfgPath, "settings.json");
             Save(server.EventCfg, cfgPath, "event.json");

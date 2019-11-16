@@ -86,11 +86,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         private void BuildBindingLists()
         {
-            var sessionTypes = new Dictionary<string, string>
+            var sessionTypes = new Dictionary<SessionType, string>
             {
-                { "P", "Practice" },
-                { "Q", "Qualification" },
-                { "R", "Race" },
+                { SessionType.Practice, "Practice" },
+                { SessionType.Qually, "Qualification" },
+                { SessionType.Race, "Race" },
             };
 
             var sessionDays = new Dictionary<int, string>
@@ -106,16 +106,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         private void ValidateSessionConfiguration()
         {
-            /*
-            if (Server.NetworkCfg.TcpPort < 1024 || Server.NetworkCfg.TcpPort > ushort.MaxValue)
-                ModelState.AddModelError("NetworkCfg.TcpPort", $"TcpPort must be greater than 1024 and less than {ushort.MaxValue}");
 
-            if (Server.NetworkCfg.UdpPort < 1024 || Server.NetworkCfg.UdpPort > ushort.MaxValue)
-                ModelState.AddModelError("NetworkCfg.UdpPort", $"UdpPort must be greater than 1024 and less than {ushort.MaxValue}");
-
-            if (Server.NetworkCfg.MaxClients == 0 || Server.NetworkCfg.MaxClients > 32)
-                ModelState.AddModelError("NetworkCfg.MaxClients", "MaxClients must be between 1 and 32");
-                */
         }
 
     }

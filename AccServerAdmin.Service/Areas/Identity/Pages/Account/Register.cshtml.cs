@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AccServerAdmin.Application.AppSettings;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,17 +23,20 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IGetAppSettingsQuery _appSettingsQuery;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IGetAppSettingsQuery appSettingsQuery)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _appSettingsQuery = appSettingsQuery;
         }
 
         [BindProperty]
@@ -59,6 +63,11 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "Admin passphrase")]
+            [Compare("Passphrase", ErrorMessage = "The passphrase does not")]
+            public string Passphrase { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +84,11 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+
+                var appSettings = await _appSettingsQuery.ExecuteAsync();
+                var passphraseOk = appSettings == null || (Input.Passphrase == appSettings?.AdminPassphrase);
+
+                if (result.Succeeded && passphraseOk)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
@@ -100,6 +113,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

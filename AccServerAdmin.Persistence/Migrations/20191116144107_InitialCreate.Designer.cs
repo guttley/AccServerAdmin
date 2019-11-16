@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191110203122_Initial create")]
-    partial class Initialcreate
+    [Migration("20191116144107_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -250,6 +250,10 @@ namespace AccServerAdmin.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AdminPassphrase")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("InstanceBasePath")

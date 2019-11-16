@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AccServerAdmin.Persistence.Migrations
 {
-    public partial class Initialcreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace AccServerAdmin.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ServerBasePath = table.Column<string>(nullable: false),
-                    InstanceBasePath = table.Column<string>(nullable: false)
+                    InstanceBasePath = table.Column<string>(nullable: false),
+                    AdminPassphrase = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

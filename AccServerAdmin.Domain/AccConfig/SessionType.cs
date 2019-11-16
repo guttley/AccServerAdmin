@@ -5,8 +5,8 @@
     /// </summary>
     public enum SessionType
     {
-        Practice,
-        Qually,
-        Race
+        Practice = 0,
+        Qually = 1,
+        Race = 2
     }
 }

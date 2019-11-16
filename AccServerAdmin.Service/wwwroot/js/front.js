@@ -1,39 +1,10 @@
-$(document).ready(function () {
-
-    // ------------------------------------------------------- //
-    // Custom Scrollbar
-    // ------------------------------------------------------ //
-
-    if ($(window).outerWidth() > 992) {
-        $("nav.side-navbar").mCustomScrollbar({
-            scrollInertia: 200
-        });
-    }
-
-    // Main Template Color
-    var brandPrimary = '#33b35a';
-
-    // ------------------------------------------------------- //
-    // Side Navbar Functionality
-    // ------------------------------------------------------ //
-    $('#toggle-btn').on('click', function (e) {
-
-        e.preventDefault();
-
-        if ($(window).outerWidth() > 1194) {
-            $('nav.side-navbar').toggleClass('shrink');
-            $('.page').toggleClass('active');
-        } else {
-            $('nav.side-navbar').toggleClass('show-sm');
-            $('.page').toggleClass('active-sm');
-        }
-    });
+$(function () {
 
     // ------------------------------------------------------- //
     // Tooltips init
     // ------------------------------------------------------ //    
 
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip()        
 
     // ------------------------------------------------------- //
     // Universal Form Validation
@@ -58,6 +29,7 @@ $(document).ready(function () {
             }
         });
     });
+
     // ------------------------------------------------------- //
     // Material Inputs
     // ------------------------------------------------------ //
@@ -65,9 +37,7 @@ $(document).ready(function () {
     var materialInputs = $('input.input-material');
 
     // activate labels for prefilled values
-    materialInputs.filter(function () {
-        return $(this).val() !== "";
-    }).siblings('.label-material').addClass('active');
+    materialInputs.filter(function() { return $(this).val() !== ""; }).siblings('.label-material').addClass('active');
 
     // move label on focus
     materialInputs.on('focus', function () {
@@ -86,34 +56,66 @@ $(document).ready(function () {
     });
 
     // ------------------------------------------------------- //
-    // Jquery Progress Circle
-    // ------------------------------------------------------ //
-    var progress_circle = $("#progress-circle").gmpc({
-        color: brandPrimary,
-        line_width: 5,
-        percent: 80
-    });
-    progress_circle.gmpc('animate', 80, 3000);
+    // Footer 
+    // ------------------------------------------------------ //   
 
-    // ------------------------------------------------------- //
-    // External links to new window
-    // ------------------------------------------------------ //
+    var pageContent = $('.page-content');
 
-    $('.external').on('click', function (e) {
-
-        e.preventDefault();
-        window.open($(this).attr("href"));
+    $(document).on('sidebarChanged', function () {
+        adjustFooter();
     });
 
-    // ------------------------------------------------------- //
-    // External links to new window
-    // ------------------------------------------------------ //
+    $(window).on('resize', function(){
+        adjustFooter();
+    })
 
-    $('#logout-btn').on('click', function (e) {
+    function adjustFooter() {
+        var footerBlockHeight = $('.footer__block').outerHeight();
+        pageContent.css('padding-bottom', footerBlockHeight + 'px');
+    }
+
+    // ------------------------------------------------------- //
+    // Adding fade effect to dropdowns
+    // ------------------------------------------------------ //
+    $('.dropdown').on('show.bs.dropdown', function () {
+        $(this).find('.dropdown-menu').first().stop(true, true).fadeIn(100).addClass('active');
+    });
+    $('.dropdown').on('hide.bs.dropdown', function () {
+        $(this).find('.dropdown-menu').first().stop(true, true).fadeOut(100).removeClass('active');
+    });
+
+
+    // ------------------------------------------------------- //
+    // Search Popup
+    // ------------------------------------------------------ //
+    $('.search-open').on('click', function (e) {
         e.preventDefault();
-        var form = $('#__AjaxAntiForgeryForm');
-        var token = $('input[name="__RequestVerificationToken"]', form).val();
-        $.post('/Identity/Account/Logout', { __RequestVerificationToken: token }, function (resp) { });
+        $('.search-panel').fadeIn(100);
+    })
+    $('.search-panel .close-btn').on('click', function () {
+        $('.search-panel').fadeOut(100);
+    });
+
+
+    // ------------------------------------------------------- //
+    // Sidebar Functionality
+    // ------------------------------------------------------ //
+    $('.sidebar-toggle').on('click', function () {
+        $(this).toggleClass('active');
+
+        $('#sidebar').toggleClass('shrinked');
+        $('.page-content').toggleClass('active');
+        $(document).trigger('sidebarChanged');
+
+        if ($('.sidebar-toggle').hasClass('active')) {
+            $('.navbar-brand .brand-sm').addClass('visible');
+            $('.navbar-brand .brand-big').removeClass('visible');
+            $(this).find('i').attr('class', 'fa fa-long-arrow-right');
+        } else {
+            $('.navbar-brand .brand-sm').removeClass('visible');
+            $('.navbar-brand .brand-big').addClass('visible');
+            $(this).find('i').attr('class', 'fa fa-long-arrow-left');
+        }
     });
 
 });

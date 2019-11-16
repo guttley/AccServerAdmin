@@ -47,7 +47,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
                 Settings = new AppSettings
                 {
                     ServerBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AccServerAdmin", "ServerBase"),
-                    InstanceBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AccServerAdmin", "ServerInstances")
+                    InstanceBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AccServerAdmin", "ServerInstances"),
+                    AdminPassphrase = "ChangeThisPassphrase"
                 };
 
                 IsDefaulted = true;
