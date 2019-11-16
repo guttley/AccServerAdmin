@@ -4,7 +4,7 @@ $(function () {
     // Tooltips init
     // ------------------------------------------------------ //    
 
-    $('[data-toggle="tooltip"]').tooltip()        
+    $('[data-toggle="tooltip"]').tooltip();        
 
     // ------------------------------------------------------- //
     // Universal Form Validation
@@ -65,9 +65,9 @@ $(function () {
         adjustFooter();
     });
 
-    $(window).on('resize', function(){
+    $(window).on('resize', function () {
         adjustFooter();
-    })
+    });
 
     function adjustFooter() {
         var footerBlockHeight = $('.footer__block').outerHeight();
@@ -91,7 +91,7 @@ $(function () {
     $('.search-open').on('click', function (e) {
         e.preventDefault();
         $('.search-panel').fadeIn(100);
-    })
+    });
     $('.search-panel .close-btn').on('click', function () {
         $('.search-panel').fadeOut(100);
     });
@@ -116,6 +116,17 @@ $(function () {
             $('.navbar-brand .brand-big').addClass('visible');
             $(this).find('i').attr('class', 'fa fa-long-arrow-left');
         }
+    });
+
+    // ------------------------------------------------------- //
+    // Logout click
+    // ------------------------------------------------------ //
+
+    $('#logout-btn').on('click', function (e) {
+        e.preventDefault();
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        $.post('/Identity/Account/Logout', { __RequestVerificationToken: token }, function (resp) { });
     });
 
 });

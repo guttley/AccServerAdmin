@@ -112,12 +112,18 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                }
+                } 
 
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
+                if (!passphraseOk)
+                {
+                    ModelState.AddModelError("Passphrase", "Passphrase is incorrect");
+                }
+
             }
 
             // If we got this far, something failed, redisplay form

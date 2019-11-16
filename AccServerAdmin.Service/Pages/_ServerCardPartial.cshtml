@@ -1,0 +1,29 @@
+﻿@model AccServerAdmin.Domain.DashItem
+
+
+    <div class="col-md-3 mb-4">
+        <div class="card h-100">
+            <div class="card-header">@Model.Server.Name</div>
+            <div class="card-body">
+
+                <form method="post">
+                    <p class="card-text">
+                        Track: @Model.Server.EventCfg.Track<br />
+                        @if (Model.ProcessInfo != null)
+                        {
+                            <small>Started: @Model.ProcessInfo?.ProcessInfo?.StartTime;</small><br />
+                            <small>PID: @Model.ProcessInfo?.ProcessInfo?.Id;</small><br />
+                            <button type="submit" class="btn btn-primary" asp-route-serverId="@Model.Server.Id" asp-page-handler="StopServer">Stop</button>
+                        }
+                        else
+                        {
+                            <br />
+                            <button type="submit" class="btn btn-primary" asp-route-serverId="@Model.Server.Id" asp-page-handler="StartServer">Start</button>
+                        }
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+

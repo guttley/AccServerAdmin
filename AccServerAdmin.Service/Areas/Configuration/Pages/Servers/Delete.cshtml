@@ -4,41 +4,42 @@
     ViewData["Title"] = "Delete Server";
 }
 
-<section class="forms">
+<div class="page-header">
     <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Servers</h2>
+    </div>
+</div>
 
-        <header>
-            <h1 class="h3 display"></h1>
-        </header>
-
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
+                <div class="col-lg-12">
+                    <div class="card">
 
-                    <div class="card-header d-flex align-items-center">
-                        <h4>Delete Server - @Model.Server.Name</h4>
-                    </div>
+                        <div class="card-header d-flex align-items-center">
+                            <h4>Delete Server - @Model.Server.Name</h4>
+                        </div>
 
-                    <div class="card-body">
-                        
-                        <form method="post" class="form-horizontal">
+                        <div class="card-body">
 
-                            <input asp-for="Server.Id" type="hidden" />
-                            
-                            <div class="form-group-material">
-                                <div class="text-danger">Are you sure you wish to delete this server?</div>
-                            </div>                            
+                            <form method="post" class="form-horizontal">
 
-                            <div class="form-group">
-                                <input type="submit" value="Delete" class="btn btn-primary">
-                                <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
-                            </div>
+                                <input asp-for="Server.Id" type="hidden" />
 
-                        </form>
+                                <div class="form-group-material">
+                                    <div class="text-danger">Are you sure you wish to delete this server?</div>
+                                </div>
 
+                                <div class="form-group">
+                                    <input type="submit" value="Delete" class="btn btn-primary">
+                                    <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
+                                </div>
+
+                            </form>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>

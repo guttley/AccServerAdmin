@@ -16,7 +16,7 @@
     <!-- Google fonts - Muli-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="/css/style.violet.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="~/css/style.default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="/css/custom.css">
     <!-- Favicon-->
@@ -43,7 +43,14 @@
 
                     <!-- Log out -->
                     <div class="list-inline-item logout">
-                        <a id="logout" href="login.html" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a>
+
+                        <form id="logout_form" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                            <a id="logout-btn" class="nav-link logout" href="javascript:;" onclick="document.getElementById('logout_form').submit();">
+                                <span class="d-none d-sm-inline-block">Logout</span><i class="icon-logout"></i>
+                            </a>
+                        </form>
+
+                        
                     </div>
                 </div>
             </div>
@@ -63,16 +70,18 @@
             <!-- Sidebar Navidation Menus-->
             <span class="heading">Main</span>
             <ul class="list-unstyled">
-                <li><a asp-area="Dashboard" asp-page="/Index"><i class="icon-home"></i>Dashboard</a></li>
+                
+                <li @if (Context.Request.Path.Value == "/") { @Html.Raw("class='active'"); }><a asp-page="/Index"><i class="icon-home"></i>Dashboard</a></li>
+                
 
                 @if (!Globals.NeedsConfiguring)
                 {
-                    <li><a asp-area="Configuration" asp-page="/Servers/List"><i class="icon-windows"></i>Servers</a></li>
-                    <li><a asp-area="Configuration" asp-page="/Drivers/List"><i class="icon-user"></i>Drivers</a></li>
+                    <li @if (Context.Request.Path.Value.Contains("Servers")) { @Html.Raw("class='active'"); }><a asp-area="Configuration" asp-page="/Servers/List"><i class="icon-computer"></i>Servers</a></li>
+                    <li @if (Context.Request.Path.Value.Contains("Drivers")) { @Html.Raw("class='active'"); }><a asp-area="Configuration" asp-page="/Drivers/List"><i class="icon-user"></i>Drivers</a></li>
                 }
 
-                <li><a asp-area="Configuration" asp-page="/Settings"><i class="icon-settings"></i>Settings</a></li>
-                <li><a asp-page="/Acknowledgments"><i class="icon-writing-whiteboard"></i>Acknowledgments</a></li>
+                <li @if (Context.Request.Path.Value.Contains("Settings")) { @Html.Raw("class='active'"); }><a asp-area="Configuration" asp-page="/Settings"><i class="icon-settings"></i>Settings</a></li>
+                <li @if (Context.Request.Path.Value.Contains("Acknowledgments")) { @Html.Raw("class='active'"); }><a asp-page="/Acknowledgments"><i class="icon-writing-whiteboard"></i>Acknowledgments</a></li>
             </ul>
         </nav>
         <!-- Sidebar Navigation end-->

@@ -4,13 +4,14 @@
     ViewData["Title"] = "Add a new server";
 }
 
-<section class="forms">
+<div class="page-header">
     <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Servers</h2>
+    </div>
+</div>
 
-        <header>
-            <h1 class="h3 display">Server</h1>
-        </header>
-
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
                 <div class="card">
@@ -26,10 +27,10 @@
                                 <input asp-for="Server.Name" type="text" class="form-control">
                                 <span asp-validation-for="Server.Name" class="text-danger"></span>
                             </div>
-                            
+
                             <div class="form-group-material">
                                 <div asp-validation-summary="All" class="text-danger"></div>
-                            </div>                            
+                            </div>
 
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary">
