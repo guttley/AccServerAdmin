@@ -44,11 +44,11 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("helmetMaterialType")]
         public int HelmetMaterialType { get; set; }
 
-        [JsonProperty("helmetMaterialType")]
+        [JsonProperty("helmetGlassColor")]
         public int HelmetGlassColor { get; set; }
 
         [JsonProperty("helmetGlassMetallic")]
-        public int HelmetGlassMetallic { get; set; }
+        public double HelmetGlassMetallic { get; set; }
 
         [JsonProperty("glovesTemplateKey")]
         public int GlovesTemplateKey { get; set; }
@@ -71,7 +71,7 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("aiRainSkill")]
         public int AiRainSkill { get; set; }
 
-        [JsonProperty("aiRainSkill")]
+        [JsonProperty("aiConsistency")]
         public int AiConsistency { get; set; }                
     }
 }

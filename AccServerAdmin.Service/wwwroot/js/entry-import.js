@@ -9,9 +9,9 @@ $(function () {
 
     connection.on("ImportMessage", function (message) {
         var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        var li = document.createElement("li");
-        li.textContent = msg;
-        document.getElementById("messagesList").appendChild(li);
+        var option = document.createElement("option");
+        option.textContent = msg;
+        document.getElementById("messages").appendChild(option);
     });
 
     connection.start().then(function () {

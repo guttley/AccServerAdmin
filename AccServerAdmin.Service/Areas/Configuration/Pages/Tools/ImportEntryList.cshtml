@@ -27,12 +27,12 @@
                             <form method="post" id="entryImportForm">
                                 <button type="submit" id="startImportBtn" class="btn btn-success" asp-route-Id="@Model.Server.Id" asp-page-handler="ImportEntryList">Start</button>
                             </form>
-
-                            <div class="col-6">
-                                <ul id="messagesList"></ul>
+                            
+                            <div class="row margin-top-sm">
+                                
+                                    <select multiple="" class="form-control" id="messages"></select>
+                                
                             </div>
-
-                        </div>
                     </div>
                 </div>
             </div>

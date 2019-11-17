@@ -29,10 +29,16 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
             Server = await _getServerByIdQuery.ExecuteAsync(id);
         }
 
-        public Task OnPostImportEntryListAsync(Guid id)
+        public async Task OnPostImportEntryListAsync(Guid id)
         {
-            Task.Run(() => _importEntryListCommand.ExecuteAsync(id));
-            return Task.CompletedTask;
+            try
+            {
+                await _importEntryListCommand.ExecuteAsync(id);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
     }

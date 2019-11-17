@@ -4,6 +4,7 @@ using AccServerAdmin.Application;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Application.Drivers.Commands;
+using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -163,6 +164,9 @@ namespace AccServerAdmin.Service
             services.AddTransient<ICreateSessionCommand, CreateSessionCommand>();
             services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
             services.AddTransient<IDeleteSessionCommand, DeleteSessionCommand>();
+            services.AddTransient<IGetDriverListQuery, GetDriverListQuery>();
+            services.AddTransient<IGetDriverByIdQuery, GetDriverByIdQuery>();
+            
             services.AddTransient<IImportEntryListCommand, ImportEntryListCommand>();
             services.AddTransient<IEntryListReader, EntryListReader>();
 

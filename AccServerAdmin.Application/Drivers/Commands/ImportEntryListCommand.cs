@@ -44,8 +44,9 @@ namespace AccServerAdmin.Application.Drivers.Commands
                     await _driverRepository.AddAsync(driver).ConfigureAwait(false);
                     await _hubContext.Clients.All.ImportMessage($"Driver imported: {driver.PlayerId} - {driver.Firstname} {driver.Lastname}").ConfigureAwait(false);
                 }
-
             }
+
+            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

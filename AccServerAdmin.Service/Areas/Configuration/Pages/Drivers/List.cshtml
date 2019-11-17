@@ -1,0 +1,52 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Drivers.DriverListModel
+
+@{
+    ViewData["Title"] = "Driver list";
+}
+
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Servers</h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Server List - <a asp-area="Configuration" asp-page="/Drivers/Add" asp>Create new Driver</a></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Driver Name</th>
+                                        <th>SteamId</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var driver in Model.Drivers)
+                                    {
+
+                                        <tr>
+                                            <th scope="row">@driver.Firstname @driver.Lastname</th>
+                                            <td>@driver.PlayerId</td>
+                                            <td><a asp-area="Configuration" asp-page="/Drivers/Edit" asp-route-Id="@driver.Id">Edit</a></td>
+                                            <td><a asp-area="Configuration" asp-page="/Drivers/Delete" asp-route-Id="@driver.Id">Delete</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
