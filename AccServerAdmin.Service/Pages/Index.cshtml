@@ -12,11 +12,10 @@
 
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
-        <div class="row">
 
-
-            @if (Globals.NeedsConfiguring)
-            {
+        @if (Globals.NeedsConfiguring)
+        {
+            <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
@@ -27,9 +26,11 @@
                         </div>
                     </div>
                 </div>
-            }
-            else if (!Model.DashItems.Any())
-            {
+            </div>
+        }
+        else if (!Model.DashItems.Any())
+        {
+            <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
@@ -40,15 +41,22 @@
                         </div>
                     </div>
                 </div>
-            }
-            else
-            {
+            </div>
+        }
+        else
+        {
+            <!--
+            <div class="row">
+                <partial name="_DashboardToolsPartial" />
+            </div>
+            -->
+
+            <div class="row">
                 @foreach (var item in Model.DashItems)
                 {
                     <partial name="_ServerCardPartial" model="@item" />
                 }
-            }
-
-        </div>
+            </div>
+        }
     </div>
 </section>

@@ -3,6 +3,7 @@ using System.IO;
 using AccServerAdmin.Application;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Common;
+using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -22,6 +23,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using AccServerAdmin.Application.Sessions.Queries;
 using AccServerAdmin.Application.Sessions.Commands;
+using AccServerAdmin.Notifications.EntryList;
 using FluffySpoon.AspNet.LetsEncrypt;
 using Certes;
 
@@ -76,6 +78,8 @@ namespace AccServerAdmin.Service
                     o.Conventions.AuthorizePage("/Index");
                 });
 
+            services.AddSignalR();
+
             RegisterApplicationComponents(services);
         }
 
@@ -106,6 +110,7 @@ namespace AccServerAdmin.Service
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                endpoints.MapHub<EntryImportHub>("/hubs/entryImportHub");
             });
         }
 
@@ -141,6 +146,7 @@ namespace AccServerAdmin.Service
             // Repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IServerRepository, ServerRepository>();
+            services.AddTransient<IDriverRepository, DriverRepository>();
             services.AddTransient<IDataRepository<AppSettings>, AppSettingsRepository>();
             services.AddTransient<IDataRepository<GameCfg>, DataRepository<GameCfg>>();
             services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
@@ -157,6 +163,11 @@ namespace AccServerAdmin.Service
             services.AddTransient<ICreateSessionCommand, CreateSessionCommand>();
             services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
             services.AddTransient<IDeleteSessionCommand, DeleteSessionCommand>();
+            services.AddTransient<IImportEntryListCommand, ImportEntryListCommand>();
+            services.AddTransient<IEntryListReader, EntryListReader>();
+
+
+
         }
     }
 }

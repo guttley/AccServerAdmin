@@ -17,7 +17,6 @@ namespace AccServerAdmin.Application.Servers.Commands
         {
             _serverRepository = serverRepository;
             _unitOfWork = unitOfWork;
-           
         }
 
         public async Task<Server> ExecuteAsync(string serverName)

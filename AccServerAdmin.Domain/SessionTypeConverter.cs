@@ -36,7 +36,7 @@ namespace AccServerAdmin.Domain
             if (reader.Value.ToString() == "R")
                 return SessionType.Race;
 
-            throw new Exception($"Unknown session type: {reader.Value.ToString()}");
+            throw new Exception($"Unknown session type: {reader.Value}");
         }
 
         public override bool CanConvert(Type objectType)

@@ -1,0 +1,40 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Tools.ImportEntryListModel
+
+@section Scripts
+{
+    <script src="@Url.Content("/js/entry-import.js")"></script>
+}
+
+<div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Entry Import</h2>
+        </div>
+    </div>
+
+<section class="no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h4>Import Entry List - @Model.Server.Name</h4>
+                        </div>
+
+                        <div class="card-body">
+                            
+                            <form method="post" id="entryImportForm">
+                                <button type="submit" id="startImportBtn" class="btn btn-success" asp-route-Id="@Model.Server.Id" asp-page-handler="ImportEntryList">Start</button>
+                            </form>
+
+                            <div class="col-6">
+                                <ul id="messagesList"></ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

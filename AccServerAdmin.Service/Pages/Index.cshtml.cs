@@ -38,9 +38,8 @@ namespace AccServerAdmin.Service.Pages
             DashItems = servers.Select(s => new DashItem
             {
                 Server = s,
-                ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id)
+                ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id),
             }).ToList();
-
 
             Globals.NeedsConfiguring = settings is null;
         }
