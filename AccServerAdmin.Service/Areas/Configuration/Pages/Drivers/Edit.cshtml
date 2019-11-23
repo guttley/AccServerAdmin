@@ -1,0 +1,78 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Drivers.EditDriverModel
+@{
+    ViewData["Title"] = "Edit a driver";
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Drivers</h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4>Edit Driver - @Model.Driver.Firstname @Model.Driver.Lastname</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form method="post" class="form-horizontal">
+
+                            <div class="form-group row">
+                                <label asp-for="Driver.PlayerId" class="col-sm-2 form-control-label">Steam Id</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Driver.PlayerId" type="text" class="form-control">
+                                    <span asp-validation-for="Driver.PlayerId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Driver.Firstname" class="col-sm-2 form-control-label">First name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Driver.Firstname" type="text" class="form-control">
+                                    <span asp-validation-for="Driver.Firstname" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Driver.Lastname" class="col-sm-2 form-control-label">Last name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Driver.Lastname" type="text" class="form-control">
+                                    <span asp-validation-for="Driver.Lastname" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Driver.Shortname" class="col-sm-2 form-control-label">Short name</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Driver.Shortname" type="text" class="form-control">
+                                    <span asp-validation-for="Driver.Shortname" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Driver.DriverCategory" class="col-sm-2 form-control-label">Driver Category</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="Driver.DriverCategory" asp-items="Model.DriverTypes" class="form-control">
+                                        <option value="">-- Select a driver category --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                                <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -81,7 +81,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
                 _directory.CreateDirectory(Settings.InstanceBasePath);
                 Globals.NeedsConfiguring = false;
 
-                return RedirectToPage("Index", new { Area = "Dashboard"});
+                return RedirectToPage("Index");
             }
 
             return Page();

@@ -47,6 +47,7 @@ namespace AccServerAdmin.Application.Drivers.Commands
             }
 
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _hubContext.Clients.All.ImportMessage("Import Finished").ConfigureAwait(false);
         }
     }
 }

@@ -46,10 +46,10 @@ namespace AccServerAdmin.Service
             services.AddFluffySpoonLetsEncryptRenewalService(new LetsEncryptOptions()
             {
                 Email = "gav@differently.net",
-                UseStaging = false,
+                UseStaging = true,
                 Domains = new[] { Program.DomainToUse },
                 TimeUntilExpiryBeforeRenewal = TimeSpan.FromDays(30),
-                CertificateSigningRequest = new CsrInfo()
+                CertificateSigningRequest = new CsrInfo
                 {
                     CountryName = "United Kingdom",
                     Locality = "UK",
@@ -97,10 +97,14 @@ namespace AccServerAdmin.Service
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+#if (USE_HTTPS)
                 app.UseFluffySpoonLetsEncryptChallengeApprovalMiddleware();
-            }            
+#endif
+            }
 
+#if (USE_HTTPS)
             app.UseHttpsRedirection();
+#endif
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseRouting();
@@ -164,6 +168,10 @@ namespace AccServerAdmin.Service
             services.AddTransient<ICreateSessionCommand, CreateSessionCommand>();
             services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
             services.AddTransient<IDeleteSessionCommand, DeleteSessionCommand>();
+
+            services.AddTransient<ICreateDriverCommand, CreateDriverCommand>();
+            services.AddTransient<IUpdateDriverCommand, UpdateDriverCommand>();
+            services.AddTransient<IDeleteDriverCommand, DeleteDriverCommand>();
             services.AddTransient<IGetDriverListQuery, GetDriverListQuery>();
             services.AddTransient<IGetDriverByIdQuery, GetDriverByIdQuery>();
             

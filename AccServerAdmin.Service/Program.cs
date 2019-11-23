@@ -18,17 +18,21 @@ namespace AccServerAdmin.Service
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-#if (RELEASE)
                         .UseKestrel(kestrelOptions =>
                         {
+#if (USE_HTTPS)
                             kestrelOptions.ConfigureHttpsDefaults(httpsOptions =>
                             {
                                 httpsOptions.ServerCertificateSelector = (c, s) => LetsEncryptRenewalService.Certificate;
                             });
+#endif
                         })
                         .UseUrls(
+#if (USE_HTTPS)
                             $"http://{DomainToUse}",
                             $"https://{DomainToUse}")
+#else 
+                            $"http://{DomainToUse}")
 #endif
                         .UseStartup<Startup>();
                 });

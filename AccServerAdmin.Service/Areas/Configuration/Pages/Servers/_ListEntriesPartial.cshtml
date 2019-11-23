@@ -1,0 +1,46 @@
+﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+
+
+<div cass="card-header">
+    <h4>Session List - <a asp-area="Configuration" asp-page="/Servers/EditSession" asp-route-serverId="@Model.Server.Id" asp-route-eventId="@Model.Server.EventCfg.Id">Create new Session</a></h4>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Session Day</th>
+                <th>Hour of Day</th>
+                <th>Time multiplier</th>
+                <th>Duration (minutes)</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var session in Model.Server.EventCfg.Sessions.OrderBy(s => s.SessionType))
+            {
+            <tr>
+                <th scope="row">@session.SessionType</th>
+                @switch (session.DayOfWeekend)
+                {
+                    case 1:
+                        <td>Friday</td>
+                        break;
+                    case 2:
+                        <td>Saturday</td>
+                        break;
+                    case 3:
+                        <td>Sunday</td>
+                        break;
+                }
+                <td>@session.HourOfDay</td>
+                <td>@session.TimeMultiplier</td>
+                <td>@session.SessionDurationMinutes</td>
+                <td><a asp-area="Configuration" asp-page="/Servers/EditSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Edit</a></td>
+                <td><a asp-area="Configuration" asp-page="/Servers/DeleteSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Delete</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
