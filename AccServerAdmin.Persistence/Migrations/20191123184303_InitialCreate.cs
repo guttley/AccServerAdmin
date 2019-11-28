@@ -179,6 +179,26 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EntryList",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ServerId = table.Column<Guid>(nullable: false),
+                    ForceEntryList = table.Column<bool>(nullable: false),
+                    ConfigVersion = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntryList", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntryList_Servers_ServerId",
+                        column: x => x.ServerId,
+                        principalTable: "Servers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EventCfgs",
                 columns: table => new
                 {
@@ -294,6 +314,32 @@ namespace AccServerAdmin.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Entries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EntryListId = table.Column<Guid>(nullable: false),
+                    CustomCar = table.Column<string>(nullable: true),
+                    RaceNumber = table.Column<int>(nullable: false),
+                    DefaultGridPosition = table.Column<int>(nullable: false),
+                    ForcedCarModel = table.Column<int>(nullable: false),
+                    OverrideDriverInfo = table.Column<bool>(nullable: false),
+                    ServerAdmin = table.Column<bool>(nullable: false),
+                    OverrideCarModelForCustomCar = table.Column<bool>(nullable: false),
+                    ConfigVersion = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Entries_EntryList_EntryListId",
+                        column: x => x.EntryListId,
+                        principalTable: "EntryList",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SessionConfiguration",
                 columns: table => new
                 {
@@ -314,6 +360,44 @@ namespace AccServerAdmin.Persistence.Migrations
                         principalTable: "EventCfgs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drivers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    PlayerId = table.Column<string>(nullable: true),
+                    Firstname = table.Column<string>(nullable: true),
+                    Lastname = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    Shortname = table.Column<string>(nullable: true),
+                    DriverCategory = table.Column<int>(nullable: false),
+                    HelmetTemplateKey = table.Column<int>(nullable: false),
+                    HelmetBaseColor = table.Column<int>(nullable: false),
+                    HelmetDetailColor = table.Column<int>(nullable: false),
+                    HelmetMaterialType = table.Column<int>(nullable: false),
+                    HelmetGlassColor = table.Column<int>(nullable: false),
+                    HelmetGlassMetallic = table.Column<double>(nullable: false),
+                    GlovesTemplateKey = table.Column<int>(nullable: false),
+                    SuitTemplateKey = table.Column<int>(nullable: false),
+                    SuitDetailColor1 = table.Column<int>(nullable: false),
+                    SuitDetailColor2 = table.Column<int>(nullable: false),
+                    AiSkill = table.Column<int>(nullable: false),
+                    AiAggro = table.Column<int>(nullable: false),
+                    AiRainSkill = table.Column<int>(nullable: false),
+                    AiConsistency = table.Column<int>(nullable: false),
+                    EntryId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Drivers_Entries_EntryId",
+                        column: x => x.EntryId,
+                        principalTable: "Entries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -351,6 +435,28 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_EntryId",
+                table: "Drivers",
+                column: "EntryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_PlayerId",
+                table: "Drivers",
+                column: "PlayerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Entries_EntryListId",
+                table: "Entries",
+                column: "EntryListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntryList_ServerId",
+                table: "EntryList",
+                column: "ServerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -404,6 +510,9 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Drivers");
+
+            migrationBuilder.DropTable(
                 name: "EventRules");
 
             migrationBuilder.DropTable(
@@ -422,7 +531,13 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Entries");
+
+            migrationBuilder.DropTable(
                 name: "EventCfgs");
+
+            migrationBuilder.DropTable(
+                name: "EntryList");
 
             migrationBuilder.DropTable(
                 name: "Servers");

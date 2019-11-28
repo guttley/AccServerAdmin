@@ -36,6 +36,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public SelectList RacecraftRatings { get; set; }
 
+
         public async Task OnGetAsync(Guid id)
         {
             Server = await _getServerByIdQuery.ExecuteAsync(id).ConfigureAwait(false);

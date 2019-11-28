@@ -23,6 +23,9 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("lastName")] 
         public string Lastname { get; set; }
 
+        [JsonIgnore]
+        public string Fullname => $"{Firstname} {Lastname}";
+
         [JsonProperty("nickName")] 
         public string Nickname { get; set; }
 

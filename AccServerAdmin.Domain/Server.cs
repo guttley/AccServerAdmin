@@ -20,6 +20,7 @@ namespace AccServerAdmin.Domain
             GameCfg = GameCfg.CreateDefault();
             EventCfg = EventCfg.CreateDefault();
             EventRules = EventRules.CreateDefault();
+            EntryList = EntryList.CreateDefault();
         }
 
         /// <summary>
@@ -58,10 +59,14 @@ namespace AccServerAdmin.Domain
         public EventCfg EventCfg { get; set; } 
 
         /// <summary>
-        /// /Event Rules
+        /// Event Rules
         /// </summary>
         public EventRules EventRules { get; set; }
 
+        /// <summary>
+        /// Entry List
+        /// </summary>
+        public EntryList EntryList { get; set; }
 
     }
 }

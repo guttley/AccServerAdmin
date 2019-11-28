@@ -1,44 +1,38 @@
-﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+﻿@using AccServerAdmin.Application
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
 
 
 <div cass="card-header">
-    <h4>Session List - <a asp-area="Configuration" asp-page="/Servers/EditSession" asp-route-serverId="@Model.Server.Id" asp-route-eventId="@Model.Server.EventCfg.Id">Create new Session</a></h4>
+    <h4>Entry List - <a asp-area="Configuration" asp-page="/Servers/AddEntry" asp-route-serverId="@Model.Server.Id" asp-route-eventId="@Model.Server.EventCfg.Id">Create new Entry</a></h4>
 </div>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Session</th>
-                <th>Session Day</th>
-                <th>Hour of Day</th>
-                <th>Time multiplier</th>
-                <th>Duration (minutes)</th>
+                <th>Race Number</th>
+                <th>Car Model</th>
+                <th>Driver(s)</th>
+                <th>Admin</th>
                 <th colspan="2">Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var session in Model.Server.EventCfg.Sessions.OrderBy(s => s.SessionType))
+            @foreach (var entry in Model.Server.EntryList.Entries.OrderBy(e => e.RaceNumber))
             {
             <tr>
-                <th scope="row">@session.SessionType</th>
-                @switch (session.DayOfWeekend)
+                <th scope="row">@entry.RaceNumber</th>
+                <td>@EnumHelper.GetEnumDescription(entry.ForcedCarModel)</td>
+                <td>@entry.ForcedCarModel</td>
+                
+                <td>
+                @foreach (var driver in entry.Drivers)
                 {
-                    case 1:
-                        <td>Friday</td>
-                        break;
-                    case 2:
-                        <td>Saturday</td>
-                        break;
-                    case 3:
-                        <td>Sunday</td>
-                        break;
+                    @driver.Fullname<br/>
                 }
-                <td>@session.HourOfDay</td>
-                <td>@session.TimeMultiplier</td>
-                <td>@session.SessionDurationMinutes</td>
-                <td><a asp-area="Configuration" asp-page="/Servers/EditSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Edit</a></td>
-                <td><a asp-area="Configuration" asp-page="/Servers/DeleteSession" asp-route-Id="@session.Id" asp-route-serverId="@Model.Server.Id">Delete</a></td>
+                </td>
+                <td><a asp-area="Configuration" asp-page="/Servers/EditEntry" asp-route-Id="@entry.Id" asp-route-serverId="@Model.Server.Id">Edit</a></td>
+                <td><a asp-area="Configuration" asp-page="/Servers/DeleteEntry" asp-route-Id="@entry.Id" asp-route-serverId="@Model.Server.Id">Delete</a></td>
             </tr>
             }
         </tbody>

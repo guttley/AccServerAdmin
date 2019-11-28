@@ -31,6 +31,8 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<GameCfg> GameCfgs { get; set; }
         public DbSet<EventCfg> EventCfgs { get; set; }
         public DbSet<EventRules> EventRules { get; set; }
+        public DbSet<EntryList> EntryList { get; set; }
+        public DbSet<Entry> Entries { get; set; }
         public DbSet<Driver> Drivers { get; set; }
 
     }

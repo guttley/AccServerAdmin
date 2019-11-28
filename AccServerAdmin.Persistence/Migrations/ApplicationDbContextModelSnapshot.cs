@@ -37,6 +37,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("DriverCategory")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid?>("EntryId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Firstname")
                         .HasColumnType("TEXT");
 
@@ -84,10 +87,75 @@ namespace AccServerAdmin.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EntryId");
+
                     b.HasIndex("PlayerId")
                         .IsUnique();
 
                     b.ToTable("Drivers");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.Entry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ConfigVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CustomCar")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DefaultGridPosition")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("EntryListId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ForcedCarModel")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("OverrideCarModelForCustomCar")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("OverrideDriverInfo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RaceNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("ServerAdmin")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntryListId");
+
+                    b.ToTable("Entries");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EntryList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ConfigVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("ForceEntryList")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
+
+                    b.ToTable("EntryList");
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventCfg", b =>
@@ -549,6 +617,31 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.Driver", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.AccConfig.Entry", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("EntryId");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.Entry", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.AccConfig.EntryList", null)
+                        .WithMany("Entries")
+                        .HasForeignKey("EntryListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EntryList", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.Server", null)
+                        .WithOne("EntryList")
+                        .HasForeignKey("AccServerAdmin.Domain.AccConfig.EntryList", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.EventCfg", b =>

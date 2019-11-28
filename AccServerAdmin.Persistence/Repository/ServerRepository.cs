@@ -23,8 +23,8 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
-                .Include(s => s.EventCfg)
-                .ThenInclude(e => e.Sessions)
+                .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
+                .Include(s => s.EntryList).ThenInclude(e => e.Entries)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -36,8 +36,8 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
-                .Include(s => s.EventCfg)                
-                .ThenInclude(e => e.Sessions)
+                .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
+                .Include(s => s.EntryList).ThenInclude(e => e.Entries)
                 .FirstOrDefaultAsync(s => s.Id == id)
                 .ConfigureAwait(false);
         }
@@ -46,29 +46,35 @@ namespace AccServerAdmin.Persistence.Repository
         {
             base.Update(id, updated);
 
-            var existingNs = DbContext.Set<NetworkCfg>().Find(updated.NetworkCfg.Id);
-            var existingGs = DbContext.Set<GameCfg>().Find(updated.GameCfg.Id);
-            var existingEs = DbContext.Set<EventCfg>().Find(updated.EventCfg.Id);
-            var existingRs = DbContext.Set<EventRules>().Find(updated.EventRules.Id);
+            var existingNetCfg = DbContext.Set<NetworkCfg>().Find(updated.NetworkCfg.Id);
+            var existingGameCfg = DbContext.Set<GameCfg>().Find(updated.GameCfg.Id);
+            var existingEventCfg = DbContext.Set<EventCfg>().Find(updated.EventCfg.Id);
+            var existingRules = DbContext.Set<EventRules>().Find(updated.EventRules.Id);
+            var existingEntries = DbContext.Set<EntryList>().Find(updated.EntryList.Id);
 
-            if (existingNs != null)
+            if (existingNetCfg != null)
             {
-                DbContext.Entry(existingNs).CurrentValues.SetValues(updated.NetworkCfg);
+                DbContext.Entry(existingNetCfg).CurrentValues.SetValues(updated.NetworkCfg);
             }
 
-            if (existingGs != null)
+            if (existingGameCfg != null)
             {
-                DbContext.Entry(existingGs).CurrentValues.SetValues(updated.GameCfg);
+                DbContext.Entry(existingGameCfg).CurrentValues.SetValues(updated.GameCfg);
             }
 
-            if (existingEs != null)
+            if (existingEventCfg != null)
             {
-                DbContext.Entry(existingEs).CurrentValues.SetValues(updated.EventCfg);
+                DbContext.Entry(existingEventCfg).CurrentValues.SetValues(updated.EventCfg);
             }
 
-            if (existingRs != null)
+            if (existingRules != null)
             {
-                DbContext.Entry(existingRs).CurrentValues.SetValues(updated.EventRules);
+                DbContext.Entry(existingRules).CurrentValues.SetValues(updated.EventRules);
+            }
+
+            if (existingEntries != null)
+            {
+                DbContext.Entry(existingEntries).CurrentValues.SetValues(updated.EntryList);
             }
         }
 

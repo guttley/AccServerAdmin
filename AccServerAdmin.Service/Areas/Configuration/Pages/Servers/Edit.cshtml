@@ -33,6 +33,8 @@
                             <input asp-for="Server.EventCfg.Id" type="hidden" />
                             <input asp-for="Server.EventRules.ServerId" type="hidden" />
                             <input asp-for="Server.EventRules.Id" type="hidden" />
+                            <input asp-for="Server.EntryList.ServerId" type="hidden" />
+                            <input asp-for="Server.EntryList.Id" type="hidden" />
 
                             <div class="form-group row">
                                 <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
@@ -67,6 +69,11 @@
                                         Weather Settings
                                     </a>
                                 </li>
+                                <li class="nav-item flex-sm-fill">
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-entries" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
+                                        Entry List
+                                    </a>
+                                </li>
                             </ul>
 
                             <div class="tab-content">
@@ -91,6 +98,10 @@
                                         <!-- Weather settings -->
                                         <partial name="_EditWeatherPartial" />
                                     </div>
+                                    <div id="nav-tab-entries" role="tabpanel" aria-labelledby="entries-tab" class="tab-pane fade px-4 py-5">
+                                        <!-- Entry list -->
+                                        <partial name="_ListEntriesPartial" />
+                                    </div>
                                 </p>
                             </div>
 
@@ -106,10 +117,10 @@
                             </div>
 
                             <!--
-                            <div class="col-sm-10 text-right">
-                                <small><a href="https://www.assettocorsa.net/forum/index.php?threads/the-server-admin-handbook-thread.58245/">Server Handbook</a></small>
-                            </div>
-                                -->
+    <div class="col-sm-10 text-right">
+        <small><a href="https://www.assettocorsa.net/forum/index.php?threads/the-server-admin-handbook-thread.58245/">Server Handbook</a></small>
+    </div>
+        -->
                         </form>
 
                     </div>

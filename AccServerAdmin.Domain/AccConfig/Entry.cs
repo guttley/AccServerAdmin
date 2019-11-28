@@ -1,10 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
 {
     public class Entry
     {
+        [Key]
+        [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+
+        [JsonIgnore]
+        public Guid EntryListId { get; set; }
+
         [JsonProperty("drivers")] 
         public List<Driver> Drivers { get; set; }
 
