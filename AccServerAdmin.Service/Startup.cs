@@ -183,9 +183,10 @@ namespace AccServerAdmin.Service
             services.AddTransient<IEntryListReader, EntryListReader>();
             services.AddTransient<IGetImportableEntriesQuery, GetImportableEntriesQuery>();
             services.AddTransient<IGetEntryByIdQuery, GetEntryByIdQuery>();
+            services.AddTransient<IValidateEntryCommand, ValidateEntryCommand>();
             services.AddTransient<ICreateEntryCommand, CreateEntryCommand>();
             services.AddTransient<IUpdateEntryCommand, UpdateEntryCommand>();
-
+            services.AddTransient<IDeleteEntryCommand, DeleteEntryCommand>();
         }
     }
 }

@@ -400,6 +400,30 @@ namespace AccServerAdmin.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DriverEntries",
+                columns: table => new
+                {
+                    DriverId = table.Column<Guid>(nullable: false),
+                    EntryId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DriverEntries", x => new { x.EntryId, x.DriverId });
+                    table.ForeignKey(
+                        name: "FK_DriverEntries_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DriverEntries_Entries_EntryId",
+                        column: x => x.EntryId,
+                        principalTable: "Entries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -436,6 +460,11 @@ namespace AccServerAdmin.Persistence.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DriverEntries_DriverId",
+                table: "DriverEntries",
+                column: "DriverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Drivers_EntryId",
@@ -510,7 +539,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
+                name: "DriverEntries");
 
             migrationBuilder.DropTable(
                 name: "EventRules");
@@ -531,10 +560,13 @@ namespace AccServerAdmin.Persistence.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Entries");
+                name: "Drivers");
 
             migrationBuilder.DropTable(
                 name: "EventCfgs");
+
+            migrationBuilder.DropTable(
+                name: "Entries");
 
             migrationBuilder.DropTable(
                 name: "EntryList");

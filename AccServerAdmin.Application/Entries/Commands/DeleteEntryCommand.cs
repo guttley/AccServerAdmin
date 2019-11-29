@@ -1,34 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Entries.Commands
 {
-    public class CreateEntryCommand : ICreateEntryCommand
+    public class DeleteEntryCommand : IDeleteEntryCommand
     {
         private readonly IDataRepository<Entry> _entryRepository;
-        private readonly IValidateEntryCommand _validator;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateEntryCommand(
+        public DeleteEntryCommand(
             IDataRepository<Entry> entryRepository,
-            IValidateEntryCommand validator,
             IUnitOfWork unitOfWork)
         {
             _entryRepository = entryRepository;
-            _validator = validator;
             _unitOfWork = unitOfWork;
         }
 
-
-        public async Task<Entry> ExecuteAsync(Entry entry)
+        public async Task ExecuteAsync(Guid entryId)
         {
-            await _validator.ExecuteAsync(entry).ConfigureAwait(false);
-            await _entryRepository.AddAsync(entry).ConfigureAwait(false);
+            _entryRepository.Delete(entryId);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
-
-            return entry;
         }
-
     }
 }

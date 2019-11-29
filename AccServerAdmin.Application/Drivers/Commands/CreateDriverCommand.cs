@@ -23,7 +23,7 @@ namespace AccServerAdmin.Application.Drivers.Commands
         {
             if (await _driverRepository.IsUniqueSteamIdAsync(driver.PlayerId).ConfigureAwait(false))
             {
-                throw new NonUniqueNameException("Steam Ids must be unique");
+                throw new DriverNameNotUniqueException("Steam Ids must be unique");
             }
 
             await _driverRepository.AddAsync(driver);

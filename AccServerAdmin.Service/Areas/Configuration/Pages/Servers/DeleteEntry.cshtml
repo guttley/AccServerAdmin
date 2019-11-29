@@ -1,12 +1,12 @@
 ﻿@page
-@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.DeleteSessionModel
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.DeleteEntryModel
 @{
-    ViewData["Title"] = "Delete Session";
+    ViewData["Title"] = "Delete Entry";
 }
 
 <div class="page-header">
     <div class="container-fluid">
-        <h2 class="h5 no-margin-bottom">Servers</h2>
+        <h2 class="h5 no-margin-bottom">Server Entry</h2>
     </div>
 </div>
 
@@ -17,19 +17,18 @@
                 <div class="card">
 
                     <div class="card-header d-flex align-items-center">
-                        <h4>Delete Session</h4>
+                        <h4>Delete Entry</h4>
                     </div>
 
                     <div class="card-body">
 
                         <form method="post">
 
-                            <input asp-for="Session.Id" type="hidden" />
                             <input asp-for="ServerId" type="hidden" />
-
+                            <input asp-for="Entry.Id" type="hidden" />
 
                             <div class="form-group-material">
-                                <div class="text-danger">Are you sure you wish to delete the @Model.Session.SessionType session?</div>
+                                <div class="text-danger">Are you sure you wish to delete the entry for car @Model.Entry.RaceNumber?</div>
                             </div>
 
                             <div class="form-group">

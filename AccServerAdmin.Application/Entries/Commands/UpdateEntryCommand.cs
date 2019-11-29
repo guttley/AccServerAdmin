@@ -9,29 +9,23 @@ namespace AccServerAdmin.Application.Entries.Commands
     public class UpdateEntryCommand : IUpdateEntryCommand
     {
         private readonly IDataRepository<Entry> _entryRepository;
+        private readonly IValidateEntryCommand _validator;
         private readonly IUnitOfWork _unitOfWork;
 
         public UpdateEntryCommand(
             IDataRepository<Entry> entryRepository,
+            IValidateEntryCommand validator,
             IUnitOfWork unitOfWork)
         {
             _entryRepository = entryRepository;
+            _validator = validator;
             _unitOfWork = unitOfWork;
         }
 
 
         public async Task ExecuteAsync(Entry entry)
         {
-            if (await _entryRepository.GetQueryable().AnyAsync(e => e.RaceNumber == entry.RaceNumber).ConfigureAwait(false))
-            {
-                throw new NonUniqueRaceNumberException($"The race number {entry.RaceNumber} is already in use");
-            }
-
-            if (entry.RaceNumber > 0 && await _entryRepository.GetQueryable().AnyAsync(e => e.DefaultGridPosition == entry.DefaultGridPosition).ConfigureAwait(false))
-            {
-                throw new NonUniqueGridPositionException($"The grid position {entry.DefaultGridPosition} is already in use");
-            }
-
+            await _validator.ExecuteAsync(entry).ConfigureAwait(false);
             _entryRepository.Update(entry.Id, entry);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }

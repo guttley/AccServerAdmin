@@ -2,9 +2,9 @@
 
 namespace AccServerAdmin.Application.Exceptions
 {
-    public class NonUniqueRaceNumberException : Exception
+    public class DriverNameNotUniqueException : Exception
     {
-        public NonUniqueRaceNumberException(string message)
+        public DriverNameNotUniqueException(string message)
             : base(message)
         {
 

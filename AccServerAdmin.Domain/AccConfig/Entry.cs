@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
 {
     public class Entry : IKeyedEntity
     {
+        private List<Driver> _drivers;
+
         [Key]
         [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,8 +19,29 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonIgnore]
         public Guid EntryListId { get; set; }
 
-        [JsonProperty("drivers")] 
-        public List<Driver> Drivers { get; set; }
+        [JsonIgnore]
+        public List<DriverEntry> Entries { get; set; }
+
+        [JsonProperty("drivers")]
+        public List<Driver> Drivers
+        {
+            get
+            {
+                if (Entries != null)
+                {
+                    return Entries.Select(e => e.Driver).ToList();
+                }
+
+                if (_drivers == null)
+                {
+                    _drivers = new List<Driver>();
+                }
+
+                return _drivers;
+            }
+            set => _drivers = value;
+        }
+        
 
         [JsonProperty("customCar")]
         public string CustomCar { get; set; }
@@ -28,8 +52,8 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("defaultGridPosition")] 
         public int DefaultGridPosition { get; set; }
 
-        [JsonProperty("forcedCarModel")]
-        public CarModel ForcedCarModel { get; set; }
+        [JsonProperty("forcedCarModel")] 
+        public CarModel ForcedCarModel { get; set; } = CarModel.NotForced;
 
         [JsonProperty("overrideDriverInfo")]
         [JsonConverter(typeof(BoolConverter))]

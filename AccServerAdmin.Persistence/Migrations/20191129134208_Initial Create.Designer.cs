@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191123184303_InitialCreate")]
+    [Migration("20191129134208_Initial Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,21 @@ namespace AccServerAdmin.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Drivers");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.DriverEntry", b =>
+                {
+                    b.Property<Guid>("EntryId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("EntryId", "DriverId");
+
+                    b.HasIndex("DriverId");
+
+                    b.ToTable("DriverEntries");
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.Entry", b =>
@@ -626,6 +641,21 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasOne("AccServerAdmin.Domain.AccConfig.Entry", null)
                         .WithMany("Drivers")
                         .HasForeignKey("EntryId");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.DriverEntry", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.AccConfig.Driver", "Driver")
+                        .WithMany("Entries")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AccServerAdmin.Domain.AccConfig.Entry", "Entry")
+                        .WithMany("Entries")
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.Entry", b =>

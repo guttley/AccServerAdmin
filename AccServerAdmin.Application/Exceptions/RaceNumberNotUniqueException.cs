@@ -2,9 +2,9 @@
 
 namespace AccServerAdmin.Application.Exceptions
 {
-    public class NonUniqueNameException : Exception
+    public class RaceNumberNotUniqueException : Exception
     {
-        public NonUniqueNameException(string message)
+        public RaceNumberNotUniqueException(string message)
             : base(message)
         {
 

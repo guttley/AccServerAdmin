@@ -20,6 +20,17 @@ namespace AccServerAdmin.Persistence.DbContext
             builder.Entity<Driver>()
                 .HasIndex(d => d.PlayerId)
                 .IsUnique();
+
+            builder.Entity<DriverEntry>()
+                   .HasKey(de => new {de.EntryId, de.DriverId});
+
+            builder.Entity<DriverEntry>()
+                   .HasOne(de => de.Entry)
+                   .WithMany(d => d.Entries);
+
+            builder.Entity<DriverEntry>()
+                   .HasOne(de => de.Entry)
+                   .WithMany(e => e.Entries);
         }
 
         //
@@ -34,6 +45,7 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<EntryList> EntryList { get; set; }
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Driver> Drivers { get; set; }
+        public DbSet<DriverEntry> DriverEntries { get; set; }
 
     }
 }

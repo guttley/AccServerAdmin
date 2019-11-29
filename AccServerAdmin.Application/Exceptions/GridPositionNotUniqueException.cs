@@ -2,9 +2,9 @@
 
 namespace AccServerAdmin.Application.Exceptions
 {
-    public class NonUniqueGridPositionException : Exception
+    public class GridPositionNotUniqueException : Exception
     {
-        public NonUniqueGridPositionException(string message)
+        public GridPositionNotUniqueException(string message)
             : base(message)
         {
 

@@ -57,7 +57,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
                 {
                     await _updateDriverCommand.ExecuteAsync(Driver).ConfigureAwait(false);
                 }
-                catch (NonUniqueNameException nex)
+                catch (DriverNameNotUniqueException nex)
                 {
                     ModelState.AddModelError("Driver.PlayerId", nex.Message);
                 }

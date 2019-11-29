@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -13,6 +14,9 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
+        [JsonIgnore]
+        public List<DriverEntry> Entries { get; set; }
 
         [JsonProperty("playerID")] 
         public string PlayerId { get; set; }

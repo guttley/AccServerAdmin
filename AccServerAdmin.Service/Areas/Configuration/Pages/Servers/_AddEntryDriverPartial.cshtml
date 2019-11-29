@@ -1,0 +1,56 @@
+﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditEntryModel
+
+@section Scripts
+{
+    <script src="@Url.Content("/js/entry-import.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/js/tables-datatable.js")"></script>
+}
+
+
+<div id="driverSelector" tabindex="-1" role="dialog" aria-labelledby="driverSelectLabel" aria-hidden="true" class="modal fade text-left">
+    <div role="document" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong id="driverSelectLabel" class="modal-title">Driver Selector</strong>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <form>
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <table id="driverSelectTable" style="width: 100%;" class="table">
+                                <thead>
+                                <tr>
+                                    <th>Driver</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var driver in Model.Drivers)
+                                {
+                                    <tr>
+                                        <td>@driver.Fullname</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Signin" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Application;
+using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Entries.Queries;
 using AccServerAdmin.Application.Exceptions;
@@ -17,15 +19,18 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         private readonly IGetEntryByIdQuery _getEntryByIdQuery;
         private readonly ICreateEntryCommand _createEntryCommand;
         private readonly IUpdateEntryCommand _updateEntryCommand;
+        private readonly IGetDriverListQuery _getDriverListQuery;
 
         public EditEntryModel(
             IGetEntryByIdQuery getEntryByIdQuery,
             ICreateEntryCommand createEntryCommand,
-            IUpdateEntryCommand updateEntryCommand)
+            IUpdateEntryCommand updateEntryCommand,
+            IGetDriverListQuery getDriverListQuery)
         {
             _getEntryByIdQuery = getEntryByIdQuery;
             _createEntryCommand = createEntryCommand;
             _updateEntryCommand = updateEntryCommand;
+            _getDriverListQuery = getDriverListQuery;
         }
 
         [BindProperty]
@@ -37,14 +42,18 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         [BindProperty]
         public Entry Entry { get; set; }
 
+        public List<Driver> Drivers { get; set; }
+
         public SelectList CarModels { get; set; }
 
-        private void BuildBindingLists()
+        private async Task BuildBindingListsAsync()
         {
             var cars = EnumHelper.GetValues<CarModel>().ToDictionary(model => model, model => model.GetDescription()).OrderBy(p => p.Value);
             var model = Entry?.ForcedCarModel ?? CarModel.NotForced; 
 
             CarModels = new SelectList(cars, "Key", "Value", model);
+
+            Drivers = (await _getDriverListQuery.ExecuteAsync().ConfigureAwait(false)).ToList();
         }
 
         public async Task OnGetAsync(Guid serverId, Guid entryListId, Guid id)
@@ -52,20 +61,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             ServerId = serverId;
             EntryListIdId = entryListId;
             
-            if (id == Guid.Empty)
-            {
-                Entry = new Entry
-                {
-                    EntryListId = entryListId,
-                    ForcedCarModel = CarModel.NotForced
-                };
-            }
-            else
-            {
-                Entry = await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
-            }   
+            Entry = id == Guid.Empty
+                    ? new Entry { EntryListId = entryListId }
+                    : await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
 
-            BuildBindingLists();
+            await BuildBindingListsAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -85,11 +85,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
                     return RedirectToPage("./Edit", new { Id = ServerId });
                 }
-                catch (NonUniqueRaceNumberException nex)
+                catch (RaceNumberNotUniqueException nex)
                 {
                     ModelState.AddModelError("Entry.RaceNumber", nex.Message);
                 }
-                catch (NonUniqueGridPositionException gex)
+                catch (GridPositionNotUniqueException gex)
                 {
                     ModelState.AddModelError("Entry.DefaultGridPosition", gex.Message);
                 }
@@ -97,7 +97,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (!ModelState.IsValid)
             {
-                BuildBindingLists();
+                await BuildBindingListsAsync();
                 return Page();
             }
             

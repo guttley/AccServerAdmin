@@ -3,7 +3,7 @@
 
 
 <div cass="card-header">
-    <h4>Entry List - <a asp-area="Configuration" asp-page="/Servers/EditEntry" asp-route-serverId="@Model.Server.Id" >Create new Entry</a></h4>
+    <h4>Entry List - <a asp-area="Configuration" asp-page="/Servers/EditEntry" asp-route-serverId="@Model.Server.Id" asp-route-entryListId="@Model.Server.EntryList.Id" >Create new Entry</a></h4>
 </div>
 
 <div class="table-responsive">
@@ -23,14 +23,16 @@
             <tr>
                 <th scope="row">@entry.RaceNumber</th>
                 <td>@entry.ForcedCarModel.GetDescription()</td>
-                <td>@entry.ForcedCarModel</td>
                 
                 <td>
-                @foreach (var driver in entry.Drivers)
-                {
-                    @driver.Fullname<br/>
-                }
+                    @foreach (var driver in entry.Drivers)
+                    {
+                        @driver.Fullname<br/>
+                    }
                 </td>
+                
+                <td>@entry.ServerAdmin</td>
+
                 <td><a asp-area="Configuration" asp-page="/Servers/EditEntry" asp-route-Id="@entry.Id" asp-route-serverId="@Model.Server.Id">Edit</a></td>
                 <td><a asp-area="Configuration" asp-page="/Servers/DeleteEntry" asp-route-Id="@entry.Id" asp-route-serverId="@Model.Server.Id">Delete</a></td>
             </tr>

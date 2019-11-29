@@ -25,7 +25,7 @@ namespace AccServerAdmin.Application.Servers.Commands
 
             if (await _serverRepository.IsUniqueNameAsync(serverName).ConfigureAwait(false))
             {
-                throw new NonUniqueNameException("Server names must be unique");
+                throw new DriverNameNotUniqueException("Server names must be unique");
             }
 
             await _serverRepository.AddAsync(server);
