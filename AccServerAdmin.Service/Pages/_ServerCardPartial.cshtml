@@ -30,7 +30,10 @@
                                 <button type="submit" class="btn btn-danger" asp-route-serverId="@Model.Server.Id" asp-page-handler="StopServer" onclick="return confirm('Are you sure you want to STOP this server?');">Stop</button>
                             }
                             
-                            <a class="btn btn-primary" asp-area="Configuration" asp-page="/Tools/ImportEntryList" asp-route-Id=" @Model.Server.Id">Import Entry List</a>
+                            @if (Model.HasImportableEntries)
+                            {
+                                <a class="btn btn-primary" asp-area="Configuration" asp-page="/Tools/ImportEntryList" asp-route-Id=" @Model.Server.Id">Import Entry List</a>
+                            }
 
                         </div>
 

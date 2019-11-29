@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
 {
-    public class Entry
+    public class Entry : IKeyedEntity
     {
         [Key]
         [JsonIgnore]
@@ -25,7 +25,7 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("raceNumber")]
         public int RaceNumber { get; set; }
 
-        [JsonProperty("defaultGridPosition")]
+        [JsonProperty("defaultGridPosition")] 
         public int DefaultGridPosition { get; set; }
 
         [JsonProperty("forcedCarModel")]

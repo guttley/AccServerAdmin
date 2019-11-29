@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AccServerAdmin.Application.Drivers.Commands
+namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IImportEntryListCommand
     {

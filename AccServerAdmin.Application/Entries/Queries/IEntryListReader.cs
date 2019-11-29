@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 
-namespace AccServerAdmin.Application.Drivers.Commands
+namespace AccServerAdmin.Application.Entries.Queries
 {
     public interface IEntryListReader
     {

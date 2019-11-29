@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AccServerAdmin.Application.Entries.Queries;
 using AccServerAdmin.Notifications.EntryList;
 using AccServerAdmin.Persistence.Common;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AccServerAdmin.Application.Drivers.Commands
+namespace AccServerAdmin.Application.Entries.Commands
 {
     public class ImportEntryListCommand : IImportEntryListCommand
     {
@@ -29,7 +30,6 @@ namespace AccServerAdmin.Application.Drivers.Commands
         public async Task ExecuteAsync(Guid serverId)
         {
             var drivers = await _entryListReader.ExecuteAsync(serverId).ConfigureAwait(false);
-
 
             foreach (var driver in drivers)
             {

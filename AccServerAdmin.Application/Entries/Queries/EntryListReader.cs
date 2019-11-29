@@ -7,7 +7,7 @@ using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Infrastructure.Helpers;
 
-namespace AccServerAdmin.Application.Drivers.Commands
+namespace AccServerAdmin.Application.Entries.Queries
 {
     public class EntryListReader : IEntryListReader
     {

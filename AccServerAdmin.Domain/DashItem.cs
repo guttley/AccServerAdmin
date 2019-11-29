@@ -5,5 +5,7 @@
         public Server Server { get; set; }
 
         public ServerProcessInfo ProcessInfo { get; set; }
+
+        public bool HasImportableEntries { get; set; }
     }
 }

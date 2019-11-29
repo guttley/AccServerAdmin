@@ -8,10 +8,10 @@ $(function () {
     document.getElementById("startImportBtn").disabled = true;
 
     connection.on("ImportMessage", function (message) {
-        var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        var option = document.createElement("option");
-        option.textContent = msg;
-        document.getElementById("messages").appendChild(option);
+        var table = document.getElementById("messages");
+        var row = table.insertRow(-1);
+        var cell = row.insertCell(0);
+        cell.innerHTML = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     });
 
     connection.start().then(function () {

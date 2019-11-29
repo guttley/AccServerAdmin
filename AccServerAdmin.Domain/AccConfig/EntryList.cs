@@ -12,7 +12,7 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
+        
         [JsonIgnore]
         public Guid ServerId { get; set; }
 

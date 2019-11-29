@@ -3,11 +3,11 @@
 
 
 <div cass="card-header">
-    <h4>Entry List - <a asp-area="Configuration" asp-page="/Servers/AddEntry" asp-route-serverId="@Model.Server.Id" asp-route-eventId="@Model.Server.EventCfg.Id">Create new Entry</a></h4>
+    <h4>Entry List - <a asp-area="Configuration" asp-page="/Servers/EditEntry" asp-route-serverId="@Model.Server.Id" >Create new Entry</a></h4>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>Race Number</th>
@@ -22,7 +22,7 @@
             {
             <tr>
                 <th scope="row">@entry.RaceNumber</th>
-                <td>@EnumHelper.GetEnumDescription(entry.ForcedCarModel)</td>
+                <td>@entry.ForcedCarModel.GetDescription()</td>
                 <td>@entry.ForcedCarModel</td>
                 
                 <td>

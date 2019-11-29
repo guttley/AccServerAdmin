@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace AccServerAdmin.Application
 {
-    public class EnumHelper
+    public static class EnumHelper
     {
-        public static string GetEnumDescription(Enum value)
+        public static string GetDescription(this Enum value)
         {
             var fi = value.GetType().GetField(value.ToString());
 
@@ -16,6 +16,11 @@ namespace AccServerAdmin.Application
             }
 
             return value.ToString();
+        }
+
+        public static TEnum[] GetValues<TEnum>() where TEnum : Enum
+        {
+            return (TEnum[])Enum.GetValues(typeof(TEnum));
         }
     }
 }

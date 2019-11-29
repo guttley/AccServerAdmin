@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AccServerAdmin.Application.Entries.Queries;
 
 namespace AccServerAdmin.Service.Pages
 {
@@ -16,15 +17,18 @@ namespace AccServerAdmin.Service.Pages
         private readonly IGetServerListQuery _getServerListQuery;
         private readonly IProcessManager _processManager;
         private readonly IGetAppSettingsQuery _getAppSettingsQuery;
+        private readonly IGetImportableEntriesQuery _getImportableEntriesQuery; 
 
         public IndexModel(
             IProcessManager processManager,
             IGetAppSettingsQuery getAppSettingsQuery,
-            IGetServerListQuery getServerListQuery)
+            IGetServerListQuery getServerListQuery,
+            IGetImportableEntriesQuery getImportableEntriesQuery)
         {
             _processManager = processManager;
             _getAppSettingsQuery = getAppSettingsQuery;
             _getServerListQuery = getServerListQuery;
+            _getImportableEntriesQuery = getImportableEntriesQuery;
         }
 
         [BindProperty]
@@ -34,13 +38,15 @@ namespace AccServerAdmin.Service.Pages
         {
             var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
             var servers = await _getServerListQuery.ExecuteAsync().ConfigureAwait(false);
-
-            DashItems = servers.Select(s => new DashItem
+            
+            var items = servers.Select(async s => new DashItem
             {
                 Server = s,
                 ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id),
+                HasImportableEntries = await _getImportableEntriesQuery.ExecuteAsync(s.Id).ConfigureAwait(false)
             }).ToList();
 
+            DashItems = await Task.WhenAll(items);
             Globals.NeedsConfiguring = settings is null;
         }
 

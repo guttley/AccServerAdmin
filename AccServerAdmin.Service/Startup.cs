@@ -5,6 +5,8 @@ using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Drivers.Queries;
+using AccServerAdmin.Application.Entries.Commands;
+using AccServerAdmin.Application.Entries.Queries;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -153,17 +155,19 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerRepository, ServerRepository>();
             services.AddTransient<IDriverRepository, DriverRepository>();
             services.AddTransient<IDataRepository<AppSettings>, AppSettingsRepository>();
-            services.AddTransient<IDataRepository<GameCfg>, DataRepository<GameCfg>>();
             services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
-
-            // Components
+            services.AddTransient<IDataRepository<Entry>, DataRepository<Entry>>();
+            
+            // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
             services.AddTransient<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
+            
             services.AddTransient<ICreateServerCommand, CreateServerCommand>();
             services.AddTransient<IUpdateServerCommand, UpdateServerCommand>();
             services.AddTransient<IDeleteServerCommand, DeleteServerCommand>();
             services.AddTransient<IGetServerListQuery, GetServerListQuery>();
             services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
+
             services.AddTransient<IGetSessionByIdQuery, GetSessionByIdQuery>();
             services.AddTransient<ICreateSessionCommand, CreateSessionCommand>();
             services.AddTransient<IUpdateSessionCommand, UpdateSessionCommand>();
@@ -177,8 +181,10 @@ namespace AccServerAdmin.Service
             
             services.AddTransient<IImportEntryListCommand, ImportEntryListCommand>();
             services.AddTransient<IEntryListReader, EntryListReader>();
-
-
+            services.AddTransient<IGetImportableEntriesQuery, GetImportableEntriesQuery>();
+            services.AddTransient<IGetEntryByIdQuery, GetEntryByIdQuery>();
+            services.AddTransient<ICreateEntryCommand, CreateEntryCommand>();
+            services.AddTransient<IUpdateEntryCommand, UpdateEntryCommand>();
 
         }
     }

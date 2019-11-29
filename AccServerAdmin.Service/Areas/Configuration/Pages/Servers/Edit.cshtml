@@ -13,99 +13,72 @@
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
         <div class="row">
+
             <div class="col-lg-10">
-                <div class="card">
 
-                    <div class="card-header">
-                        <h4>Edit Server - @Model.Server.Name</h4>
-                    </div>
+                <form method="post">
 
-                    <div class="card-body">
+                    <input asp-for="Server.Id" type="hidden" />
+                    <input asp-for="Server.GameCfg.ServerId" type="hidden" />
+                    <input asp-for="Server.GameCfg.Id" type="hidden" />
+                    <input asp-for="Server.NetworkCfg.ServerId" type="hidden" />
+                    <input asp-for="Server.NetworkCfg.Id" type="hidden" />
+                    <input asp-for="Server.EventCfg.ServerId" type="hidden" />
+                    <input asp-for="Server.EventCfg.Id" type="hidden" />
+                    <input asp-for="Server.EventRules.ServerId" type="hidden" />
+                    <input asp-for="Server.EventRules.Id" type="hidden" />
+                    <input asp-for="Server.EntryList.ServerId" type="hidden" />
+                    <input asp-for="Server.EntryList.Id" type="hidden" />
 
-                        <form method="post" class="form-horizontal">
-
-                            <input asp-for="Server.Id" type="hidden" />
-                            <input asp-for="Server.GameCfg.ServerId" type="hidden" />
-                            <input asp-for="Server.GameCfg.Id" type="hidden" />
-                            <input asp-for="Server.NetworkCfg.ServerId" type="hidden" />
-                            <input asp-for="Server.NetworkCfg.Id" type="hidden" />
-                            <input asp-for="Server.EventCfg.ServerId" type="hidden" />
-                            <input asp-for="Server.EventCfg.Id" type="hidden" />
-                            <input asp-for="Server.EventRules.ServerId" type="hidden" />
-                            <input asp-for="Server.EventRules.Id" type="hidden" />
-                            <input asp-for="Server.EntryList.ServerId" type="hidden" />
-                            <input asp-for="Server.EntryList.Id" type="hidden" />
-
-                            <div class="form-group row">
-                                <label asp-for="Server.Name" class="col-sm-2 form-control-label">Server Name</label>
-                                <div class="col-sm-10">
-                                    <input asp-for="Server.Name" type="text" class="form-control" />
-                                </div>
-                            </div>
-
-                            <ul role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul role="tablist" class="nav nav-tabs card-header-tabs flex-column flex-sm-row">
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-network" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active">
-                                        Network Settings
-                                    </a>
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-game" aria-selected="true" class="nav-link active">Game Settings</a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-game" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
-                                        Game Settings
-                                    </a>
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-network" aria-selected="false" class="nav-link">Network Settings</a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-event" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
-                                        Event Settings
-                                    </a>
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-event" aria-selected="false" class="nav-link">Event Settings</a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-sessions" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
-                                        Session Settings
-                                    </a>
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-sessions" aria-selected="false" class="nav-link">Session Settings</a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-weather" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
-                                        Weather Settings
-                                    </a>
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-weather" aria-selected="false" class="nav-link">Weather Settings</a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
-                                    <a data-toggle="tab" role="tab" href="#nav-tab-entries" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0">
-                                        Entry List
-                                    </a>
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-entries" aria-selected="false" class="nav-link">Entry List</a>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="card-body tab-content">
 
-                            <div class="tab-content">
-                                <p>
-                                    <div id="nav-tab-network" role="tabpanel" aria-labelledby="network-tab" class="tab-pane fade px-4 py-5 show active">
-                                        <!-- Network settings -->
-                                        <partial name="_EditNetworkPartial" />
-                                    </div>
-                                    <div id="nav-tab-game" role="tabpanel" aria-labelledby="game-tab" class="tab-pane fade px-4 py-5">
-                                        <!-- Game server settings -->
-                                        <partial name="_EditGamePartial" />
-                                    </div>
-                                    <div id="nav-tab-event" role="tabpanel" aria-labelledby="event-tab" class="tab-pane fade px-4 py-5">
-                                        <!-- Event settings -->
-                                        <partial name="_EditEventPartial" />
-                                    </div>
-                                    <div id="nav-tab-sessions" role="tabpanel" aria-labelledby="sessions-tab" class="tab-pane fade px-4 py-5">
-                                        <!-- Sessions settings -->
-                                        <partial name="_ListSessionsPartial" />
-                                    </div>
-                                    <div id="nav-tab-weather" role="tabpanel" aria-labelledby="weather-tab" class="tab-pane fade px-4 py-5">
-                                        <!-- Weather settings -->
-                                        <partial name="_EditWeatherPartial" />
-                                    </div>
-                                    <div id="nav-tab-entries" role="tabpanel" aria-labelledby="entries-tab" class="tab-pane fade px-4 py-5">
-                                        <!-- Entry list -->
-                                        <partial name="_ListEntriesPartial" />
-                                    </div>
-                                </p>
+                            <div id="nav-tab-game" role="tabpanel" aria-labelledby="game-tab" class="tab-pane fade px-4 py-5 show active">
+                                <!-- Game server settings -->
+                                <partial name="_EditGamePartial" />
                             </div>
-
-                            <div class="line"></div>
+                            <div id="nav-tab-network" role="tabpanel" aria-labelledby="network-tab" class="tab-pane fade px-4 py-5">
+                                <!-- Network settings -->
+                                <partial name="_EditNetworkPartial" />
+                            </div>
+                            <div id="nav-tab-event" role="tabpanel" aria-labelledby="event-tab" class="tab-pane fade px-4 py-5">
+                                <!-- Event settings -->
+                                <partial name="_EditEventPartial" />
+                            </div>
+                            <div id="nav-tab-sessions" role="tabpanel" aria-labelledby="sessions-tab" class="tab-pane fade px-4 py-5">
+                                <!-- Sessions settings -->
+                                <partial name="_ListSessionsPartial" />
+                            </div>
+                            <div id="nav-tab-weather" role="tabpanel" aria-labelledby="weather-tab" class="tab-pane fade px-4 py-5">
+                                <!-- Weather settings -->
+                                <partial name="_EditWeatherPartial" />
+                            </div>
+                            <div id="nav-tab-entries" role="tabpanel" aria-labelledby="entries-tab" class="tab-pane fade px-4 py-5">
+                                <!-- Entry list -->
+                                <partial name="_ListEntriesPartial" />
+                            </div>
 
                             <div class="form-group-material">
                                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -113,18 +86,13 @@
 
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary">
-                                <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
+                                <button type="button" onclick="window.history.go(-1);return false;" class="btn btn-primary">Cancel</button>
                             </div>
 
-                            <!--
-    <div class="col-sm-10 text-right">
-        <small><a href="https://www.assettocorsa.net/forum/index.php?threads/the-server-admin-handbook-thread.58245/">Server Handbook</a></small>
-    </div>
-        -->
-                        </form>
-
+                        </div>
                     </div>
-                </div>
+
+                </form>
             </div>
         </div>
     </div>
