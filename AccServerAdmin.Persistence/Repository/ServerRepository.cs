@@ -24,7 +24,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
-                .Include(s => s.EntryList).ThenInclude(e => e.Entries)
+                .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -37,7 +37,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
-                .Include(s => s.EntryList).ThenInclude(e => e.Entries)
+                .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
                 .FirstOrDefaultAsync(s => s.Id == id)
                 .ConfigureAwait(false);
         }

@@ -27,7 +27,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 {
                     Server = await _createServerCommand.ExecuteAsync(Server.Name).ConfigureAwait(false);
                 }
-                catch (DriverNameNotUniqueException nex)
+                catch (SteamIdNotUniqueException nex)
                 {
                     ModelState.AddModelError("Server.Name", nex.Message);
                 }

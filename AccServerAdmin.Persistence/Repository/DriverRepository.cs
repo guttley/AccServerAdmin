@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.DbContext;
@@ -13,11 +14,13 @@ namespace AccServerAdmin.Persistence.Repository
         {
         }
 
-        public async Task<bool> IsUniqueSteamIdAsync(string steamId)
+        public async Task<bool> IsUniqueSteamIdAsync(Driver driver)
         {
-            return await DbContext.Set<Driver>()
-                .AnyAsync(d => d.PlayerId == steamId)
+            var hasMatch = await DbContext.Set<Driver>()
+                .AnyAsync(d => d.PlayerId == driver.PlayerId && d.Id != driver.Id)
                 .ConfigureAwait(false);
+
+            return !hasMatch;
         }
 
     }

@@ -22,15 +22,17 @@ namespace AccServerAdmin.Persistence.DbContext
                 .IsUnique();
 
             builder.Entity<DriverEntry>()
-                   .HasKey(de => new {de.EntryId, de.DriverId});
+                .HasKey(de => new {de.EntryId, de.DriverId});
 
             builder.Entity<DriverEntry>()
-                   .HasOne(de => de.Entry)
-                   .WithMany(d => d.Entries);
+                .HasOne(de => de.Entry)
+                .WithMany(e => e.Entries)
+                .HasForeignKey(de => de.EntryId);
 
             builder.Entity<DriverEntry>()
-                   .HasOne(de => de.Entry)
-                   .WithMany(e => e.Entries);
+                   .HasOne(de => de.Driver)
+                   .WithMany(e => e.Entries)
+                   .HasForeignKey(de => de.DriverId);
         }
 
         //

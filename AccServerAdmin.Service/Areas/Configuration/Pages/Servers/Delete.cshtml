@@ -24,7 +24,7 @@
 
                             <form method="post">
 
-                                <input asp-for="Server.Id" type="hidden" />
+                                @Html.HiddenFor(model => model.Server.Id)
 
                                 <div class="form-group-material">
                                     <div class="text-danger">Are you sure you wish to delete this server?</div>

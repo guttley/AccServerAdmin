@@ -21,9 +21,9 @@ namespace AccServerAdmin.Application.Drivers.Commands
 
         public async Task<Driver> ExecuteAsync(Driver driver)
         {
-            if (await _driverRepository.IsUniqueSteamIdAsync(driver.PlayerId).ConfigureAwait(false))
+            if (!await _driverRepository.IsUniqueSteamIdAsync(driver).ConfigureAwait(false))
             {
-                throw new DriverNameNotUniqueException("Steam Ids must be unique");
+                throw new SteamIdNotUniqueException("Steam Ids must be unique");
             }
 
             await _driverRepository.AddAsync(driver);

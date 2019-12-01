@@ -24,8 +24,8 @@
 
                         <form method="post">
 
-                            <input asp-for="ServerId" type="hidden" />
-                            <input asp-for="Entry.Id" type="hidden" />
+                            @Html.HiddenFor(model => model.ServerId)
+                            @Html.HiddenFor(model => model.Entry.Id)
 
                             <div class="form-group-material">
                                 <div class="text-danger">Are you sure you wish to delete the entry for car @Model.Entry.RaceNumber?</div>

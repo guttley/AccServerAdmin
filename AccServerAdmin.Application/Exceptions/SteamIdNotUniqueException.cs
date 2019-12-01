@@ -2,9 +2,9 @@
 
 namespace AccServerAdmin.Application.Exceptions
 {
-    public class DriverNameNotUniqueException : Exception
+    public class SteamIdNotUniqueException : Exception
     {
-        public DriverNameNotUniqueException(string message)
+        public SteamIdNotUniqueException(string message)
             : base(message)
         {
 

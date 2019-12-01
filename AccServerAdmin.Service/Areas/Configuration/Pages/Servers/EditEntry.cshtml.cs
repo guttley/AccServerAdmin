@@ -17,27 +17,30 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
     public class EditEntryModel : PageModel
     {
         private readonly IGetEntryByIdQuery _getEntryByIdQuery;
-        private readonly ICreateEntryCommand _createEntryCommand;
         private readonly IUpdateEntryCommand _updateEntryCommand;
         private readonly IGetDriverListQuery _getDriverListQuery;
+        private readonly IAddDriverEntryCommand _addDriverCommand;
+        private readonly IDeleteDriverEntryCommand _deleteDriverCommand;
 
         public EditEntryModel(
             IGetEntryByIdQuery getEntryByIdQuery,
-            ICreateEntryCommand createEntryCommand,
             IUpdateEntryCommand updateEntryCommand,
-            IGetDriverListQuery getDriverListQuery)
+            IGetDriverListQuery getDriverListQuery,
+            IAddDriverEntryCommand addDriverCommand,
+            IDeleteDriverEntryCommand deleteDriverCommand)
         {
             _getEntryByIdQuery = getEntryByIdQuery;
-            _createEntryCommand = createEntryCommand;
             _updateEntryCommand = updateEntryCommand;
             _getDriverListQuery = getDriverListQuery;
+            _addDriverCommand = addDriverCommand;
+            _deleteDriverCommand = deleteDriverCommand;
         }
 
         [BindProperty]
         public Guid ServerId { get; set; }
 
         [BindProperty]
-        public Guid EntryListIdId { get; set; }
+        public Guid EntryListId { get; set; }
 
         [BindProperty]
         public Entry Entry { get; set; }
@@ -59,13 +62,13 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task OnGetAsync(Guid serverId, Guid entryListId, Guid id)
         {
             ServerId = serverId;
-            EntryListIdId = entryListId;
+            EntryListId = entryListId;
             
             Entry = id == Guid.Empty
                     ? new Entry { EntryListId = entryListId }
                     : await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
 
-            await BuildBindingListsAsync();
+            await BuildBindingListsAsync().ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -74,16 +77,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             {
                 try
                 {
-                    if (Entry.Id == Guid.Empty)
-                    {
-                        await _createEntryCommand.ExecuteAsync(Entry).ConfigureAwait(false);                
-                    }
-                    else
-                    {
-                        await _updateEntryCommand.ExecuteAsync(Entry).ConfigureAwait(false);
-                    }
-
-                    return RedirectToPage("./Edit", new { Id = ServerId });
+                    Entry.EntryListId = EntryListId;
+                    await _updateEntryCommand.ExecuteAsync(Entry).ConfigureAwait(false);
                 }
                 catch (RaceNumberNotUniqueException nex)
                 {
@@ -97,11 +92,25 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (!ModelState.IsValid)
             {
-                await BuildBindingListsAsync();
+                await BuildBindingListsAsync().ConfigureAwait(false);
                 return Page();
             }
             
             return Redirect($"Edit?Id={ServerId}");
+        }
+
+        public async Task OnGetSelectDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
+        {
+            var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId };
+            await _addDriverCommand.ExecuteAsync(driverEntry).ConfigureAwait(false);
+            await OnGetAsync(serverId, entryListId, entryId);
+        }
+
+        public async Task OnGetRemoveDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
+        {
+            var driverEntry = new DriverEntry { DriverId = driverId, EntryId = entryId };
+            await _deleteDriverCommand.ExecuteAsync(driverEntry).ConfigureAwait(false);
+            await OnGetAsync(serverId, entryListId, entryId);
         }
 
     }

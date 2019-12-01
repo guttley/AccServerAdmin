@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
-using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Entries.Queries
 {
     public class GetEntryByIdQuery : IGetEntryByIdQuery
     {
-        private readonly IDataRepository<Entry> _entryRepository;
+        private readonly IEntryRepository _entryRepository;
 
         public GetEntryByIdQuery(
-            IDataRepository<Entry> entryRepository)
+            IEntryRepository entryRepository)
         {
             _entryRepository = entryRepository;
         }

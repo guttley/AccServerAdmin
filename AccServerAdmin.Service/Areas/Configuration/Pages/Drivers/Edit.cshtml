@@ -17,12 +17,21 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h4>Edit Driver - @Model.Driver.Fullname</h4>
+                        @if (Model.Driver.Id == Guid.Empty)
+                        {
+                            <h4>Create Driver</h4>
+                        }
+                        else
+                        {
+                            <h4>Edit Driver - @Model.Driver.Fullname</h4>
+                        }
                     </div>
 
                     <div class="card-body">
 
                         <form method="post">
+
+                            @Html.HiddenFor(model => model.Driver.Id)
 
                             <div class="form-group row">
                                 <label asp-for="Driver.PlayerId" class="col-sm-2 form-control-label">Steam Id</label>

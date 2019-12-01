@@ -4,6 +4,16 @@
     ViewData["Title"] = "Server entry";
 }
 
+@section Scripts
+{
+    <script src="@Url.Content("/js/entry-import.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/js/tables-datatable.js")"></script>
+}
+
 <div class="page-header">
     <div class="container-fluid">
         <h2 class="h5 no-margin-bottom">Server Entry</h2>
@@ -17,23 +27,16 @@
                 <div class="card">
 
                     <div class="card-header d-flex align-items-center">
-                        @if (Model.Entry.Id == Guid.Empty)
-                        {
-                            <h4>Create New Entry</h4>
-                        }
-                        else
-                        {
-                            <h4>Edit Entry</h4>
-                        }
+                        <h4>Edit Entry</h4>
                     </div>
 
                     <div class="card-body">
 
                         <form method="post">
 
-                            <input asp-for="ServerId" type="hidden" />
-                            <input asp-for="Entry.Id" type="hidden" />
-                            <input asp-for="Entry.EntryListId" type="hidden" />
+                            @Html.HiddenFor(model => model.ServerId)
+                            @Html.HiddenFor(model => model.EntryListId)
+                            @Html.HiddenFor(model => model.Entry.Id)
 
                             <div class="form-group row">
                                 <label asp-for="Entry.RaceNumber" class="col-sm-2 form-control-label">Race Number</label>
@@ -88,23 +91,27 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
                                 <label class="col-sm-2 form-control-label">Drivers</label>
-                            
                                 <div class="col-sm-10">
-                                    <button type="button" data-toggle="modal" data-target="#driverSelector" class="btn btn-primary">Add Driver</button>
-
                                     <ul>
                                         @foreach (var driver in Model.Entry.Drivers)
                                         {
-                                            <li>@driver.Fullname</li>
+                                            <li>@driver.Fullname 
+                                                <a asp-page-handler="RemoveDriver" 
+                                                   asp-route-serverId="@Model.ServerId" 
+                                                   asp-route-entryListId="@Model.EntryListId"
+                                                   asp-route-entryId="@Model.Entry.Id" 
+                                                   asp-route-driverId="@driver.Id"
+                                                   alt="Select @driver.Fullname">Remove Driver</a>
+                                            </li>
                                         }
                                     </ul>
+
+                                    <button type="button" data-toggle="modal" data-target="#driverSelector" class="btn btn-primary">Add Driver</button>
                                 </div>
 
-                                <partial name="_AddEntryDriverPartial"/>
-
+                                <partial name="_AddEntryDriverPartial" />
                             </div>
 
                             <div class="form-group-material">
@@ -119,6 +126,7 @@
                     </div>
 
                 </div>
+
             </div>
 
         </div>

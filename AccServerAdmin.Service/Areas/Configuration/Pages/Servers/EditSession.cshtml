@@ -24,9 +24,9 @@
 
                         <form method="post">
 
-                            <input asp-for="ServerId" type="hidden" />
-                            <input asp-for="Session.Id" type="hidden" />
-                            <input asp-for="Session.EventCfgId" type="hidden" />
+                            @Html.HiddenFor(model => model.ServerId)
+                            @Html.HiddenFor(model => model.Session.Id)
+                            @Html.HiddenFor(model => model.Session.EventCfgId)
 
                             <p>
                                 <div class="form-group row">

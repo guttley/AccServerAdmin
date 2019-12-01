@@ -14,13 +14,16 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
     public class EditDriverModel : PageModel
     {
         private readonly IGetDriverByIdQuery _getDriverByIdQuery;
+        private readonly ICreateDriverCommand _createDriverCommand;
         private readonly IUpdateDriverCommand _updateDriverCommand;
 
         public EditDriverModel(
             IGetDriverByIdQuery getDriverByIdQuery,
+            ICreateDriverCommand createDriverCommand,
             IUpdateDriverCommand updateDriverCommand)
         {
             _getDriverByIdQuery = getDriverByIdQuery;
+            _createDriverCommand = createDriverCommand;
             _updateDriverCommand = updateDriverCommand;
         }
 
@@ -31,7 +34,6 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
 
         private void BuildBindingLists()
         {
-
             var driverTypes = new Dictionary<int, string>
             {
                 { (int)DriverCategory.Bronze, "Bronze"},
@@ -45,7 +47,10 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
 
         public async Task OnGetAsync(Guid id)
         {
-            Driver = await _getDriverByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+            Driver = id == Guid.Empty
+                     ? new Driver() 
+                     : await _getDriverByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+
             BuildBindingLists();
         }
 
@@ -55,9 +60,16 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
             {
                 try
                 {
-                    await _updateDriverCommand.ExecuteAsync(Driver).ConfigureAwait(false);
+                    if (Driver.Id == Guid.Empty)
+                    {
+                        await _createDriverCommand.ExecuteAsync(Driver).ConfigureAwait(false);
+                    } 
+                    else 
+                    {
+                        await _updateDriverCommand.ExecuteAsync(Driver).ConfigureAwait(false);
+                    }
                 }
-                catch (DriverNameNotUniqueException nex)
+                catch (SteamIdNotUniqueException nex)
                 {
                     ModelState.AddModelError("Driver.PlayerId", nex.Message);
                 }
@@ -73,7 +85,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
                 return Page();
             }
             
-            return Redirect($"Edit?Id={Driver.Id}");
+            return Redirect("List");
         }
 
     }

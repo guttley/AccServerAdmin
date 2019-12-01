@@ -1,15 +1,5 @@
 ﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditEntryModel
 
-@section Scripts
-{
-    <script src="@Url.Content("/js/entry-import.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
-    <script src="@Url.Content("/js/tables-datatable.js")"></script>
-}
-
 
 <div id="driverSelector" tabindex="-1" role="dialog" aria-labelledby="driverSelectLabel" aria-hidden="true" class="modal fade text-left">
     <div role="document" class="modal-dialog">
@@ -21,34 +11,36 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <form>
-                    <div class="form-group">
-                        <div class="table-responsive">
-                            <table id="driverSelectTable" style="width: 100%;" class="table">
-                                <thead>
+                
+                <div class="form-group">
+                    <div class="table-responsive">
+                        <table id="driverSelectTable" style="width: 100%;" class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Driver</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var driver in Model.Drivers)
+                            {
                                 <tr>
-                                    <th>Driver</th>
+                                    <td>
+                                        <a asp-page-handler="SelectDriver" 
+                                           asp-route-serverId="@Model.ServerId" 
+                                           asp-route-entryListId="@Model.EntryListId"
+                                           asp-route-entryId="@Model.Entry.Id" 
+                                           asp-route-driverId="@driver.Id"
+                                           alt="Select @driver.Fullname">@driver.Fullname</a>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (var driver in Model.Drivers)
-                                {
-                                    <tr>
-                                        <td>@driver.Fullname</td>
-                                    </tr>
-                                }
-                                </tbody>
-                            </table>
-                        </div>
+                            }
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Signin" class="btn btn-primary">
-                    </div>
-                </form>
+                </div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>

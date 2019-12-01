@@ -18,17 +18,17 @@
 
                 <form method="post">
 
-                    <input asp-for="Server.Id" type="hidden" />
-                    <input asp-for="Server.GameCfg.ServerId" type="hidden" />
-                    <input asp-for="Server.GameCfg.Id" type="hidden" />
-                    <input asp-for="Server.NetworkCfg.ServerId" type="hidden" />
-                    <input asp-for="Server.NetworkCfg.Id" type="hidden" />
-                    <input asp-for="Server.EventCfg.ServerId" type="hidden" />
-                    <input asp-for="Server.EventCfg.Id" type="hidden" />
-                    <input asp-for="Server.EventRules.ServerId" type="hidden" />
-                    <input asp-for="Server.EventRules.Id" type="hidden" />
-                    <input asp-for="Server.EntryList.ServerId" type="hidden" />
-                    <input asp-for="Server.EntryList.Id" type="hidden" />
+                    @Html.HiddenFor(model => model.Server.Id)
+                    @Html.HiddenFor(model => model.Server.GameCfg.ServerId)
+                    @Html.HiddenFor(model => model.Server.GameCfg.Id)
+                    @Html.HiddenFor(model => model.Server.NetworkCfg.ServerId)
+                    @Html.HiddenFor(model => model.Server.NetworkCfg.Id)
+                    @Html.HiddenFor(model => model.Server.EventCfg.ServerId)
+                    @Html.HiddenFor(model => model.Server.EventCfg.Id)
+                    @Html.HiddenFor(model => model.Server.EventRules.ServerId)
+                    @Html.HiddenFor(model => model.Server.EventRules.Id)
+                    @Html.HiddenFor(model => model.Server.EntryList.ServerId)
+                    @Html.HiddenFor(model => model.Server.EntryList.Id)
 
                     <div class="card">
                         <div class="card-header">

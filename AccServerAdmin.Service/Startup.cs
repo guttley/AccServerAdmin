@@ -44,7 +44,7 @@ namespace AccServerAdmin.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if (RELEASE)
+#if (USE_HTTPS)
             services.AddFluffySpoonLetsEncryptRenewalService(new LetsEncryptOptions()
             {
                 Email = "gav@differently.net",
@@ -154,10 +154,12 @@ namespace AccServerAdmin.Service
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IServerRepository, ServerRepository>();
             services.AddTransient<IDriverRepository, DriverRepository>();
+            services.AddTransient<IEntryRepository, EntryRepository>();
             services.AddTransient<IDataRepository<AppSettings>, AppSettingsRepository>();
             services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
             services.AddTransient<IDataRepository<Entry>, DataRepository<Entry>>();
-            
+            services.AddTransient<IDriverEntryRepository, DriverEntryRepository>();
+
             // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
             services.AddTransient<ISaveAppSettingsCommand, SaveAppSettingsCommand>();
@@ -187,6 +189,9 @@ namespace AccServerAdmin.Service
             services.AddTransient<ICreateEntryCommand, CreateEntryCommand>();
             services.AddTransient<IUpdateEntryCommand, UpdateEntryCommand>();
             services.AddTransient<IDeleteEntryCommand, DeleteEntryCommand>();
+            services.AddTransient<IAddDriverEntryCommand, AddDriverEntryCommand>();
+            services.AddTransient<IDeleteDriverEntryCommand, DeleteDriverEntryCommand>();
+
         }
     }
 }
