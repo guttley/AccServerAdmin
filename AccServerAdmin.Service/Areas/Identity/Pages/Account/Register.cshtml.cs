@@ -78,13 +78,12 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            returnUrl ??= Url.Content("~/");
+
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
                 var appSettings = await _appSettingsQuery.ExecuteAsync();
                 var passphraseOk = appSettings == null || (Input.Passphrase == appSettings?.AdminPassphrase);
 
@@ -92,8 +91,18 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        user.EmailConfirmed = true;
+                        await _userManager.UpdateAsync(user).ConfigureAwait(false);
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToPage("ConfirmEmail");
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
                 } 
 
                 foreach (var error in result.Errors)

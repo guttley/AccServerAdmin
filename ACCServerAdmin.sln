@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Service", "AccServerAdmin.Service\AccServerAdmin.Service.csproj", "{B760C93B-A29F-4EBA-985F-94415B41788C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccServerAdmin.Notifications", "AccServerAdmin.Notifications\AccServerAdmin.Notifications.csproj", "{2F9E91C0-CF45-47EC-B773-730B565A1D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Notifications", "AccServerAdmin.Notifications\AccServerAdmin.Notifications.csproj", "{2F9E91C0-CF45-47EC-B773-730B565A1D7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
