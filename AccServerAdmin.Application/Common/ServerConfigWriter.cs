@@ -30,6 +30,7 @@ namespace AccServerAdmin.Application.Common
             Save(server.GameCfg, cfgPath, "settings.json");
             Save(server.EventCfg, cfgPath, "event.json");
             Save(server.EventRules, cfgPath, "eventRules.json");
+            Save(server.EntryList, cfgPath, "entrylist.json");
         }
 
         private void Save<T>(T config, string cfgPath, string filename)

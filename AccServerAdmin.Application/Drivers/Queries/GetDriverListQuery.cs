@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
@@ -16,7 +17,8 @@ namespace AccServerAdmin.Application.Drivers.Queries
 
         public async Task<IEnumerable<Driver>> ExecuteAsync()
         {
-            return await _driverRepository.GetAllAsync().ConfigureAwait(false);
+            var drivers = await _driverRepository.GetAllAsync().ConfigureAwait(false);
+            return drivers.OrderBy(d => d.Fullname);
         }
     }
 }
