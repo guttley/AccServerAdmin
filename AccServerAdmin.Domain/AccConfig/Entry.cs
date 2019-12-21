@@ -32,19 +32,13 @@ namespace AccServerAdmin.Domain.AccConfig
                     return Entries.Select(e => e.Driver).ToList();
                 }
 
-                if (_drivers == null)
-                {
-                    _drivers = new List<Driver>();
-                }
-
-                return _drivers;
+                return _drivers ??= new List<Driver>();
             }
             set => _drivers = value;
         }
-        
 
         [JsonProperty("customCar")]
-        public string CustomCar { get; set; }
+        public string CustomCar { get; set; } = string.Empty;
 
         [JsonProperty("raceNumber")]
         public int RaceNumber { get; set; }

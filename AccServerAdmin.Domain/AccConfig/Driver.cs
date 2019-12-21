@@ -22,19 +22,19 @@ namespace AccServerAdmin.Domain.AccConfig
         public string PlayerId { get; set; }
 
         [JsonProperty("firstName")] 
-        public string Firstname { get; set; }
+        public string Firstname { get; set; } = string.Empty;
 
         [JsonProperty("lastName")] 
-        public string Lastname { get; set; }
+        public string Lastname { get; set; } = string.Empty;
 
         [JsonIgnore]
         public string Fullname => $"{Firstname} {Lastname}";
 
         [JsonProperty("nickName")] 
-        public string Nickname { get; set; }
+        public string Nickname { get; set; } = string.Empty;
 
         [JsonProperty("shortName")] 
-        public string Shortname { get; set; }
+        public string Shortname { get; set; } = string.Empty;
 
         [JsonProperty("driverCategory")]
         public DriverCategory DriverCategory { get; set; }
