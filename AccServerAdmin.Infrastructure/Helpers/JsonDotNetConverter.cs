@@ -15,7 +15,7 @@ namespace AccServerAdmin.Infrastructure.Helpers
         /// <inheritdoc/>
         public string SerializeObject<T>(T obj)
         {
-            var settings = new JsonSerializerSettings() { ContractResolver = new NullToEmptyStringResolver() };
+            var settings = new JsonSerializerSettings { ContractResolver = new NullToEmptyStringResolver() };
 
             return JsonConvert.SerializeObject(obj, Formatting.Indented, settings);
         }

@@ -85,5 +85,13 @@ namespace AccServerAdmin.Persistence.Repository
                 .AnyAsync(s => s.Name == serverName)
                 .ConfigureAwait(false);
         }
+
+        /// <inheritdoc />
+        public async Task<bool> IsDuplicatePortsAsync(Guid serverId, int tcpPort, int udpPort)
+        {
+            return !await DbContext.Set<Server>()
+                .AnyAsync(s => s.Id != serverId && s.NetworkCfg.TcpPort == tcpPort && s.NetworkCfg.UdpPort == tcpPort)
+                .ConfigureAwait(false);
+        }
     }
 }

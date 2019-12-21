@@ -14,12 +14,15 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
     {
         private readonly IUpdateServerCommand _updateServerCommand;
         private readonly IGetServerByIdQuery _getServerByIdQuery;
+        private readonly IGetDuplicatePortQuery _getDuplicatePortQuery;
 
         public EditServerModel(
             IGetServerByIdQuery getServerByIdQuery,
+            IGetDuplicatePortQuery getDuplicatePortQuery,
             IUpdateServerCommand updateServerCommand)
         {
             _getServerByIdQuery = getServerByIdQuery;
+            _getDuplicatePortQuery = getDuplicatePortQuery;
             _updateServerCommand = updateServerCommand;
         }
 
@@ -101,7 +104,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             RacecraftRatings = new SelectList(ratings, "Key", "Value", Server.GameCfg.RacecraftRatingRequirement);
         }
 
-        private void ValidateNetworkCfg()
+        private async Task ValidateNetworkCfgAsync()
         {
             if (Server.NetworkCfg.TcpPort < 1024 || Server.NetworkCfg.TcpPort > ushort.MaxValue)
                 ModelState.AddModelError("NetworkCfg.TcpPort", $"TcpPort must be greater than 1024 and less than {ushort.MaxValue}");
@@ -111,6 +114,14 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (Server.NetworkCfg.MaxConnections == 0 || Server.NetworkCfg.MaxConnections > 64)
                 ModelState.AddModelError("NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
+
+
+            if (await _getDuplicatePortQuery.ExecuteAsync(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort).ConfigureAwait(false))
+            {
+                ModelState.AddModelError("NetworkCfg.TcpPort", "In use by another server");
+                ModelState.AddModelError("NetworkCfg.UdpPort", "In use by another server");
+            }
+
         }
 
         private void ValidateGameCfg()
@@ -142,7 +153,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             if (ModelState.IsValid)
             {
-                ValidateNetworkCfg();
+                await ValidateNetworkCfgAsync().ConfigureAwait(false);
                 ValidateGameCfg();
             }
 
