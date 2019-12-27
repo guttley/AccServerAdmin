@@ -22,7 +22,7 @@ namespace AccServerAdmin.Application.Entries.Commands
                 return true;
 
             var hasMatch = await _entryRepository.GetQueryable()
-                                                 .AnyAsync(e => e.RaceNumber == entry.RaceNumber && e.Id != entry.Id)
+                                                 .AnyAsync(e => e.RaceNumber == entry.RaceNumber && e.EntryListId == entry.EntryListId)
                                                  .ConfigureAwait(false);
             return !hasMatch;
         }
@@ -33,7 +33,7 @@ namespace AccServerAdmin.Application.Entries.Commands
                 return true;
 
             var hasMatch = await _entryRepository.GetQueryable()
-                                                 .AnyAsync(e => e.DefaultGridPosition == entry.DefaultGridPosition && e.Id != entry.Id)
+                                                 .AnyAsync(e => e.DefaultGridPosition == entry.DefaultGridPosition && e.EntryListId == entry.EntryListId)
                                                  .ConfigureAwait(false);
             return !hasMatch;
         }

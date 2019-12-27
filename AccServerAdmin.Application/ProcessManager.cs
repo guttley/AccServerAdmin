@@ -41,13 +41,11 @@ namespace AccServerAdmin.Application
 
                     foreach (var process in toCheck)
                     {
-                        using (var processInfo = Process.GetProcessById(process.ProcessInfo.Id))
+                        using var processInfo = Process.GetProcessById(process.ProcessInfo.Id);
+                        if (processInfo == null)
                         {
-                            if (processInfo == null)
-                            {
-                                _logger.LogInformation($"Server found not to be running: {process.ServerId}");
-                                _processes.TryRemove(process.ServerId, out _);
-                            }
+                            _logger.LogInformation($"Server found not to be running: {process.ServerId}");
+                            _processes.TryRemove(process.ServerId, out _);
                         }
                     }
 
@@ -63,40 +61,38 @@ namespace AccServerAdmin.Application
 
         public async Task<ServerProcessInfo> StartServerAsync(Guid serverId)
         {
-            using (var scope = _services.CreateScope())
+            using var scope = _services.CreateScope();
+            var getServerByIdQuery = scope.ServiceProvider.GetRequiredService<IGetServerByIdQuery>();
+            var serverConfigWriter = scope.ServiceProvider.GetRequiredService<IServerConfigWriter>();
+            var serverInstanceCreator = scope.ServiceProvider.GetRequiredService<IServerInstanceCreator>();
+            var server = await getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
+            var path = await serverInstanceCreator.ExecuteAsync(server).ConfigureAwait(false);
+
+            serverConfigWriter.Execute(server, path);
+
+            var startInfo = new ProcessStartInfo
             {
-                var getServerByIdQuery = scope.ServiceProvider.GetRequiredService<IGetServerByIdQuery>();
-                var serverConfigWriter = scope.ServiceProvider.GetRequiredService<IServerConfigWriter>();
-                var serverInstanceCreator = scope.ServiceProvider.GetRequiredService<IServerInstanceCreator>();
-                var server = await getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
-                var path = await serverInstanceCreator.ExecuteAsync(server).ConfigureAwait(false);
+                CreateNoWindow = true,
+                FileName = "accServer.exe",
+                UseShellExecute = true,
+                Verb = "runas",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                WorkingDirectory = path
+            };
 
-                serverConfigWriter.Execute(server, path);
+            _logger.LogInformation($"Starting server: {server.Name}");
 
-                var startInfo = new ProcessStartInfo
-                {
-                    CreateNoWindow = true,
-                    FileName = "accServer.exe",
-                    UseShellExecute = true,
-                    Verb = "runas",
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    WorkingDirectory = path
-                };
+            var processInfo = new ServerProcessInfo
+            {
+                ProcessInfo = Process.Start(startInfo),
+                ServerId = serverId,
+            };
 
-                _logger.LogInformation($"Starting server: {server.Name}");
+            _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");
 
-                var processInfo = new ServerProcessInfo
-                {
-                    ProcessInfo = Process.Start(startInfo),
-                    ServerId = serverId,
-                };
+            _processes.AddOrUpdate(serverId, processInfo, (k, v) => processInfo);
 
-                _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");
-
-                _processes.AddOrUpdate(serverId, processInfo, (k, v) => processInfo);
-
-                return processInfo;
-            }
+            return processInfo;
         }
 
         public void StopServer(Guid serverId)
