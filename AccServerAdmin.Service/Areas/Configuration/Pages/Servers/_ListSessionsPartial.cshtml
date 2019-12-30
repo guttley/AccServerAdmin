@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var session in Model.Server.EventCfg.Sessions.OrderBy(s => s.SessionType))
+            @foreach (var session in Model.Server.EventCfg.Sessions)
             {
             <tr>
                 <th scope="row">@session.SessionType</th>

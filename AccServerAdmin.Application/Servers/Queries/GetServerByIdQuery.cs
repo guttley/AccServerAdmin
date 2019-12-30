@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Persistence.Common;
@@ -16,7 +17,15 @@ namespace AccServerAdmin.Application.Servers.Queries
         
         public async Task<Server> ExecuteAsync(Guid serverId)
         {
-            return await _serverRepository.GetAsync(serverId).ConfigureAwait(false);
+            var server = await _serverRepository.GetAsync(serverId).ConfigureAwait(false);
+
+            server.EventCfg.Sessions =
+                server.EventCfg.Sessions
+                    .OrderBy(s => s.DayOfWeekend)
+                    .ThenBy(s => s.HourOfDay)
+                    .ToList();
+            
+            return server;
         }
     }
 }

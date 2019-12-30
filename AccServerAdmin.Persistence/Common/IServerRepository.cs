@@ -18,6 +18,6 @@ namespace AccServerAdmin.Persistence.Common
         /// <param name="tcpPort"></param>
         /// <param name="udpPort"></param>
         /// <returns></returns>
-        Task<bool> IsDuplicatePortsAsync(Guid serverId, in int tcpPort, in int udpPort);
+        Task<bool> IsDuplicatePortsAsync(Guid serverId, int tcpPort, int udpPort);
     }
 }

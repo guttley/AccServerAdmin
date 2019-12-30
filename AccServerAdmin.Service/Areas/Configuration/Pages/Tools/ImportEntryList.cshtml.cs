@@ -36,7 +36,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
             {
                 await _importEntryListCommand.ExecuteAsync(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
