@@ -78,6 +78,15 @@
                             <div id="nav-tab-entries" role="tabpanel" aria-labelledby="entries-tab" class="tab-pane fade px-4 py-5">
                                 <!-- Entry list -->
                                 <partial name="_ListEntriesPartial" />
+
+                                <label class="col-sm-2 form-control-label">&nbsp;</label>
+                                <div class="col-sm-10">
+                                    <div class="i-checks">
+                                        <input asp-for="Server.EntryList.ForceEntryList" type="checkbox" class="checkbox-template">
+                                        <label asp-for="Server.EntryList.ForceEntryList" class="label-material">Force Entry List</label>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="form-group-material">

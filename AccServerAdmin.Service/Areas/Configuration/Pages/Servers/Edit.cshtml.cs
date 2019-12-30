@@ -118,8 +118,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (await _getDuplicatePortQuery.ExecuteAsync(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort).ConfigureAwait(false))
             {
-                ModelState.AddModelError("NetworkCfg.TcpPort", "In use by another server");
-                ModelState.AddModelError("NetworkCfg.UdpPort", "In use by another server");
+                ModelState.AddModelError("NetworkCfg.TcpPort", "Tcp or Udp Port is in use by another server");
             }
 
         }
