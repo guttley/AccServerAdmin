@@ -6,6 +6,7 @@ using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 
 namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
 {
@@ -13,13 +14,16 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
     {
         private readonly IGetServerByIdQuery _getServerByIdQuery;
         private readonly IImportEntryListCommand _importEntryListCommand;
+        private readonly ILogger<ImportEntryListModel> _logger;
 
         public ImportEntryListModel(
             IGetServerByIdQuery getServerByIdQuery,
-            IImportEntryListCommand importEntryListCommand)
+            IImportEntryListCommand importEntryListCommand,
+            ILogger<ImportEntryListModel> logger)
         {
             _getServerByIdQuery = getServerByIdQuery;
             _importEntryListCommand = importEntryListCommand;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -36,9 +40,9 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
             {
                 await _importEntryListCommand.ExecuteAsync(id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Exception caught attempting to import users");
             }
         }
 
