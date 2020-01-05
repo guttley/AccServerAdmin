@@ -68,7 +68,7 @@ namespace AccServerAdmin.Application
             var server = await getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
             var path = await serverInstanceCreator.ExecuteAsync(server).ConfigureAwait(false);
 
-            serverConfigWriter.Execute(server, path);
+            await serverConfigWriter.ExecuteAsync(server, path).ConfigureAwait(false);
 
             var startInfo = new ProcessStartInfo
             {

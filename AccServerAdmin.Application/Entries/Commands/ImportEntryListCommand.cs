@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AccServerAdmin.Application.Entries.Queries;
 using AccServerAdmin.Notifications.EntryList;
 using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.Repository;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 

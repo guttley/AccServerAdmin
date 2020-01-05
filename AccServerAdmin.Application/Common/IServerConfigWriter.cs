@@ -1,9 +1,10 @@
-﻿using AccServerAdmin.Domain;
+﻿using System.Threading.Tasks;
+using AccServerAdmin.Domain;
 
 namespace AccServerAdmin.Application.Common
 {
     public interface IServerConfigWriter
     {
-        void Execute(Server server, string serverPath);
+        Task ExecuteAsync(Server server, string serverPath);
     }
 }

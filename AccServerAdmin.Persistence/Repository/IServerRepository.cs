@@ -1,8 +1,9 @@
 ﻿using System;
-using AccServerAdmin.Domain;
 using System.Threading.Tasks;
+using AccServerAdmin.Domain;
+using AccServerAdmin.Persistence.Common;
 
-namespace AccServerAdmin.Persistence.Common
+namespace AccServerAdmin.Persistence.Repository
 {
     public interface IServerRepository : IDataRepository<Server>
     {

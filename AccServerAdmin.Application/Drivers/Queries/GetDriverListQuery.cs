@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Drivers.Queries
 {

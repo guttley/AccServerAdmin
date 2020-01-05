@@ -86,22 +86,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         private void BuildBindingLists()
         {
-            var sessionTypes = new Dictionary<SessionType, string>
-            {
-                { SessionType.Practice, "Practice" },
-                { SessionType.Qually, "Qualification" },
-                { SessionType.Race, "Race" },
-            };
-
-            var sessionDays = new Dictionary<int, string>
-            {
-                { 1, "Friday" },
-                { 2, "Saturday" },
-                { 3, "Sunday" },
-            };
-
-            SessionTypes = new SelectList(sessionTypes, "Key", "Value", null);
-            SessionDays = new SelectList(sessionDays, "Key", "Value", null);
+            SessionTypes = new SelectList(ListData.SessionTypes, "Key", "Value", null);
+            SessionDays = new SelectList(ListData.SessionDays, "Key", "Value", null);
         }
 
         private void ValidateSessionConfiguration()

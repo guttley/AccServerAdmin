@@ -2,6 +2,7 @@
 using AccServerAdmin.Application.Exceptions;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Drivers.Commands
 {

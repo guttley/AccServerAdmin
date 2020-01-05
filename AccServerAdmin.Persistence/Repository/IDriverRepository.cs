@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
+using AccServerAdmin.Persistence.Common;
 
-namespace AccServerAdmin.Persistence.Common
+namespace AccServerAdmin.Persistence.Repository
 {
     public interface IDriverRepository : IDataRepository<Driver>
     {

@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 using AccServerAdmin.Persistence.Common;
+using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {

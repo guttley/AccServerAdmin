@@ -48,6 +48,7 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<DriverEntry> DriverEntries { get; set; }
+        public DbSet<BalanceOfPerformance> BalanceOfPerformance { get; set; }
 
     }
 }

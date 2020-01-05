@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Drivers.Queries;
@@ -34,15 +33,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
 
         private void BuildBindingLists()
         {
-            var driverTypes = new Dictionary<int, string>
-            {
-                { (int)DriverCategory.Bronze, "Bronze"},
-                { (int)DriverCategory.Silver, "Silver"},
-                { (int)DriverCategory.Gold, "Gold"},
-                { (int)DriverCategory.Platinum, "Platinum"},
-            };
-
-            DriverTypes = new SelectList(driverTypes, "Key", "Value", Driver.DriverCategory);
+            DriverTypes = new SelectList(ListData.DriverTypes, "Key", "Value", Driver.DriverCategory);
         }
 
         public async Task OnGetAsync(Guid id)
@@ -71,7 +62,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
                 }
                 catch (SteamIdNotUniqueException nex)
                 {
-                    ModelState.AddModelError(nameof(Driver.PlayerId), nex.Message);
+                    ModelState.AddModelError("Driver.PlayerId", nex.Message);
                 }
                 catch (EmptyDirectoryException eex)
                 {

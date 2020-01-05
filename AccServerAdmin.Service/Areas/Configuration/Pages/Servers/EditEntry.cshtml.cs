@@ -48,11 +48,9 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         private async Task BuildBindingListsAsync()
         {
-            var cars = EnumHelper.GetValues<CarModel>().ToDictionary(model => model, model => model.GetDescription())
-                .OrderBy(p => p.Value);
             var model = Entry?.ForcedCarModel ?? CarModel.NotForced;
 
-            CarModels = new SelectList(cars, "Key", "Value", model);
+            CarModels = new SelectList(ListData.Cars, "Key", "Value", model);
 
             Drivers = (await _getDriverListQuery.ExecuteAsync().ConfigureAwait(false)).ToList();
         }
@@ -73,12 +71,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             if (Entry.Ballast > 100)
             {
-                ModelState.AddModelError(nameof(Entry.Ballast), "Ballast maximum is 100KG");
+                ModelState.AddModelError("Entry.Ballast", "Ballast maximum is 100KG");
             }
 
             if (Entry.Restrictor > 20)
             {
-                ModelState.AddModelError(nameof(Entry.Restrictor), "Restrictor maximum is 20%");
+                ModelState.AddModelError("(Entry.Restrictor", "Restrictor maximum is 20%");
             }
 
             if (ModelState.IsValid)
@@ -90,11 +88,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 }
                 catch (RaceNumberNotUniqueException nex)
                 {
-                    ModelState.AddModelError(nameof(Entry.RaceNumber), nex.Message);
+                    ModelState.AddModelError("Entry.RaceNumber", nex.Message);
                 }
                 catch (GridPositionNotUniqueException gex)
                 {
-                    ModelState.AddModelError(nameof(Entry.DefaultGridPosition), gex.Message);
+                    ModelState.AddModelError("Entry.DefaultGridPosition", gex.Message);
                 }
             }
 

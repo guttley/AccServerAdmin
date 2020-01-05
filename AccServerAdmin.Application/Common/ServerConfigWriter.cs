@@ -1,6 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using AccServerAdmin.Application.Bop.Queries;
 using AccServerAdmin.Domain;
+using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 
@@ -10,27 +13,36 @@ namespace AccServerAdmin.Application.Common
     {
         private readonly IFile _file;
         private readonly IJsonConverter _jsonConverter;
+        private readonly IGetBopListQuery _getBopListQuery;
 
         public ServerConfigWriter(
             IFile file,
-            IJsonConverter jsonConverter)
+            IJsonConverter jsonConverter,
+            IGetBopListQuery getBopListQuery)
         {
             _file = file;
             _jsonConverter = jsonConverter;
+            _getBopListQuery = getBopListQuery;
         }
 
-        public void Execute(Server server, string serverPath)
+        public async Task ExecuteAsync(Server server, string serverPath)
         {
             var cfgPath = Path.Combine(serverPath, "cfg");
 
             // Must order the Sessions P, Q, R or the server will complain
             server.EventCfg.Sessions = server.EventCfg.Sessions.OrderBy(s => s.SessionType).ToList();
 
+            var globalBop = new GlobalBop
+            {
+                BopList = (await _getBopListQuery.ExecuteAsync().ConfigureAwait(false)).ToList()
+            };
+
             Save(server.NetworkCfg,  cfgPath, "configuration.json");
             Save(server.GameCfg, cfgPath, "settings.json");
             Save(server.EventCfg, cfgPath, "event.json");
             Save(server.EventRules, cfgPath, "eventRules.json");
             Save(server.EntryList, cfgPath, "entrylist.json");
+            Save(globalBop, cfgPath, "bop.json");
         }
 
         private void Save<T>(T config, string cfgPath, string filename)

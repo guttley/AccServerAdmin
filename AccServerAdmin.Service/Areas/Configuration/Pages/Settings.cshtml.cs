@@ -63,12 +63,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
                 {
                     if (!_directory.Exists(Settings.ServerBasePath))
                     {
-                        ModelState.AddModelError(nameof(Settings.ServerBasePath), "Directory does not exist");
+                        ModelState.AddModelError("Settings.ServerBasePath", "Directory does not exist");
                     }
 
                     if (!_directory.Exists(Settings.InstanceBasePath))
                     {
-                        ModelState.AddModelError(nameof(Settings.InstanceBasePath), "Directory does not exist");
+                        ModelState.AddModelError("Settings.InstanceBasePath", "Directory does not exist");
                     }
 
                     if (!ModelState.IsValid)

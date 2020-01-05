@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using AccServerAdmin.Application;
 using AccServerAdmin.Application.AppSettings;
+using AccServerAdmin.Application.Bop.Commands;
+using AccServerAdmin.Application.Bop.Queries;
 using AccServerAdmin.Application.Common;
 using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Drivers.Queries;
@@ -159,6 +161,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
             services.AddTransient<IDataRepository<Entry>, DataRepository<Entry>>();
             services.AddTransient<IDriverEntryRepository, DriverEntryRepository>();
+            services.AddTransient<IBopRepository, BopRepository>();
 
             // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
@@ -192,6 +195,12 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDeleteEntryCommand, DeleteEntryCommand>();
             services.AddTransient<IAddDriverEntryCommand, AddDriverEntryCommand>();
             services.AddTransient<IDeleteDriverEntryCommand, DeleteDriverEntryCommand>();
+
+            services.AddTransient<ICreateBopCommand, CreateBopCommand>();
+            services.AddTransient<IUpdateBopCommand, UpdateBopCommand>();
+            services.AddTransient<IDeleteBopCommand, DeleteBopCommand>();
+            services.AddTransient<IGetBopListQuery, GetBopListQuery>();
+            services.AddTransient<IGetBopByIdQuery, GetBopByIdQuery>();
 
         }
     }

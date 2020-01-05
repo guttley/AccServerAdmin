@@ -43,7 +43,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 }
                 catch (RaceNumberNotUniqueException rex)
                 {
-                    ModelState.AddModelError(nameof(Entry.RaceNumber), rex.Message);
+                    ModelState.AddModelError("Entry.RaceNumber", rex.Message);
                 }
             }
 

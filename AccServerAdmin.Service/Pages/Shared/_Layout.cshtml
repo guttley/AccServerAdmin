@@ -73,18 +73,19 @@
             <!-- Sidebar Navidation Menus-->
             <span class="heading">Main</span>
             <ul class="list-unstyled">
-                
-                <li @if (Context.Request.Path.Value == "/") { @Html.Raw("class='active'"); }><a asp-page="/Index"><i class="icon-home"></i>Dashboard</a></li>
-                
+
+                <li @if (Context.Request.Path.Value == "/") { @Html.Raw("class='active'") ; }><a asp-page="/Index"><i class="icon-home"></i>Dashboard</a></li>
+
 
                 @if (!Globals.NeedsConfiguring)
                 {
-                    <li @if (Context.Request.Path.Value.Contains("Servers")) { @Html.Raw("class='active'"); }><a asp-area="Configuration" asp-page="/Servers/List"><i class="icon-computer"></i>Servers</a></li>
-                    <li @if (Context.Request.Path.Value.Contains("Drivers")) { @Html.Raw("class='active'"); }><a asp-area="Configuration" asp-page="/Drivers/List"><i class="icon-user"></i>Drivers</a></li>
+                    <li @if (Context.Request.Path.Value.Contains("Servers")) { @Html.Raw("class='active'") ; }><a asp-area="Configuration" asp-page="/Servers/List"><i class="icon-computer"></i>Servers</a></li>
+                    <li @if (Context.Request.Path.Value.Contains("Drivers")) { @Html.Raw("class='active'") ; }><a asp-area="Configuration" asp-page="/Drivers/List"><i class="icon-user"></i>Drivers</a></li>
+                    <li @if (Context.Request.Path.Value.Contains("GlobalBop")) { @Html.Raw("class='active'") ; }><a asp-area="Configuration" asp-page="/GlobalBop/List"><i class="icon-controls"></i>Global BoP</a></li>
                 }
 
-                <li @if (Context.Request.Path.Value.Contains("Settings")) { @Html.Raw("class='active'"); }><a asp-area="Configuration" asp-page="/Settings"><i class="icon-settings"></i>Settings</a></li>
-                <li @if (Context.Request.Path.Value.Contains("Acknowledgments")) { @Html.Raw("class='active'"); }><a asp-page="/Acknowledgments"><i class="icon-writing-whiteboard"></i>Acknowledgments</a></li>
+                <li @if (Context.Request.Path.Value.Contains("Settings")) { @Html.Raw("class='active'") ; }><a asp-area="Configuration" asp-page="/Settings"><i class="icon-settings"></i>Settings</a></li>
+                <li @if (Context.Request.Path.Value.Contains("Acknowledgments")) { @Html.Raw("class='active'") ; }><a asp-page="/Acknowledgments"><i class="icon-writing-whiteboard"></i>Acknowledgments</a></li>
             </ul>
         </nav>
         <!-- Sidebar Navigation end-->

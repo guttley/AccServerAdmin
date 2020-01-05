@@ -112,7 +112,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
 
                 if (!passphraseOk)
                 {
-                    ModelState.AddModelError(nameof(InputModel.Passphrase), "Passphrase is incorrect");
+                    ModelState.AddModelError("Passphrase", "Passphrase is incorrect");
                 }
 
             }

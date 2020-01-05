@@ -1,0 +1,81 @@
+﻿@page
+@using AccServerAdmin.Service
+@model AccServerAdmin.Service.Areas.Configuration.Pages.GlobalBop.EditBopModel
+@{
+    ViewData["Title"] = "Edit Balance of Performance";
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Balance of Performance</h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+
+                    <div class="card-header">
+                        @if (Model.Balance.Id == Guid.Empty)
+                        {
+                            <h4>Create Balance of Performance</h4>
+                        }
+                        else
+                        {
+                            <h4>Edit Balance of Performance - @ListData.Tracks[Model.Balance.Track] - @ListData.Cars[Model.Balance.Car]</h4>
+                        }
+                    </div>
+
+                    <div class="card-body">
+
+                        <form method="post">
+
+                            @Html.HiddenFor(model => model.Balance.Id)
+
+                            <div class="form-group row">
+                                <label asp-for="Balance.Track" class="col-sm-2 form-control-label">Track</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="Balance.Track" asp-items="Model.Tracks" class="form-control">
+                                        <option value="">-- Select a track --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Balance.Car" class="col-sm-2 form-control-label">Car Model</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="Balance.Car" asp-items="Model.Cars" class="form-control">
+                                        <option value="">-- Select a Car Type --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Balance.Ballast" class="col-sm-2 form-control-label">Ballast KG</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Balance.Ballast" type="text" class="form-control">
+                                    <span asp-validation-for="Balance.Ballast" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Balance.Restrictor" class="col-sm-2 form-control-label">Restrictor %</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Balance.Restrictor" type="text" class="form-control">
+                                    <span asp-validation-for="Balance.Restrictor" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                                <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
