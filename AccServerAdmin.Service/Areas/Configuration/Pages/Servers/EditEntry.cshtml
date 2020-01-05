@@ -72,6 +72,22 @@
                             </div>
 
                             <div class="form-group row">
+                                <label asp-for="Entry.Ballast" class="col-sm-2 form-control-label">Ballast KG</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.Ballast" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.Ballast" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.Restrictor" class="col-sm-2 form-control-label">Restrictor %</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.Restrictor" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.Restrictor" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label class="col-sm-2 form-control-label">&nbsp;</label>
                                 <div class="col-sm-10">
                                     <div class="i-checks">
@@ -97,11 +113,12 @@
                                     <ul>
                                         @foreach (var driver in Model.Entry.Drivers)
                                         {
-                                            <li>@driver.Fullname 
-                                                <a asp-page-handler="RemoveDriver" 
-                                                   asp-route-serverId="@Model.ServerId" 
+                                            <li>
+                                                @driver.Fullname
+                                                <a asp-page-handler="RemoveDriver"
+                                                   asp-route-serverId="@Model.ServerId"
                                                    asp-route-entryListId="@Model.EntryListId"
-                                                   asp-route-entryId="@Model.Entry.Id" 
+                                                   asp-route-entryId="@Model.Entry.Id"
                                                    asp-route-driverId="@driver.Id"
                                                    alt="Select @driver.Fullname">Remove Driver</a>
                                             </li>

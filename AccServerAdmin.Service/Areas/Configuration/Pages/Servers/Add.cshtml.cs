@@ -29,7 +29,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 }
                 catch (SteamIdNotUniqueException nex)
                 {
-                    ModelState.AddModelError("Server.Name", nex.Message);
+                    ModelState.AddModelError(nameof(Server.Name), nex.Message);
                 }
                 catch (EmptyDirectoryException eex)
                 {

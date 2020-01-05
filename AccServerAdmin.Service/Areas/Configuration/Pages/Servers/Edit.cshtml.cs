@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
+using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -107,18 +108,18 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         private async Task ValidateNetworkCfgAsync()
         {
             if (Server.NetworkCfg.TcpPort < 1024 || Server.NetworkCfg.TcpPort > ushort.MaxValue)
-                ModelState.AddModelError("NetworkCfg.TcpPort", $"TcpPort must be greater than 1024 and less than {ushort.MaxValue}");
+                ModelState.AddModelError(nameof(NetworkCfg.TcpPort), $"TcpPort must be greater than 1024 and less than {ushort.MaxValue}");
 
             if (Server.NetworkCfg.UdpPort < 1024 || Server.NetworkCfg.UdpPort > ushort.MaxValue)
-                ModelState.AddModelError("NetworkCfg.UdpPort", $"UdpPort must be greater than 1024 and less than {ushort.MaxValue}");
+                ModelState.AddModelError(nameof(NetworkCfg.UdpPort), $"UdpPort must be greater than 1024 and less than {ushort.MaxValue}");
 
             if (Server.NetworkCfg.MaxConnections == 0 || Server.NetworkCfg.MaxConnections > 64)
-                ModelState.AddModelError("NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
+                ModelState.AddModelError(nameof(NetworkCfg.MaxConnections), "MaxConnections must be between 1 and 64");
 
 
             if (await _getDuplicatePortQuery.ExecuteAsync(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort).ConfigureAwait(false))
             {
-                ModelState.AddModelError("NetworkCfg.TcpPort", "Tcp or Udp Port is in use by another server");
+                ModelState.AddModelError(nameof(NetworkCfg.TcpPort), "Tcp or Udp Port is in use by another server");
             }
 
         }
@@ -136,15 +137,15 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             }
 
             if (string.IsNullOrEmpty(Server.GameCfg.AdminPassword))
-                ModelState.AddModelError("GameCfg.AdminPassword", "You must supply an Admin password!!");
+                ModelState.AddModelError(nameof(GameCfg.AdminPassword), "You must supply an Admin password!!");
 
             if (!string.IsNullOrEmpty(Server.GameCfg.Password))
             {
                 if (Server.GameCfg.Password == Server.GameCfg.AdminPassword)
-                    ModelState.AddModelError("GameCfg.Password", "You must supply a different password for the server and admin passwords");
+                    ModelState.AddModelError(nameof(GameCfg.Password), "You must supply a different password for the server and admin passwords");
 
                 if (Server.GameCfg.Password == Server.GameCfg.SpectatorPassword)
-                    ModelState.AddModelError("GameCfg.SpectatorPassword", "You must supply a different password for the spectator password");
+                    ModelState.AddModelError(nameof(GameCfg.SpectatorPassword), "You must supply a different password for the spectator password");
             }
         }
 

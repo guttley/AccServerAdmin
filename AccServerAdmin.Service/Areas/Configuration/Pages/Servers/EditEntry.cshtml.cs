@@ -36,14 +36,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             _deleteDriverCommand = deleteDriverCommand;
         }
 
-        [BindProperty]
-        public Guid ServerId { get; set; }
+        [BindProperty] public Guid ServerId { get; set; }
 
-        [BindProperty]
-        public Guid EntryListId { get; set; }
+        [BindProperty] public Guid EntryListId { get; set; }
 
-        [BindProperty]
-        public Entry Entry { get; set; }
+        [BindProperty] public Entry Entry { get; set; }
 
         public List<Driver> Drivers { get; set; }
 
@@ -51,8 +48,9 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         private async Task BuildBindingListsAsync()
         {
-            var cars = EnumHelper.GetValues<CarModel>().ToDictionary(model => model, model => model.GetDescription()).OrderBy(p => p.Value);
-            var model = Entry?.ForcedCarModel ?? CarModel.NotForced; 
+            var cars = EnumHelper.GetValues<CarModel>().ToDictionary(model => model, model => model.GetDescription())
+                .OrderBy(p => p.Value);
+            var model = Entry?.ForcedCarModel ?? CarModel.NotForced;
 
             CarModels = new SelectList(cars, "Key", "Value", model);
 
@@ -63,16 +61,26 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             ServerId = serverId;
             EntryListId = entryListId;
-            
+
             Entry = id == Guid.Empty
-                    ? new Entry { EntryListId = entryListId }
-                    : await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+                ? new Entry {EntryListId = entryListId}
+                : await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
 
             await BuildBindingListsAsync().ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Entry.Ballast > 100)
+            {
+                ModelState.AddModelError(nameof(Entry.Ballast), "Ballast maximum is 100KG");
+            }
+
+            if (Entry.Restrictor > 20)
+            {
+                ModelState.AddModelError(nameof(Entry.Restrictor), "Restrictor maximum is 20%");
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -82,11 +90,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 }
                 catch (RaceNumberNotUniqueException nex)
                 {
-                    ModelState.AddModelError("Entry.RaceNumber", nex.Message);
+                    ModelState.AddModelError(nameof(Entry.RaceNumber), nex.Message);
                 }
                 catch (GridPositionNotUniqueException gex)
                 {
-                    ModelState.AddModelError("Entry.DefaultGridPosition", gex.Message);
+                    ModelState.AddModelError(nameof(Entry.DefaultGridPosition), gex.Message);
                 }
             }
 
@@ -95,23 +103,22 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 await BuildBindingListsAsync().ConfigureAwait(false);
                 return Page();
             }
-            
+
             return Redirect($"Edit?Id={ServerId}");
         }
 
         public async Task OnGetSelectDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
         {
-            var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId };
+            var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
             await _addDriverCommand.ExecuteAsync(driverEntry).ConfigureAwait(false);
             await OnGetAsync(serverId, entryListId, entryId);
         }
 
         public async Task OnGetRemoveDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
         {
-            var driverEntry = new DriverEntry { DriverId = driverId, EntryId = entryId };
+            var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
             await _deleteDriverCommand.ExecuteAsync(driverEntry).ConfigureAwait(false);
             await OnGetAsync(serverId, entryListId, entryId);
         }
-
     }
 }

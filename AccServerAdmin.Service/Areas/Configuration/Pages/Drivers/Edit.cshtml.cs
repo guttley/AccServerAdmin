@@ -71,7 +71,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
                 }
                 catch (SteamIdNotUniqueException nex)
                 {
-                    ModelState.AddModelError("Driver.PlayerId", nex.Message);
+                    ModelState.AddModelError(nameof(Driver.PlayerId), nex.Message);
                 }
                 catch (EmptyDirectoryException eex)
                 {
