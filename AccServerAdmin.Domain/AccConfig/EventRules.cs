@@ -36,23 +36,18 @@ namespace AccServerAdmin.Domain.AccConfig
         public int MaxDriversCount { get; set; }
 
         [JsonProperty("isRefuellingAllowedInRace")]
-        [JsonConverter(typeof(BoolConverter))]
         public bool RefuellingAllowedInRace { get; set; }
 
         [JsonProperty("isRefuellingTimeFixed")]
-        [JsonConverter(typeof(BoolConverter))]
         public bool RefuellingTimeFixed { get; set; }
 
         [JsonProperty("isMandatoryPitstopRefuellingRequired")]
-        [JsonConverter(typeof(BoolConverter))]
         public bool MandatoryPitstopRefuellingRequired { get; set; }
 
         [JsonProperty("isMandatoryPitstopTyreChangeRequired")]
-        [JsonConverter(typeof(BoolConverter))]
         public bool MandatoryPitstopTyreChangeRequired { get; set; }
 
         [JsonProperty("isMandatoryPitstopSwapDriverRequired")]
-        [JsonConverter(typeof(BoolConverter))]
         public bool MandatoryPitstopSwapDriverRequired { get; set; }
 
         public static EventRules CreateDefault()

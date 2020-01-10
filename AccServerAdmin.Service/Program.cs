@@ -32,7 +32,7 @@ namespace AccServerAdmin.Service
                             $"http://{DomainToUse}",
                             $"https://{DomainToUse}")
 #else 
-                            "http://localhost:8080",
+                            "http://localhost:58080",
                             $"http://{DomainToUse}")
 #endif
                         .UseStartup<Startup>();
