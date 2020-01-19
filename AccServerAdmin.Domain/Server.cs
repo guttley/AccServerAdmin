@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -67,6 +68,11 @@ namespace AccServerAdmin.Domain
         /// Entry List
         /// </summary>
         public EntryList EntryList { get; set; }
+
+        /// <summary>
+        /// Balance of performance
+        /// </summary>
+        public List<BalanceOfPerformance> ServerBop { get; set; }
 
     }
 }

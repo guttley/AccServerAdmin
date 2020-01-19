@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace AccServerAdmin.Service.Areas.Configuration.Pages.GlobalBop
+namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 {
     public class EditBopModel : PageModel
     {
@@ -26,6 +26,9 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.GlobalBop
             _updateBopCommand = updateBopCommand;
         }
 
+        [BindProperty] 
+        public Guid ServerId { get; set; }
+
         [BindProperty]
         public BalanceOfPerformance Balance { get; set; }
 
@@ -39,8 +42,10 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.GlobalBop
             Cars = new SelectList(ListData.Cars, "Key", "Value", Balance.Car);
         }
 
-        public async Task OnGetAsync(Guid id)
+        public async Task OnGetAsync(Guid serverId, Guid id)
         {
+            ServerId = serverId;
+
             Balance = id == Guid.Empty
                      ? new BalanceOfPerformance() 
                      : await _getBopByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
@@ -74,6 +79,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.GlobalBop
             {
                 try
                 {
+                    Balance.ServerId = ServerId;
+
                     if (Balance.Id == Guid.Empty)
                     {
                         await _createBopCommand.ExecuteAsync(Balance).ConfigureAwait(false);
@@ -89,7 +96,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.GlobalBop
                     ModelState.AddModelError("Balance.Car", nex.Message);
                 }
 
-                return Redirect("List");
+                return Redirect($"Edit?Id={ServerId}");
             } 
             else
             { 

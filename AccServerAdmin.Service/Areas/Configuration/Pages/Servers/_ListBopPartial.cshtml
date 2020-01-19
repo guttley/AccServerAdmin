@@ -1,0 +1,38 @@
+﻿@using AccServerAdmin.Application
+@using AccServerAdmin.Service
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+
+
+<div cass="card-header">
+    <h4><a asp-area="Configuration" asp-page="/Servers/EditBop" asp-route-serverId="@Model.Server.Id">Create new BoP</a></h4>
+</div>
+
+<div class="table-responsive">
+    <table id="bopTable" class="table table-striped table-sm" style="width: 100%;">
+        <thead>
+        <tr>
+            <th>Track</th>
+            <th>Car</th>
+            <th>Ballast</th>
+            <th>Restrictor</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var bop in Model.Server.ServerBop)
+        {
+            <tr>
+                <th scope="row">@ListData.Tracks[bop.Track]</th>
+                <td>@ListData.Cars[bop.Car]</td>
+                <td>@bop.Ballast</td>
+                <td>@bop.Restrictor</td>
+                <td>
+                    <a asp-area="Configuration" asp-page="/Servers/EditBop" asp-route-Id="@bop.Id">Edit</a>
+                    &nbsp;
+                    <a asp-area="Configuration" asp-page="/Servers/DeleteBop" asp-route-Id="@bop.Id" asp-route-serverId="@Model.Server.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

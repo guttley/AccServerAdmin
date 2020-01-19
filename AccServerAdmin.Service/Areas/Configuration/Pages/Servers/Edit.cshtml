@@ -51,6 +51,9 @@
                                 <li class="nav-item flex-sm-fill">
                                     <a data-toggle="tab" role="tab" href="#nav-tab-entries" aria-selected="false" class="nav-link">Entry List</a>
                                 </li>
+                                <li class="nav-item flex-sm-fill">
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-bop" aria-selected="false" class="nav-link">BoP</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-body tab-content">
@@ -86,7 +89,10 @@
                                         <label asp-for="Server.EntryList.ForceEntryList" class="label-material">Force Entry List</label>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div id="nav-tab-bop" role="tabpanel" aria-labelledby="bop-tab" class="tab-pane fade px-4 py-5">
+                                <!-- Balance of Performance -->
+                                <partial name="_ListBopPartial" />
                             </div>
 
                             <div class="form-group-material">

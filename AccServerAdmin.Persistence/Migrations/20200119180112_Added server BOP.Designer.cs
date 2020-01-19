@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200105132500_Added global BOP")]
-    partial class AddedglobalBOP
+    [Migration("20200119180112_Added server BOP")]
+    partial class AddedserverBOP
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,10 +33,15 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("Restrictor")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Track")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ServerId");
 
                     b.ToTable("BalanceOfPerformance");
                 });
@@ -663,6 +668,15 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.BalanceOfPerformance", b =>
+                {
+                    b.HasOne("AccServerAdmin.Domain.Server", null)
+                        .WithMany("ServerBop")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AccServerAdmin.Domain.AccConfig.Driver", b =>

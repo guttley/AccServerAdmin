@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AccServerAdmin.Application;
 using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Entries.Queries;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
-using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +22,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
+                .Include(s => s.ServerBop)
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
                 .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
                 .ToListAsync()
@@ -36,6 +36,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
+                .Include(s => s.ServerBop)
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
                 .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
                 .FirstOrDefaultAsync(s => s.Id == id)

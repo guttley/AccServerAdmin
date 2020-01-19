@@ -12,6 +12,9 @@ namespace AccServerAdmin.Domain.AccConfig
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [JsonIgnore]
+        public Guid ServerId { get; set; }
+
         [JsonProperty("track")]
         public string Track { get; set; }
 

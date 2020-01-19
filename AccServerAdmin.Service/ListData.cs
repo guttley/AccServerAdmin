@@ -46,7 +46,7 @@ namespace AccServerAdmin.Service
             {"silverstone_2019", "Silverstone 2019" },
             {"paul_ricard_2019", "Paul Ricard 2019" },
             {"misano_2019", "Misano 2019" },
-            {"spa_2019", "Spa-Francorchampss 2019" },
+            {"spa_2019", "Spa-Francorchamps 2019" },
             {"nurburgring_2019", "Nurburgring 2019" },
             {"barcelona_2019", "Barcelona 2019" },
             {"hungaroring_2019", "Hungaroring 2019" },

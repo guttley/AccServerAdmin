@@ -34,7 +34,7 @@ namespace AccServerAdmin.Application.Common
 
             var globalBop = new GlobalBop
             {
-                BopList = (await _getBopListQuery.ExecuteAsync().ConfigureAwait(false)).ToList()
+                BopList = (await _getBopListQuery.ExecuteAsync(server.Id).ConfigureAwait(false)).ToList()
             };
 
             Save(server.NetworkCfg,  cfgPath, "configuration.json");

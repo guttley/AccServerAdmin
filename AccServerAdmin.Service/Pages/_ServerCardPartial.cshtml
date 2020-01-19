@@ -8,16 +8,16 @@
 
                 <form method="post" >
                     <p class="card-text">
-                        Track: @Model.Server.EventCfg.Track<br />
+                        Track: @ListData.Tracks[Model.Server.EventCfg.Track]<br />
                         @if (Model.ProcessInfo != null)
                         {
                             <small>Started: @Model.ProcessInfo?.ProcessInfo?.StartTime;</small><br />
                             <small>PID: @Model.ProcessInfo?.ProcessInfo?.Id;</small><br />
 
                         }
-                        
+
                         <div class="form-group">
-                            
+
                             <a class="btn btn-primary" asp-area="Configuration" asp-page="/Servers/Edit" asp-route-Id=" @Model.Server.Id">Edit</a>
 
                             @if (Model.ProcessInfo == null)
@@ -29,7 +29,7 @@
                             {
                                 <button type="submit" class="btn btn-danger" asp-route-serverId="@Model.Server.Id" asp-page-handler="StopServer" onclick="return confirm('Are you sure you want to STOP this server?');">Stop</button>
                             }
-                            
+
                             @if (Model.HasImportableEntries)
                             {
                                 <a class="btn btn-primary" asp-area="Configuration" asp-page="/Tools/ImportEntryList" asp-route-Id=" @Model.Server.Id">Import Entry List</a>

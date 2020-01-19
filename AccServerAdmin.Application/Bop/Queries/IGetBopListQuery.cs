@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 
@@ -6,6 +7,6 @@ namespace AccServerAdmin.Application.Bop.Queries
 {
     public interface IGetBopListQuery
     {
-        Task<IEnumerable<BalanceOfPerformance>> ExecuteAsync();
+        Task<IEnumerable<BalanceOfPerformance>> ExecuteAsync(Guid serverId);
     }
 }
