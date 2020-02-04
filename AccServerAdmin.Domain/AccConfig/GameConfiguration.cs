@@ -86,8 +86,11 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("maxCarSlots")]
         public int MaxCarSlots { get; set; }
 
-        [JsonProperty("CentralEntryListPath")]
+        [JsonProperty("centralEntryListPath")]
         public string CentralEntryListPath { get; set; }
+
+        [JsonProperty("formationLapType")]
+        public FormationLap FormationLap { get; set; }
 
         public static GameCfg CreateDefault()
         {
@@ -108,6 +111,7 @@ namespace AccServerAdmin.Domain.AccConfig
                 ShortFormationLap = DefaultShortFormationLap,
                 RandomizeTrackWhenEmpty = DefaultRandomTrackWhenEmpty,
                 MaxCarSlots = DefaultCarSlots,
+                FormationLap = FormationLap.Default,
                 CentralEntryListPath = string.Empty
             };
 

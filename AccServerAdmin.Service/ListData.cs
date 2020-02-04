@@ -73,6 +73,13 @@ namespace AccServerAdmin.Service
             {"Sprint", "Sprint"}
         };
 
+        public static Dictionary<FormationLap, string> FormationLapTypes { get; } = new Dictionary<FormationLap, string>
+        {
+            {FormationLap.Free, "Free (same as /manual)"},
+            {FormationLap.Limited, "Limited speed lap"},
+            {FormationLap.Default, "Default with position control and UI"}
+        };
+
         public static Dictionary<int, string> TrackMedals { get; } = new Dictionary<int, string>
         {
             { 0, "0"},

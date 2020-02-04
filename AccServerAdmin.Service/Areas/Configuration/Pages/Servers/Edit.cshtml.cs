@@ -34,6 +34,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public SelectList EventTypes { get; set; }
 
+        public SelectList FormationLapTypes { get; set; }
+
         public SelectList TrackMedals { get; set; }
 
         public SelectList SafetyRatings { get; set; }
@@ -51,6 +53,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             Tracks = new SelectList(ListData.Tracks, "Key", "Value", Server.EventCfg.Track);
             EventTypes = new SelectList(ListData.EventTypes, "Key", "Value", Server.EventCfg.EventType);
+            FormationLapTypes = new SelectList(ListData.FormationLapTypes, "Key", "Value", Server.EventCfg.EventType);
             TrackMedals = new SelectList(ListData.TrackMedals, "Key", "Value", Server.GameCfg.TrackMedalsRequirement);
             SafetyRatings = new SelectList(ListData.Ratings, "Key", "Value", Server.GameCfg.SafetyRatingRequirement);
             RacecraftRatings = new SelectList(ListData.Ratings, "Key", "Value", Server.GameCfg.RacecraftRatingRequirement);
