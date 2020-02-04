@@ -51,6 +51,10 @@ namespace AccServerAdmin.Service
             {"barcelona_2019", "Barcelona 2019" },
             {"hungaroring_2019", "Hungaroring 2019" },
             {"zandvoort_2019", "Zandvoort 2019" },
+            {"kyalami_2019", "Kyalami 2019" },
+            {"mount_panorama_2019", "Mount Panorama 2019" },
+            {"suzuka_2019", "Suzuka 2019" },
+            {"laguna_seca_2019", "Laguna Seca 2019" },
         };
 
         public static Dictionary<int, string> DriverTypes { get; } = new Dictionary<int, string>
