@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Servers.Queries

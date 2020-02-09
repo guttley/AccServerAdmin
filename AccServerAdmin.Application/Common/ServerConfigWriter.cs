@@ -29,9 +29,6 @@ namespace AccServerAdmin.Application.Common
         {
             var cfgPath = Path.Combine(serverPath, "cfg");
 
-            // Must order the Sessions P, Q, R or the server will complain
-            server.EventCfg.Sessions = server.EventCfg.Sessions.OrderBy(s => s.SessionType).ToList();
-
             var globalBop = new GlobalBop
             {
                 BopList = (await _getBopListQuery.ExecuteAsync(server.Id).ConfigureAwait(false)).ToList()
