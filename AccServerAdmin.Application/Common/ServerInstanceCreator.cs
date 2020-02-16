@@ -29,7 +29,7 @@ namespace AccServerAdmin.Application.Common
 
         public async Task<string> Execute(Server server)
         {
-            var settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
+            var settings = await _getAppSettingsQuery.Execute();
             var sourceFiles = _directory.GetFiles(settings.ServerBasePath).ToList();
 
             if (!sourceFiles.Any())

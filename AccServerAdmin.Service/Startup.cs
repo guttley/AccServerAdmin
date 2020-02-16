@@ -9,6 +9,7 @@ using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Entries.Queries;
+using AccServerAdmin.Application.Results.Queries;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -28,7 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using AccServerAdmin.Application.Sessions.Queries;
 using AccServerAdmin.Application.Sessions.Commands;
-using AccServerAdmin.Notifications.EntryList;
+using AccServerAdmin.Notifications.Results;
 
 namespace AccServerAdmin.Service
 {
@@ -117,7 +118,7 @@ namespace AccServerAdmin.Service
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
-                endpoints.MapHub<EntryImportHub>("/hubs/entryImportHub");
+                endpoints.MapHub<ResultImportHub>("/hubs/resultImportHub");
             });
         }
 
@@ -149,7 +150,9 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerConfigWriter, ServerConfigWriter>();
             services.AddTransient<IServerInstanceCreator, ServerInstanceCreator>();
             services.AddTransient<IServerPathResolver, ServerPathResolver>();
+            services.AddTransient<IResultImporter, ResultImporter>();
             services.AddSingleton<IProcessManager, ProcessManager>();
+
 
             // Repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -161,7 +164,8 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDataRepository<Entry>, DataRepository<Entry>>();
             services.AddTransient<IDriverEntryRepository, DriverEntryRepository>();
             services.AddTransient<IBopRepository, BopRepository>();
-            services.AddTransient<ISessionRepository, SessionRepository>();
+            services.AddTransient<IDataRepository<Session>, DataRepository<Session>>();
+            services.AddTransient<IDataRepository<SessionDriver>, DataRepository<SessionDriver>>();
 
             // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
@@ -185,9 +189,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IGetDriverListQuery, GetDriverListQuery>();
             services.AddTransient<IGetDriverByIdQuery, GetDriverByIdQuery>();
             
-            services.AddTransient<IImportEntryListCommand, ImportEntryListCommand>();
-            services.AddTransient<IEntryListReader, EntryListReader>();
-            services.AddTransient<IGetImportableEntriesQuery, GetImportableEntriesQuery>();
+            services.AddTransient<IGetImportableResultsQuery, GetImportableResultsQuery>();
             services.AddTransient<IGetEntryByIdQuery, GetEntryByIdQuery>();
             services.AddTransient<IValidateEntryCommand, ValidateEntryCommand>();
             services.AddTransient<ICreateEntryCommand, CreateEntryCommand>();

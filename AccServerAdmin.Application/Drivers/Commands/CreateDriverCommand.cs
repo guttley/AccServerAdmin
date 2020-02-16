@@ -22,13 +22,13 @@ namespace AccServerAdmin.Application.Drivers.Commands
 
         public async Task<Driver> Execute(Driver driver)
         {
-            if (!await _driverRepository.IsUniqueSteamIdAsync(driver).ConfigureAwait(false))
+            if (!await _driverRepository.IsUniqueSteamIdAsync(driver))
             {
                 throw new SteamIdNotUniqueException("Steam Ids must be unique");
             }
 
             await _driverRepository.Add(driver);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
 
             return driver;
         }

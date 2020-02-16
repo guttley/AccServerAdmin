@@ -39,7 +39,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var command = new CreateServerCommand(repo, unitOfWork);
 
             // Act
-            var returnServer = await command.Execute(serverName).ConfigureAwait(false);
+            var returnServer = await command.Execute(serverName);
 
             // Assert
             Assert.That(returnServer, Is.Not.Null);
@@ -47,7 +47,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             Assert.That(returnServer.Id, Is.EqualTo(server.Id));
 
             await unitOfWork.Received().SaveChanges();
-            await repo.Received().Add(server).ConfigureAwait(false);
+            await repo.Received().Add(server);
         }
     }
 }

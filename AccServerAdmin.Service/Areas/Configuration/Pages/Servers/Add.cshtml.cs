@@ -25,7 +25,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             {
                 try
                 {
-                    Server = await _createServerCommand.Execute(Server.Name).ConfigureAwait(false);
+                    Server = await _createServerCommand.Execute(Server.Name);
                 }
                 catch (SteamIdNotUniqueException nex)
                 {

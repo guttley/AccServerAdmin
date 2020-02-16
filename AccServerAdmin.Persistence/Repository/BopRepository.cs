@@ -16,7 +16,7 @@ namespace AccServerAdmin.Persistence.Repository
         {
             var hasMatch = await DbContext.Set<BalanceOfPerformance>()
                 .AnyAsync(b => b.Track == bop.Track && b.Car != bop.Car)
-                .ConfigureAwait(false);
+                ;
 
             return !hasMatch;
         }

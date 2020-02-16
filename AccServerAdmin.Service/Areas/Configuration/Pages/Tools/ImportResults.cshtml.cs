@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using AccServerAdmin.Application.Entries.Commands;
+using AccServerAdmin.Application.Results.Queries;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +9,19 @@ using Microsoft.Extensions.Logging;
 
 namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
 {
-    public class ImportEntryListModel : PageModel
+    public class ImportResultsModel : PageModel
     {
         private readonly IGetServerByIdQuery _getServerByIdQuery;
-        private readonly IImportEntryListCommand _importEntryListCommand;
-        private readonly ILogger<ImportEntryListModel> _logger;
+        private readonly IResultImporter _resultImporter;
+        private readonly ILogger<ImportResultsModel> _logger;
 
-        public ImportEntryListModel(
+        public ImportResultsModel(
             IGetServerByIdQuery getServerByIdQuery,
-            IImportEntryListCommand importEntryListCommand,
-            ILogger<ImportEntryListModel> logger)
+            IResultImporter resultImporter,
+            ILogger<ImportResultsModel> logger)
         {
             _getServerByIdQuery = getServerByIdQuery;
-            _importEntryListCommand = importEntryListCommand;
+            _resultImporter = resultImporter;
             _logger = logger;
         }
 
@@ -33,11 +33,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
             Server = await _getServerByIdQuery.Execute(id);
         }
 
-        public async Task OnPostImportEntryListAsync(Guid id)
+        public async Task OnPostImportResultsAsync(Guid id)
         {
             try
             {
-                await _importEntryListCommand.Execute(id);
+                await _resultImporter.Execute(id);
             }
             catch (Exception ex)
             {

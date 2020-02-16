@@ -16,7 +16,7 @@ namespace AccServerAdmin.Persistence.Repository
 
         public async Task AddAsync(DriverEntry driverEntry)
         {
-            await _dbContext.DriverEntries.AddAsync(driverEntry).ConfigureAwait(false);
+            await _dbContext.DriverEntries.AddAsync(driverEntry);
         }
 
         public void Delete(DriverEntry driverEntry)

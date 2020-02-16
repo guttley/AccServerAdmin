@@ -15,7 +15,7 @@ namespace AccServerAdmin.Application.Servers.Queries
 
         public async Task<bool> Execute(Guid serverId, int tcpPort, int udpPort)
         {
-            return await _serverRepository.IsDuplicatePortsAsync(serverId, tcpPort, udpPort).ConfigureAwait(false);
+            return await _serverRepository.IsDuplicatePortsAsync(serverId, tcpPort, udpPort);
         }
     }
 }

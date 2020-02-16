@@ -2,7 +2,7 @@
 
 $(function () {
 
-    var connection = new signalR.HubConnectionBuilder().withUrl("/hubs/entryImportHub").build();
+    var connection = new signalR.HubConnectionBuilder().withUrl("/hubs/resultImportHub").build();
 
     //Disable send button until connection is established
     document.getElementById("startImportBtn").disabled = true;
@@ -12,6 +12,7 @@ $(function () {
         var row = table.insertRow(-1);
         var cell = row.insertCell(0);
         cell.innerHTML = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        window.scrollTo(0, document.body.scrollHeight);
     });
 
     connection.start().then(function () {

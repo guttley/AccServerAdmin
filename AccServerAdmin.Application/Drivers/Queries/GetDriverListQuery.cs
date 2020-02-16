@@ -17,7 +17,7 @@ namespace AccServerAdmin.Application.Drivers.Queries
 
         public async Task<IEnumerable<Driver>> Execute()
         {
-            var drivers = await _driverRepository.GetAll().ConfigureAwait(false);
+            var drivers = await _driverRepository.GetAll();
             return drivers.OrderBy(d => d.Fullname);
         }
     }

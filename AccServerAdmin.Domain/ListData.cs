@@ -1,9 +1,8 @@
-﻿using AccServerAdmin.Domain.AccConfig;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AccServerAdmin.Application;
+using AccServerAdmin.Domain.AccConfig;
 
-namespace AccServerAdmin.Service
+namespace AccServerAdmin.Domain
 {
     /// <summary>
     /// Holds data for selects

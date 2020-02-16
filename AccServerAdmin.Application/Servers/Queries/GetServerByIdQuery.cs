@@ -17,7 +17,7 @@ namespace AccServerAdmin.Application.Servers.Queries
         
         public async Task<Server> Execute(Guid serverId)
         {
-            var server = await _serverRepository.Get(serverId).ConfigureAwait(false);
+            var server = await _serverRepository.Get(serverId);
 
             server.EventCfg.Sessions =
                 server.EventCfg.Sessions

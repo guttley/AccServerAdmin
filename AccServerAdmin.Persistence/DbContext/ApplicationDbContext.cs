@@ -33,6 +33,13 @@ namespace AccServerAdmin.Persistence.DbContext
                    .HasOne(de => de.Driver)
                    .WithMany(e => e.Entries)
                    .HasForeignKey(de => de.DriverId);
+
+            builder.Entity<Session>()
+                .HasIndex(s => s.SessionTimestamp)
+                .IsUnique();
+
+            builder.Entity<Session>()
+                .HasIndex(s => s.Track);
         }
 
         //
@@ -49,6 +56,7 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<DriverEntry> DriverEntries { get; set; }
         public DbSet<BalanceOfPerformance> BalanceOfPerformance { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
     }
 }

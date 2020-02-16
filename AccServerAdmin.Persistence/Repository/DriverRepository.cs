@@ -16,7 +16,7 @@ namespace AccServerAdmin.Persistence.Repository
         {
             var hasMatch = await DbContext.Set<Driver>()
                 .AnyAsync(d => d.PlayerId == driver.PlayerId && d.Id != driver.Id)
-                .ConfigureAwait(false);
+                ;
 
             return !hasMatch;
         }

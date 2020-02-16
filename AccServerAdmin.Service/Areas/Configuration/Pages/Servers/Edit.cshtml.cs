@@ -43,7 +43,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public async Task OnGetAsync(Guid id)
         {
-            Server = await _getServerByIdQuery.Execute(id).ConfigureAwait(false);
+            Server = await _getServerByIdQuery.Execute(id);
             BuildBindingLists();
         }
 
@@ -69,7 +69,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 ModelState.AddModelError("Server.NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
 
 
-            if (await _getDuplicatePortQuery.Execute(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort).ConfigureAwait(false))
+            if (await _getDuplicatePortQuery.Execute(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort))
             {
                 ModelState.AddModelError("Server.NetworkCfg.TcpPort", "Tcp or Udp Port is in use by another server");
             }
@@ -105,7 +105,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             if (ModelState.IsValid)
             {
-                await ValidateNetworkCfgAsync().ConfigureAwait(false);
+                await ValidateNetworkCfgAsync();
                 ValidateGameCfg();
             }
 
@@ -115,7 +115,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 return Page();
             }
 
-            await _updateServerCommand.Execute(Server).ConfigureAwait(false);
+            await _updateServerCommand.Execute(Server);
             return RedirectToPage("./List");
         }
     }

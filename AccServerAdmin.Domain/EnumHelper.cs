@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace AccServerAdmin.Application
+namespace AccServerAdmin.Domain
 {
     public static class EnumHelper
     {

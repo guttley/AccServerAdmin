@@ -40,7 +40,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
 
         public async Task OnGetAsync()
         {
-            Settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
+            Settings = await _getAppSettingsQuery.Execute();
 
             if (Settings is null)
             {
@@ -75,8 +75,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages
                         return Page();
                 }
 
-                await _saveAppSettingsCommand.Execute(Settings).ConfigureAwait(false);
-                await _unitOfWork.SaveChanges().ConfigureAwait(false);
+                await _saveAppSettingsCommand.Execute(Settings);
+                await _unitOfWork.SaveChanges();
                 _directory.CreateDirectory(Settings.ServerBasePath);
                 _directory.CreateDirectory(Settings.InstanceBasePath);
                 Globals.NeedsConfiguring = false;

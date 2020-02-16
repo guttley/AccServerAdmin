@@ -24,13 +24,13 @@ namespace AccServerAdmin.Application.Servers.Commands
         {
             var server = new Server {Name = serverName};
 
-            if (await _serverRepository.IsUniqueNameAsync(serverName).ConfigureAwait(false))
+            if (await _serverRepository.IsUniqueNameAsync(serverName))
             {
                 throw new SteamIdNotUniqueException("Server names must be unique");
             }
 
             await _serverRepository.Add(server);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
 
             return server;
         }

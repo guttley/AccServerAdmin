@@ -23,9 +23,9 @@ namespace AccServerAdmin.Application.Entries.Commands
 
         public async Task Execute(Entry entry)
         {
-            await _validator.Execute(entry).ConfigureAwait(false);
+            await _validator.Execute(entry);
             _entryRepository.Update(entry.Id, entry);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
         }
 
     }

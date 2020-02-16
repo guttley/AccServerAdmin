@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.Sessions.Commands;
 using AccServerAdmin.Application.Sessions.Queries;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -55,7 +56,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             }
             else
             {
-                Session = await _getSessionByIdQuery.Execute(id).ConfigureAwait(false);
+                Session = await _getSessionByIdQuery.Execute(id);
             }                       
         }
 
@@ -73,11 +74,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (Session.Id == Guid.Empty)
             {
-                await _createSessionCommand.Execute(ServerId, Session).ConfigureAwait(false);                
+                await _createSessionCommand.Execute(ServerId, Session);                
             }
             else
             {
-                await _updateSessionCommand.Execute(ServerId, Session).ConfigureAwait(false);
+                await _updateSessionCommand.Execute(ServerId, Session);
             }
 
             return RedirectToPage("./Edit", new { Id = ServerId});

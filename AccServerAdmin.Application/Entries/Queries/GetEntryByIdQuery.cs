@@ -18,7 +18,7 @@ namespace AccServerAdmin.Application.Entries.Queries
 
         public async Task<Entry> Execute(Guid entryId)
         {
-            return await _entryRepository.Get(entryId).ConfigureAwait(false);
+            return await _entryRepository.Get(entryId);
         }
 
     }

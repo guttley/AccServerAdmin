@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AccServerAdmin.Application.Entries.Queries;
+using AccServerAdmin.Application.Results.Queries;
 
 namespace AccServerAdmin.Service.Pages
 {
@@ -17,18 +17,18 @@ namespace AccServerAdmin.Service.Pages
         private readonly IGetServerListQuery _getServerListQuery;
         private readonly IProcessManager _processManager;
         private readonly IGetAppSettingsQuery _getAppSettingsQuery;
-        private readonly IGetImportableEntriesQuery _getImportableEntriesQuery; 
+        private readonly IGetImportableResultsQuery _getImportableResultsQuery; 
 
         public IndexModel(
             IProcessManager processManager,
             IGetAppSettingsQuery getAppSettingsQuery,
             IGetServerListQuery getServerListQuery,
-            IGetImportableEntriesQuery getImportableEntriesQuery)
+            IGetImportableResultsQuery getImportableResultsQuery)
         {
             _processManager = processManager;
             _getAppSettingsQuery = getAppSettingsQuery;
             _getServerListQuery = getServerListQuery;
-            _getImportableEntriesQuery = getImportableEntriesQuery;
+            _getImportableResultsQuery = getImportableResultsQuery;
         }
 
         [BindProperty]
@@ -36,14 +36,14 @@ namespace AccServerAdmin.Service.Pages
 
         public async Task OnGetAsync()
         {
-            var settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
-            var servers = await _getServerListQuery.Execute().ConfigureAwait(false);
+            var settings = await _getAppSettingsQuery.Execute();
+            var servers = await _getServerListQuery.Execute();
             
             var items = servers.Select(async s => new DashItem
             {
                 Server = s,
                 ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id),
-                HasImportableEntries = await _getImportableEntriesQuery.Execute(s.Id).ConfigureAwait(false)
+                HasImportableResults = await _getImportableResultsQuery.Execute(s.Id)
             }).ToList();
 
             DashItems = await Task.WhenAll(items);

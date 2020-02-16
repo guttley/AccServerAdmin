@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Exceptions;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -40,7 +41,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
         {
             Driver = id == Guid.Empty
                      ? new Driver() 
-                     : await _getDriverByIdQuery.Execute(id).ConfigureAwait(false);
+                     : await _getDriverByIdQuery.Execute(id);
 
             BuildBindingLists();
         }
@@ -53,11 +54,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
                 {
                     if (Driver.Id == Guid.Empty)
                     {
-                        await _createDriverCommand.Execute(Driver).ConfigureAwait(false);
+                        await _createDriverCommand.Execute(Driver);
                     } 
                     else 
                     {
-                        await _updateDriverCommand.Execute(Driver).ConfigureAwait(false);
+                        await _updateDriverCommand.Execute(Driver);
                     }
                 }
                 catch (SteamIdNotUniqueException nex)

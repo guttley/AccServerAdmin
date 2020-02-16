@@ -21,7 +21,7 @@ namespace AccServerAdmin.Application.Sessions.Commands
         public async Task Execute(Guid serverId, SessionConfiguration session)
         {
             _sessionRepository.Update(session.Id, session);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

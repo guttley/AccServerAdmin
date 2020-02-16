@@ -24,7 +24,7 @@ namespace AccServerAdmin.Application.Bop.Queries
                 .OrderBy(b => b.Track)
                 .ThenBy(b => b.Car)
                 .ToListAsync()
-                .ConfigureAwait(false);
+                ;
         }
     }
 }

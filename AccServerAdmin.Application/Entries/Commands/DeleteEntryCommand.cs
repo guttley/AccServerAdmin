@@ -21,7 +21,7 @@ namespace AccServerAdmin.Application.Entries.Commands
         public async Task Execute(Guid entryId)
         {
             _entryRepository.Delete(entryId);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

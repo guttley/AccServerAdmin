@@ -24,7 +24,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var command = new UpdateServerCommand(repo);
 
             // Act
-            await command.Execute(updatedServer).ConfigureAwait(false);
+            await command.Execute(updatedServer);
 
             // Assert
             serverResolver.Received().Resolve(serverId);

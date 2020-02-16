@@ -26,7 +26,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
                 .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
                 .ToListAsync()
-                .ConfigureAwait(false);
+                ;
         }
 
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
                 .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
                 .FirstOrDefaultAsync(s => s.Id == id)
-                .ConfigureAwait(false);
+                ;
         }
 
         public override void Update(Guid id, Server updated)
@@ -84,7 +84,7 @@ namespace AccServerAdmin.Persistence.Repository
         {
             return await DbContext.Set<Server>()
                 .AnyAsync(s => s.Name == serverName)
-                .ConfigureAwait(false);
+                ;
         }
 
         /// <inheritdoc />
@@ -92,7 +92,7 @@ namespace AccServerAdmin.Persistence.Repository
         {
             var hasMatch = await DbContext.Set<Server>()
                 .AnyAsync(s => s.Id != serverId && (s.NetworkCfg.TcpPort == tcpPort || s.NetworkCfg.UdpPort == udpPort))
-                .ConfigureAwait(false);
+                ;
 
             return hasMatch;
         }

@@ -48,7 +48,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(IdentityUser user)
         {
-            var email = await _userManager.GetEmailAsync(user).ConfigureAwait(false);
+            var email = await _userManager.GetEmailAsync(user);
             Email = email;
 
             Input = new InputModel
@@ -56,12 +56,12 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
                 NewEmail = email,
             };
 
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user).ConfigureAwait(false);
+            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User).ConfigureAwait(false);
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -73,7 +73,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostChangeEmailAsync()
         {
-            var user = await _userManager.GetUserAsync(User).ConfigureAwait(false);
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -85,11 +85,11 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var email = await _userManager.GetEmailAsync(user).ConfigureAwait(false);
+            var email = await _userManager.GetEmailAsync(user);
             if (Input.NewEmail != email)
             {
-                var userId = await _userManager.GetUserIdAsync(user).ConfigureAwait(false);
-                var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail).ConfigureAwait(false);
+                var userId = await _userManager.GetUserIdAsync(user);
+                var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
@@ -98,7 +98,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
                     "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.").ConfigureAwait(false);
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return RedirectToPage();
@@ -110,7 +110,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
-            var user = await _userManager.GetUserAsync(User).ConfigureAwait(false);
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -122,9 +122,9 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var userId = await _userManager.GetUserIdAsync(user).ConfigureAwait(false);
-            var email = await _userManager.GetEmailAsync(user).ConfigureAwait(false);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user).ConfigureAwait(false);
+            var userId = await _userManager.GetUserIdAsync(user);
+            var email = await _userManager.GetEmailAsync(user);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
@@ -134,7 +134,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
             await _emailSender.SendEmailAsync(
                 email,
                 "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.").ConfigureAwait(false);
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

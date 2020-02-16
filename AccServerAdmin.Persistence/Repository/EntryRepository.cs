@@ -23,7 +23,7 @@ namespace AccServerAdmin.Persistence.Repository
             return await _dbContext.Set<Entry>()
                 .Include(e => e.Entries).ThenInclude(e => e.Driver)
                 .FirstOrDefaultAsync(e => e.Id == id)
-                .ConfigureAwait(false);
+                ;
         }
 
         public override async Task<IEnumerable<Entry>> GetAll()
@@ -31,7 +31,7 @@ namespace AccServerAdmin.Persistence.Repository
             return await _dbContext.Set<Entry>()
                 .Include(e => e.Entries).ThenInclude(e => e.Driver)
                 .ToListAsync()
-                .ConfigureAwait(false);
+                ;
         }
     }
 }

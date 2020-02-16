@@ -17,7 +17,7 @@ namespace AccServerAdmin.Application.AppSettings
 
         public async Task<AppSettings> Execute()
         {
-            var settings = await _appSettingsRepository.GetAll().ConfigureAwait(false);
+            var settings = await _appSettingsRepository.GetAll();
 
             return settings.FirstOrDefault();
         }

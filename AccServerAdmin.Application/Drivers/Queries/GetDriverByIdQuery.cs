@@ -16,7 +16,7 @@ namespace AccServerAdmin.Application.Drivers.Queries
         
         public async Task<Driver> Execute(Guid driverId)
         {
-            return await _driverRepository.Get(driverId).ConfigureAwait(false);
+            return await _driverRepository.Get(driverId);
         }
     }
 }

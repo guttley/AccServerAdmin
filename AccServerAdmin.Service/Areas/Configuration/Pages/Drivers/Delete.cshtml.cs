@@ -26,12 +26,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
 
         public async Task OnGetAsync(Guid id)
         {
-            Driver = await _getDriverByIdQuery.Execute(id).ConfigureAwait(false);
+            Driver = await _getDriverByIdQuery.Execute(id);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _deleteDriverCommand.Execute(Driver.Id).ConfigureAwait(false);
+            await _deleteDriverCommand.Execute(Driver.Id);
             return RedirectToPage("./List");
         }
 

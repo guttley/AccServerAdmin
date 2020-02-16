@@ -21,7 +21,7 @@ namespace AccServerAdmin.Application.Sessions.Commands
         public async Task Execute(Guid sessionId)
         {
             _sessionRepository.Delete(sessionId);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

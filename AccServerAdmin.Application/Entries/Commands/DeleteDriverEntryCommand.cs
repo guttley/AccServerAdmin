@@ -21,7 +21,7 @@ namespace AccServerAdmin.Application.Entries.Commands
         public async Task Execute(DriverEntry driverEntry)
         {
             _driverEntryRepository.Delete(driverEntry);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

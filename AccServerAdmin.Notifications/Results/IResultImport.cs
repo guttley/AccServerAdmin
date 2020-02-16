@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace AccServerAdmin.Notifications.EntryList
+namespace AccServerAdmin.Notifications.Results
 {
-    public interface IEntryImport
+    public interface IResultImport
     {
         Task ImportMessage(string message);
     }

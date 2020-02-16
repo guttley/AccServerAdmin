@@ -65,10 +65,10 @@ namespace AccServerAdmin.Application
             var getServerByIdQuery = scope.ServiceProvider.GetRequiredService<IGetServerByIdQuery>();
             var serverConfigWriter = scope.ServiceProvider.GetRequiredService<IServerConfigWriter>();
             var serverInstanceCreator = scope.ServiceProvider.GetRequiredService<IServerInstanceCreator>();
-            var server = await getServerByIdQuery.Execute(serverId).ConfigureAwait(false);
-            var path = await serverInstanceCreator.Execute(server).ConfigureAwait(false);
+            var server = await getServerByIdQuery.Execute(serverId);
+            var path = await serverInstanceCreator.Execute(server);
 
-            await serverConfigWriter.Execute(server, path).ConfigureAwait(false);
+            await serverConfigWriter.Execute(server, path);
 
             var startInfo = new ProcessStartInfo
             {
@@ -105,7 +105,7 @@ namespace AccServerAdmin.Application
             processInfo.ProcessInfo.Kill(true);
             _logger.LogInformation("Server stopped");
 
-            //await serverInstanceCleanUp.Execute(serverId).ConfigureAwait(false);
+            //await serverInstanceCleanUp.Execute(serverId);
         }
 
         public void Dispose()

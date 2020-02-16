@@ -30,14 +30,14 @@ namespace AccServerAdmin.Persistence.Repository
         {
             return await _dbContext.Set<TEntity>()
                 .ToListAsync()
-                .ConfigureAwait(false);
+                ;
         }
 
         public virtual async Task<TEntity> Get(Guid id)
         {
             return await _dbContext.Set<TEntity>()
                 .FirstOrDefaultAsync(e => e.Id == id)
-                .ConfigureAwait(false);
+                ;
         }
 
         public virtual async Task Add(TEntity entity)

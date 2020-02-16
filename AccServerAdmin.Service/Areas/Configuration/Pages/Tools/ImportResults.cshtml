@@ -1,14 +1,14 @@
 ﻿@page
-@model AccServerAdmin.Service.Areas.Configuration.Pages.Tools.ImportEntryListModel
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Tools.ImportResultsModel
 
 @section Scripts
 {
-    <script src="@Url.Content("/js/entry-import.js")"></script>
+    <script src="@Url.Content("/js/result-import.js")"></script>
 }
 
 <div class="page-header">
     <div class="container-fluid">
-        <h2 class="h5 no-margin-bottom">Entry Import</h2>
+        <h2 class="h5 no-margin-bottom">Result Import</h2>
     </div>
 </div>
 
@@ -18,13 +18,13 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h4>Import Entry List - @Model.Server.Name</h4>
+                    <h4>Import Results - @Model.Server.Name</h4>
                 </div>
 
                 <div class="card-body">
                     
                     <form method="post" id="entryImportForm">
-                        <button type="submit" id="startImportBtn" class="btn btn-success" asp-route-Id="@Model.Server.Id" asp-page-handler="ImportEntryList">Start</button>
+                        <button type="submit" id="startImportBtn" class="btn btn-success" asp-route-Id="@Model.Server.Id" asp-page-handler="ImportResults">Start</button>
                     </form>
 
                     <div class="table-responsive">

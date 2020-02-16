@@ -91,7 +91,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         user.EmailConfirmed = true;
-                        await _userManager.UpdateAsync(user).ConfigureAwait(false);
+                        await _userManager.UpdateAsync(user);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToPage("ConfirmEmail");
                     }

@@ -32,7 +32,7 @@
         [HttpGet]
         public async Task<IEnumerable<Server>> GetServerList()
         {
-            return await _getServerListQuery.Execute().ConfigureAwait(false);
+            return await _getServerListQuery.Execute();
         }
 
         /// <summary>
@@ -41,7 +41,7 @@
         [HttpGet("{serverId}")]
         public async Task<Server> GetServerById([FromQuery] Guid serverId)
         {
-            return await _getServerByIdQuery.Execute(serverId).ConfigureAwait(false);
+            return await _getServerByIdQuery.Execute(serverId);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@
         [HttpPost("{serverName}")]
         public async Task<Server> CreateServer([FromQuery] string serverName)
         {
-            return await _createServerCommand.Execute(serverName).ConfigureAwait(false);
+            return await _createServerCommand.Execute(serverName);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
         [HttpPut("{serverId}")]
         public async Task UpdateServerAsync([FromQuery] Guid serverId, [FromBody] Server server)
         {
-            await _updateServerCommand.Execute(server).ConfigureAwait(false);
+            await _updateServerCommand.Execute(server);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@
         [HttpDelete("{serverId}")]
         public async Task DeleteServer([FromQuery] Guid serverId)
         {
-            await _deleteServerCommand.Execute(serverId).ConfigureAwait(false);
+            await _deleteServerCommand.Execute(serverId);
         }
     }
     */

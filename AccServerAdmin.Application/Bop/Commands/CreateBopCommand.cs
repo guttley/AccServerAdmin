@@ -21,13 +21,13 @@ namespace AccServerAdmin.Application.Bop.Commands
 
         public async Task<BalanceOfPerformance> Execute(BalanceOfPerformance bop)
         {
-            if (!await _bopRepository.IsUniqueBopAsync(bop).ConfigureAwait(false))
+            if (!await _bopRepository.IsUniqueBopAsync(bop))
             {
                 throw new BopNotUniqueException("Balance of performance already exists for this track/car");
             }
 
             await _bopRepository.Add(bop);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
 
             return bop;
         }

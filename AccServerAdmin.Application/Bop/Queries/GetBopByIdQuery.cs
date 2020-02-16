@@ -16,7 +16,7 @@ namespace AccServerAdmin.Application.Bop.Queries
         
         public async Task<BalanceOfPerformance> Execute(Guid driverId)
         {
-            return await _bopRepository.Get(driverId).ConfigureAwait(false);
+            return await _bopRepository.Get(driverId);
         }
     }
 }

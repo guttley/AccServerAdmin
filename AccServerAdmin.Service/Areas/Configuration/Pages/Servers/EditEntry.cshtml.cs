@@ -6,6 +6,7 @@ using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Entries.Queries;
 using AccServerAdmin.Application.Exceptions;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -51,7 +52,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             CarModels = new SelectList(ListData.Cars, "Key", "Value", model);
 
-            Drivers = (await _getDriverListQuery.Execute().ConfigureAwait(false)).ToList();
+            Drivers = (await _getDriverListQuery.Execute()).ToList();
         }
 
         public async Task OnGetAsync(Guid serverId, Guid entryListId, Guid id)
@@ -61,9 +62,9 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             Entry = id == Guid.Empty
                 ? new Entry {EntryListId = entryListId}
-                : await _getEntryByIdQuery.Execute(id).ConfigureAwait(false);
+                : await _getEntryByIdQuery.Execute(id);
 
-            await BuildBindingListsAsync().ConfigureAwait(false);
+            await BuildBindingListsAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -83,7 +84,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 try
                 {
                     Entry.EntryListId = EntryListId;
-                    await _updateEntryCommand.Execute(Entry).ConfigureAwait(false);
+                    await _updateEntryCommand.Execute(Entry);
                 }
                 catch (RaceNumberNotUniqueException nex)
                 {
@@ -97,7 +98,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (!ModelState.IsValid)
             {
-                await BuildBindingListsAsync().ConfigureAwait(false);
+                await BuildBindingListsAsync();
                 return Page();
             }
 
@@ -107,14 +108,14 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task OnGetSelectDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
         {
             var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
-            await _addDriverCommand.Execute(driverEntry).ConfigureAwait(false);
+            await _addDriverCommand.Execute(driverEntry);
             await OnGetAsync(serverId, entryListId, entryId);
         }
 
         public async Task OnGetRemoveDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
         {
             var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
-            await _deleteDriverCommand.Execute(driverEntry).ConfigureAwait(false);
+            await _deleteDriverCommand.Execute(driverEntry);
             await OnGetAsync(serverId, entryListId, entryId);
         }
     }

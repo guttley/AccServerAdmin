@@ -37,8 +37,8 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(IdentityUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user).ConfigureAwait(false);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user).ConfigureAwait(false);
+            var userName = await _userManager.GetUserNameAsync(user);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
 
@@ -50,7 +50,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User).ConfigureAwait(false);
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -62,7 +62,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User).ConfigureAwait(false);
+            var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -74,18 +74,18 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user).ConfigureAwait(false);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber).ConfigureAwait(false);
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    var userId = await _userManager.GetUserIdAsync(user).ConfigureAwait(false);
+                    var userId = await _userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
 
-            await _signInManager.RefreshSignInAsync(user).ConfigureAwait(false);
+            await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }

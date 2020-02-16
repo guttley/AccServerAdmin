@@ -23,7 +23,7 @@
         [HttpGet("{serverId}")]
         public GameCfg GetGameConfig([FromQuery] Guid serverId)
         {
-            return await _getConfigQuery.Execute(serverId).ConfigureAwait(false);
+            return await _getConfigQuery.Execute(serverId);
         }
 
         /// <summary>

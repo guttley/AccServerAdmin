@@ -20,8 +20,8 @@ namespace AccServerAdmin.Application.Sessions.Commands
 
         public async Task Execute(Guid serverId, SessionConfiguration session)
         {
-            await _sessionRepository.Add(session).ConfigureAwait(false);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _sessionRepository.Add(session);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

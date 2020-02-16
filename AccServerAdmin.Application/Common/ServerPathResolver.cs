@@ -16,7 +16,7 @@ namespace AccServerAdmin.Application.Common
         
         public async Task<string> Execute(Guid serverId)
         {
-            var settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
+            var settings = await _getAppSettingsQuery.Execute();
             var destinationPath = Path.Combine(settings.InstanceBasePath, serverId.ToString());
             return destinationPath;
         }

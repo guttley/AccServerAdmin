@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AccServerAdmin.Application.Bop.Commands;
 using AccServerAdmin.Application.Bop.Queries;
 using AccServerAdmin.Application.Exceptions;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -48,7 +49,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             Balance = id == Guid.Empty
                      ? new BalanceOfPerformance() 
-                     : await _getBopByIdQuery.Execute(id).ConfigureAwait(false);
+                     : await _getBopByIdQuery.Execute(id);
 
             BuildBindingLists();
         }
@@ -83,11 +84,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
                     if (Balance.Id == Guid.Empty)
                     {
-                        await _createBopCommand.Execute(Balance).ConfigureAwait(false);
+                        await _createBopCommand.Execute(Balance);
                     } 
                     else 
                     {
-                        await _updateBopCommand.Execute(Balance).ConfigureAwait(false);
+                        await _updateBopCommand.Execute(Balance);
                     }
                 }
                 catch (BopNotUniqueException nex)

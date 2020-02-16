@@ -1,4 +1,5 @@
-﻿@model AccServerAdmin.Domain.DashItem
+﻿@using AccServerAdmin.Domain
+@model AccServerAdmin.Domain.DashItem
 
 
     <div class="col-md-3 mb-4">
@@ -30,9 +31,9 @@
                                 <button type="submit" class="btn btn-danger" asp-route-serverId="@Model.Server.Id" asp-page-handler="StopServer" onclick="return confirm('Are you sure you want to STOP this server?');">Stop</button>
                             }
 
-                            @if (Model.HasImportableEntries)
+                            @if (Model.HasImportableResults)
                             {
-                                <a class="btn btn-primary" asp-area="Configuration" asp-page="/Tools/ImportEntryList" asp-route-Id=" @Model.Server.Id">Import Entry List</a>
+                                <a class="btn btn-primary" asp-area="Configuration" asp-page="/Tools/ImportResults" asp-route-Id=" @Model.Server.Id">Import Results</a>
                             }
 
                         </div>

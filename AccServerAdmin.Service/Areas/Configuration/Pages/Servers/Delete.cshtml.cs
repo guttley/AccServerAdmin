@@ -26,12 +26,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public async Task OnGetAsync(Guid id)
         {
-            Server = await _getServerByIdQuery.Execute(id).ConfigureAwait(false);
+            Server = await _getServerByIdQuery.Execute(id);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _deleteServerCommand.Execute(Server.Id).ConfigureAwait(false);
+            await _deleteServerCommand.Execute(Server.Id);
             return RedirectToPage("./List");
         }
 

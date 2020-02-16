@@ -21,11 +21,11 @@ namespace AccServerAdmin.Application.AppSettings
 
         public async Task Execute(AppSettings appSettings)
         {
-            var dbSettings = (await _appSettingsRepository.GetAll().ConfigureAwait(false)).FirstOrDefault();
+            var dbSettings = (await _appSettingsRepository.GetAll()).FirstOrDefault();
 
             if (dbSettings is null)
             {
-                await _appSettingsRepository.Add(appSettings).ConfigureAwait(false);
+                await _appSettingsRepository.Add(appSettings);
             }
             else
             {

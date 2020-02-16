@@ -21,7 +21,7 @@ namespace AccServerAdmin.Application.Servers.Commands
         public async Task Execute(Server server)
         {
             _serverRepository.Update(server.Id, server);
-            await _unitOfWork.SaveChanges().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

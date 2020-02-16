@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AccServerAdmin.Application.Entries.Queries
+namespace AccServerAdmin.Application.Results.Queries
 {
-    public interface IGetImportableEntriesQuery
+    public interface IGetImportableResultsQuery
     {
         Task<bool> Execute(Guid serverId);
     }

@@ -14,7 +14,7 @@ namespace AccServerAdmin.Persistence.Common
 
         public async Task SaveChanges()
         {
-            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

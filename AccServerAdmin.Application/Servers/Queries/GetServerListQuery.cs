@@ -16,7 +16,7 @@ namespace AccServerAdmin.Application.Servers.Queries
 
         public async Task<IEnumerable<Server>> Execute()
         {
-            return await _serverRepository.GetAll().ConfigureAwait(false);
+            return await _serverRepository.GetAll();
         }
     }
 }

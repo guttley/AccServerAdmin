@@ -39,7 +39,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 try
                 {
                     Entry.EntryListId = EntryListId;
-                    await _createEntryCommand.Execute(Entry).ConfigureAwait(false);
+                    await _createEntryCommand.Execute(Entry);
                 }
                 catch (RaceNumberNotUniqueException rex)
                 {

@@ -6,6 +6,6 @@
 
         public ServerProcessInfo ProcessInfo { get; set; }
 
-        public bool HasImportableEntries { get; set; }
+        public bool HasImportableResults { get; set; }
     }
 }
