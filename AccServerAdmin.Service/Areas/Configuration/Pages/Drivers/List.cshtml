@@ -1,4 +1,5 @@
 ﻿@page
+@using AccServerAdmin.Domain
 @model AccServerAdmin.Service.Areas.Configuration.Pages.Drivers.DriverListModel
 
 @{
@@ -43,7 +44,10 @@
                                     <td>
                                         <a asp-area="Configuration" asp-page="/Drivers/Edit" asp-route-Id="@driver.Id">Edit</a>
                                         &nbsp;
-                                        <a asp-area="Configuration" asp-page="/Drivers/Delete" asp-route-Id="@driver.Id">Delete</a>
+                                        @if (driver.Id != ListData.AnonymousDriverId)
+                                        {
+                                            <a asp-area="Configuration" asp-page="/Drivers/Delete" asp-route-Id="@driver.Id">Delete</a>
+                                        }
                                     </td>
                                 </tr>
                             }

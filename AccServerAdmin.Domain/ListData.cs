@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AccServerAdmin.Domain.AccConfig;
 
@@ -23,6 +24,7 @@ namespace AccServerAdmin.Domain
                 .ToDictionary(model => model, model => model.GetDescription());
         }
 
+        public static Guid AnonymousDriverId { get; } = Guid.Parse("00000000-0000-0000-0000-000000000001");
 
         public static Dictionary<CarModel, string> Cars { get; }
 

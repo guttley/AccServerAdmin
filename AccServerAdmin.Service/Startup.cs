@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using AccServerAdmin.Application;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Bop.Commands;
@@ -138,6 +139,20 @@ namespace AccServerAdmin.Service
             var dbContext = provider.GetService<ApplicationDbContext>();
 
             dbContext.Database.Migrate();
+
+            if (!dbContext.Drivers.Any(d => d.Id == ListData.AnonymousDriverId))
+            {
+                dbContext.Drivers.Add(
+                    new Driver
+                    {
+                        Id = ListData.AnonymousDriverId,
+                        Firstname = "Anonymous",
+                        Lastname = "Driver"
+                    });
+
+                dbContext.SaveChanges();
+            }
+
         }
 
         private void RegisterApplicationComponents(IServiceCollection services)

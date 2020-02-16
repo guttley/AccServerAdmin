@@ -1,4 +1,5 @@
-﻿using AccServerAdmin.Domain;
+﻿using System;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
