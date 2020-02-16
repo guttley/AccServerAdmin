@@ -11,6 +11,8 @@ namespace AccServerAdmin.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        public string ServerName { get; set; }
+
         public DateTime SessionTimestamp { get; set; }
 
         public string SessionType { get; set; }

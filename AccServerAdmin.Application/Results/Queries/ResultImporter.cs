@@ -31,6 +31,9 @@ namespace AccServerAdmin.Application.Results.Queries
         private readonly List<SessionDriver> _driverCache = new List<SessionDriver>();
         private readonly Regex _fileMatcher = new Regex(@"\d{6}_\d{6}_F?[PQR]\d?.json");
 
+        private string _serverName;
+
+
         public ResultImporter(
             IHubContext<ResultImportHub, IResultImport> hubContext,
             IDriverRepository driverRepository,
@@ -52,8 +55,9 @@ namespace AccServerAdmin.Application.Results.Queries
         }
 
 
-        public async Task Execute(Guid serverId)
+        public async Task Execute(Guid serverId, string serverName)
         {
+            _serverName = serverName;
             _driverCache.AddRange(_sessionDriverRepository.GetQueryable().AsNoTracking().Include("Driver"));
 
             var path = await _serverPathResolver.Execute(serverId);
@@ -183,6 +187,7 @@ namespace AccServerAdmin.Application.Results.Queries
 
             var session = new Session
             {
+                ServerName = _serverName,
                 SessionTimestamp = timestamp,
                 SessionType = results.SessionType,
                 Track = results.TrackName,

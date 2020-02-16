@@ -484,6 +484,9 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<bool>("IsWet")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ServerName")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("SessionTimestamp")
                         .HasColumnType("TEXT");
 

@@ -33,7 +33,7 @@ namespace AccServerAdmin.Tests
 
             serverPathResolver.Execute(serverId).Returns("C:\\ProgramData\\AccServerAdmin\\ServerInstances\\5e2eecf4-330a-4ad1-b8fc-a2edd49bf7be");
 
-            await importer.Execute(serverId);
+            await importer.Execute(serverId, "Wibble");
 
         }
     }

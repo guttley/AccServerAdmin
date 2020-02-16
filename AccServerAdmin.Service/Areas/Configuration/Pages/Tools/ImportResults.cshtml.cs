@@ -33,11 +33,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
             Server = await _getServerByIdQuery.Execute(id);
         }
 
-        public async Task OnPostImportResultsAsync(Guid id)
+        public async Task OnPostImportResultsAsync(Guid id, string serverName)
         {
             try
             {
-                await _resultImporter.Execute(id);
+                await _resultImporter.Execute(id, serverName);
             }
             catch (Exception ex)
             {

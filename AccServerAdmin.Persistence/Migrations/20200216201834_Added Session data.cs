@@ -34,6 +34,7 @@ namespace AccServerAdmin.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    ServerName = table.Column<string>(nullable: false),
                     SessionTimestamp = table.Column<DateTime>(nullable: false),
                     SessionType = table.Column<string>(nullable: true),
                     Track = table.Column<string>(nullable: true),

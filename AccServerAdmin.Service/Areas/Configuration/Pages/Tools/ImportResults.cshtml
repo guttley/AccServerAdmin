@@ -24,7 +24,7 @@
                 <div class="card-body">
                     
                     <form method="post" id="entryImportForm">
-                        <button type="submit" id="startImportBtn" class="btn btn-success" asp-route-Id="@Model.Server.Id" asp-page-handler="ImportResults">Start</button>
+                        <button type="submit" id="startImportBtn" class="btn btn-success" asp-route-Id="@Model.Server.Id" asp-route-serverName="@Model.Server.Name" asp-page-handler="ImportResults">Start</button>
                     </form>
 
                     <div class="table-responsive">
