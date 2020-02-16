@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Sessions.Queries
 {
     public interface IGetSessionByIdQuery
     {
-        Task<SessionConfiguration> ExecuteAsync(Guid sesisonId);
+        Task<SessionConfiguration> Execute(Guid sesisonId);
     }
 }

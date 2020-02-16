@@ -14,9 +14,9 @@ namespace AccServerAdmin.Application.Sessions.Queries
             _sessionRepository = sessionRepository;
         }
 
-        public async Task<SessionConfiguration> ExecuteAsync(Guid sesisonId)
+        public async Task<SessionConfiguration> Execute(Guid sesisonId)
         {
-            return await _sessionRepository.GetAsync(sesisonId).ConfigureAwait(false);
+            return await _sessionRepository.Get(sesisonId).ConfigureAwait(false);
         }
     }
 }

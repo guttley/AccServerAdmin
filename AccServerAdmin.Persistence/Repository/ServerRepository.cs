@@ -16,7 +16,7 @@ namespace AccServerAdmin.Persistence.Repository
         }
 
         /// <inheritdoc />
-        public override async Task<IEnumerable<Server>> GetAllAsync()
+        public override async Task<IEnumerable<Server>> GetAll()
         {
             return await DbContext.Set<Server>()
                 .Include(s => s.NetworkCfg)
@@ -30,7 +30,7 @@ namespace AccServerAdmin.Persistence.Repository
         }
 
         /// <inheritdoc />
-        public override async Task<Server> GetAsync(Guid id)
+        public override async Task<Server> Get(Guid id)
         {
             return await DbContext.Set<Server>()
                 .Include(s => s.NetworkCfg)

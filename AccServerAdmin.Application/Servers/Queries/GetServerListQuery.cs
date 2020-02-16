@@ -1,7 +1,6 @@
 ﻿using AccServerAdmin.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Servers.Queries
@@ -15,9 +14,9 @@ namespace AccServerAdmin.Application.Servers.Queries
             _serverRepository = serverRepository;
         }
 
-        public async Task<IEnumerable<Server>> ExecuteAsync()
+        public async Task<IEnumerable<Server>> Execute()
         {
-            return await _serverRepository.GetAllAsync().ConfigureAwait(false);
+            return await _serverRepository.GetAll().ConfigureAwait(false);
         }
     }
 }

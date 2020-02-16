@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IDeleteEntryCommand
     {
-        Task ExecuteAsync(Guid entryId);
+        Task Execute(Guid entryId);
     }
 }

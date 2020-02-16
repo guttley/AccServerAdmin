@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using AccServerAdmin.Domain.AccConfig;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccResults

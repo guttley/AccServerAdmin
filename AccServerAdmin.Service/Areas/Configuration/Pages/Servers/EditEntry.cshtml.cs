@@ -51,7 +51,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             CarModels = new SelectList(ListData.Cars, "Key", "Value", model);
 
-            Drivers = (await _getDriverListQuery.ExecuteAsync().ConfigureAwait(false)).ToList();
+            Drivers = (await _getDriverListQuery.Execute().ConfigureAwait(false)).ToList();
         }
 
         public async Task OnGetAsync(Guid serverId, Guid entryListId, Guid id)
@@ -61,7 +61,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             Entry = id == Guid.Empty
                 ? new Entry {EntryListId = entryListId}
-                : await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+                : await _getEntryByIdQuery.Execute(id).ConfigureAwait(false);
 
             await BuildBindingListsAsync().ConfigureAwait(false);
         }
@@ -83,7 +83,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 try
                 {
                     Entry.EntryListId = EntryListId;
-                    await _updateEntryCommand.ExecuteAsync(Entry).ConfigureAwait(false);
+                    await _updateEntryCommand.Execute(Entry).ConfigureAwait(false);
                 }
                 catch (RaceNumberNotUniqueException nex)
                 {
@@ -107,14 +107,14 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task OnGetSelectDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
         {
             var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
-            await _addDriverCommand.ExecuteAsync(driverEntry).ConfigureAwait(false);
+            await _addDriverCommand.Execute(driverEntry).ConfigureAwait(false);
             await OnGetAsync(serverId, entryListId, entryId);
         }
 
         public async Task OnGetRemoveDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
         {
             var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
-            await _deleteDriverCommand.ExecuteAsync(driverEntry).ConfigureAwait(false);
+            await _deleteDriverCommand.Execute(driverEntry).ConfigureAwait(false);
             await OnGetAsync(serverId, entryListId, entryId);
         }
     }

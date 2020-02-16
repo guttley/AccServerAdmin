@@ -4,6 +4,6 @@ namespace AccServerAdmin.Persistence.Common
 {
     public interface IUnitOfWork
     {
-        Task SaveChangesAsync();
+        Task SaveChanges();
     }
 }

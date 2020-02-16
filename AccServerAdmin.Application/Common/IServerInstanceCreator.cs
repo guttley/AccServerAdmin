@@ -10,6 +10,6 @@ namespace AccServerAdmin.Application.Common
         /// </summary>
         /// <param name="server">Server</param>
         /// <returns>Path to the server instance</returns>
-        Task<string> ExecuteAsync(Server server);
+        Task<string> Execute(Server server);
     }
 }

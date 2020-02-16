@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Sessions.Commands
 {
     public interface IUpdateSessionCommand
     {
-        Task ExecuteAsync(Guid serverId, SessionConfiguration server);
+        Task Execute(Guid serverId, SessionConfiguration server);
     }
 }

@@ -18,10 +18,10 @@ namespace AccServerAdmin.Application.Servers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Server server)
+        public async Task Execute(Server server)
         {
             _serverRepository.Update(server.Id, server);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
         }
     }
 }

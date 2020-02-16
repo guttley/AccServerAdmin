@@ -20,7 +20,7 @@ namespace AccServerAdmin.Application.Servers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Server> ExecuteAsync(string serverName)
+        public async Task<Server> Execute(string serverName)
         {
             var server = new Server {Name = serverName};
 
@@ -29,8 +29,8 @@ namespace AccServerAdmin.Application.Servers.Commands
                 throw new SteamIdNotUniqueException("Server names must be unique");
             }
 
-            await _serverRepository.AddAsync(server);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _serverRepository.Add(server);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
 
             return server;
         }

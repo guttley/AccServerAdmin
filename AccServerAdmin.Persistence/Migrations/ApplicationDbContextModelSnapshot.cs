@@ -3,7 +3,6 @@ using System;
 using AccServerAdmin.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccServerAdmin.Persistence.Migrations
 {

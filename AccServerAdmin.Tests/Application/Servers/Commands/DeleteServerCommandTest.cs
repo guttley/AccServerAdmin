@@ -1,14 +1,4 @@
-﻿using AccServerAdmin.Infrastructure.IO;
-using NSubstitute;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using AccServerAdmin.Application.Common;
-using AccServerAdmin.Application.Servers.Commands;
-
-namespace AccServerAdmin.Tests.Application.Servers.Commands
+﻿namespace AccServerAdmin.Tests.Application.Servers.Commands
 {
     /*
     [ExcludeFromCodeCoverage]

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Servers.Queries
@@ -14,7 +13,7 @@ namespace AccServerAdmin.Application.Servers.Queries
             _serverRepository = serverRepository;
         }
 
-        public async Task<bool> ExecuteAsync(Guid serverId, int tcpPort, int udpPort)
+        public async Task<bool> Execute(Guid serverId, int tcpPort, int udpPort)
         {
             return await _serverRepository.IsDuplicatePortsAsync(serverId, tcpPort, udpPort).ConfigureAwait(false);
         }

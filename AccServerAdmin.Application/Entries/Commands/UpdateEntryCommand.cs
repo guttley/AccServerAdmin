@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
-using AccServerAdmin.Application.Exceptions;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.Common;
-using Microsoft.EntityFrameworkCore;
 
 namespace AccServerAdmin.Application.Entries.Commands
 {
@@ -23,11 +21,11 @@ namespace AccServerAdmin.Application.Entries.Commands
         }
 
 
-        public async Task ExecuteAsync(Entry entry)
+        public async Task Execute(Entry entry)
         {
-            await _validator.ExecuteAsync(entry).ConfigureAwait(false);
+            await _validator.Execute(entry).ConfigureAwait(false);
             _entryRepository.Update(entry.Id, entry);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
         }
 
     }

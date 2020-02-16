@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Bop.Commands
 {
     public interface IUpdateBopCommand
     {
-        Task ExecuteAsync(BalanceOfPerformance bop);
+        Task Execute(BalanceOfPerformance bop);
     }
 }

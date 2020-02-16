@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Servers.Queries
 {
     public interface IGetServerByIdQuery
     {
-        Task<Server> ExecuteAsync(Guid serverId);
+        Task<Server> Execute(Guid serverId);
     }
 }

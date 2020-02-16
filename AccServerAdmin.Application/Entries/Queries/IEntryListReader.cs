@@ -7,6 +7,6 @@ namespace AccServerAdmin.Application.Entries.Queries
 {
     public interface IEntryListReader
     {
-        Task<List<Driver>> ExecuteAsync(Guid serverId);
+        Task<List<Driver>> Execute(Guid serverId);
     }
 }

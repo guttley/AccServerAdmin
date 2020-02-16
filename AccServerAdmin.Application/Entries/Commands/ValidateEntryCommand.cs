@@ -39,7 +39,7 @@ namespace AccServerAdmin.Application.Entries.Commands
         }
 
 
-        public async Task ExecuteAsync(Entry entry)
+        public async Task Execute(Entry entry)
         {
             if (!await IsUniqueRaceNumber(entry).ConfigureAwait(false))
             {

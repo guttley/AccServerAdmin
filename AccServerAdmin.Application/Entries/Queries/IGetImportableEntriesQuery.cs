@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Queries
 {
     public interface IGetImportableEntriesQuery
     {
-        Task<bool> ExecuteAsync(Guid serverId);
+        Task<bool> Execute(Guid serverId);
     }
 }

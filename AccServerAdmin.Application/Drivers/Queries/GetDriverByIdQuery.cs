@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
-using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.Repository;
 
 namespace AccServerAdmin.Application.Drivers.Queries
@@ -15,9 +14,9 @@ namespace AccServerAdmin.Application.Drivers.Queries
             _driverRepository = serverRepository;
         }
         
-        public async Task<Driver> ExecuteAsync(Guid driverId)
+        public async Task<Driver> Execute(Guid driverId)
         {
-            return await _driverRepository.GetAsync(driverId).ConfigureAwait(false);
+            return await _driverRepository.Get(driverId).ConfigureAwait(false);
         }
     }
 }

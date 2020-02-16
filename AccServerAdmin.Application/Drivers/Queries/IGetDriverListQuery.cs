@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Drivers.Queries
 {
     public interface IGetDriverListQuery
     {
-        Task<IEnumerable<Driver>> ExecuteAsync();
+        Task<IEnumerable<Driver>> Execute();
     }
 }

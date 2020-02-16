@@ -48,7 +48,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             Balance = id == Guid.Empty
                      ? new BalanceOfPerformance() 
-                     : await _getBopByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+                     : await _getBopByIdQuery.Execute(id).ConfigureAwait(false);
 
             BuildBindingLists();
         }
@@ -83,11 +83,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
                     if (Balance.Id == Guid.Empty)
                     {
-                        await _createBopCommand.ExecuteAsync(Balance).ConfigureAwait(false);
+                        await _createBopCommand.Execute(Balance).ConfigureAwait(false);
                     } 
                     else 
                     {
-                        await _updateBopCommand.ExecuteAsync(Balance).ConfigureAwait(false);
+                        await _updateBopCommand.Execute(Balance).ConfigureAwait(false);
                     }
                 }
                 catch (BopNotUniqueException nex)

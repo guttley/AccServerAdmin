@@ -21,7 +21,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public async Task OnGetAsync()
         {
-            Servers = await _getServerListQuery.ExecuteAsync().ConfigureAwait(false);
+            Servers = await _getServerListQuery.Execute().ConfigureAwait(false);
         }
     }
 }

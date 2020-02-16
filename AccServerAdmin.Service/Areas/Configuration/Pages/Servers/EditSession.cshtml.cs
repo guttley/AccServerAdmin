@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.Sessions.Commands;
 using AccServerAdmin.Application.Sessions.Queries;
@@ -56,7 +55,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             }
             else
             {
-                Session = await _getSessionByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+                Session = await _getSessionByIdQuery.Execute(id).ConfigureAwait(false);
             }                       
         }
 
@@ -74,11 +73,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (Session.Id == Guid.Empty)
             {
-                await _createSessionCommand.ExecuteAsync(ServerId, Session).ConfigureAwait(false);                
+                await _createSessionCommand.Execute(ServerId, Session).ConfigureAwait(false);                
             }
             else
             {
-                await _updateSessionCommand.ExecuteAsync(ServerId, Session).ConfigureAwait(false);
+                await _updateSessionCommand.Execute(ServerId, Session).ConfigureAwait(false);
             }
 
             return RedirectToPage("./Edit", new { Id = ServerId});

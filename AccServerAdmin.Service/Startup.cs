@@ -29,8 +29,6 @@ using Microsoft.AspNetCore.Http;
 using AccServerAdmin.Application.Sessions.Queries;
 using AccServerAdmin.Application.Sessions.Commands;
 using AccServerAdmin.Notifications.EntryList;
-using FluffySpoon.AspNet.LetsEncrypt;
-using Certes;
 
 namespace AccServerAdmin.Service
 {
@@ -150,6 +148,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerInstanceCleanUp, ServerInstanceCleanUp>();
             services.AddTransient<IServerConfigWriter, ServerConfigWriter>();
             services.AddTransient<IServerInstanceCreator, ServerInstanceCreator>();
+            services.AddTransient<IServerPathResolver, ServerPathResolver>();
             services.AddSingleton<IProcessManager, ProcessManager>();
 
             // Repositories
@@ -162,6 +161,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDataRepository<Entry>, DataRepository<Entry>>();
             services.AddTransient<IDriverEntryRepository, DriverEntryRepository>();
             services.AddTransient<IBopRepository, BopRepository>();
+            services.AddTransient<ISessionRepository, SessionRepository>();
 
             // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();

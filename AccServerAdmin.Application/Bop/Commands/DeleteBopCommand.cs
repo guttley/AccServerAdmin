@@ -18,10 +18,10 @@ namespace AccServerAdmin.Application.Bop.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Guid bopId)
+        public async Task Execute(Guid bopId)
         {
             _bopRepository.Delete(bopId);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChanges();
         }
     }
 }

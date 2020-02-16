@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IValidateEntryCommand
     {
-        Task ExecuteAsync(Entry entry);
+        Task Execute(Entry entry);
     }
 }

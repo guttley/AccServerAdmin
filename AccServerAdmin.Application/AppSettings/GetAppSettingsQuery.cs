@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Persistence.Common;
 
@@ -16,9 +15,9 @@ namespace AccServerAdmin.Application.AppSettings
             _appSettingsRepository = appSettingsRepository;
         }
 
-        public async Task<AppSettings> ExecuteAsync()
+        public async Task<AppSettings> Execute()
         {
-            var settings = await _appSettingsRepository.GetAllAsync().ConfigureAwait(false);
+            var settings = await _appSettingsRepository.GetAll().ConfigureAwait(false);
 
             return settings.FirstOrDefault();
         }

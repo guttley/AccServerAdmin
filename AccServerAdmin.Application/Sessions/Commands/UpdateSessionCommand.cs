@@ -18,10 +18,10 @@ namespace AccServerAdmin.Application.Sessions.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Guid serverId, SessionConfiguration session)
+        public async Task Execute(Guid serverId, SessionConfiguration session)
         {
             _sessionRepository.Update(session.Id, session);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
         }
     }
 }

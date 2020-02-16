@@ -1,10 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using AccServerAdmin.Application.Common;
-using AccServerAdmin.Application.Servers.Queries;
-using AccServerAdmin.Domain;
-using NSubstitute;
+﻿using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace AccServerAdmin.Tests.Application.Servers.Queries

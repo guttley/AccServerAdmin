@@ -18,10 +18,10 @@ namespace AccServerAdmin.Application.Drivers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Guid driverId)
+        public async Task Execute(Guid driverId)
         {
             _driverRepository.Delete(driverId);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChanges();
         }
     }
 }

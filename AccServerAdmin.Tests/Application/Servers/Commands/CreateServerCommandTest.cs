@@ -34,20 +34,20 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var repo = Substitute.For<IServerRepository>();
             var unitOfWork = Substitute.For<IUnitOfWork>();
             
-            options.GetAllAsync().Returns(new List<AppSettings> {settings});
+            options.GetAll().Returns(new List<AppSettings> {settings});
 
             var command = new CreateServerCommand(repo, unitOfWork);
 
             // Act
-            var returnServer = await command.ExecuteAsync(serverName).ConfigureAwait(false);
+            var returnServer = await command.Execute(serverName).ConfigureAwait(false);
 
             // Assert
             Assert.That(returnServer, Is.Not.Null);
             Assert.That(returnServer.Name, Is.EqualTo(serverName));
             Assert.That(returnServer.Id, Is.EqualTo(server.Id));
 
-            await unitOfWork.Received().SaveChangesAsync();
-            await repo.Received().AddAsync(server).ConfigureAwait(false);
+            await unitOfWork.Received().SaveChanges();
+            await repo.Received().Add(server).ConfigureAwait(false);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IUpdateEntryCommand
     {
-        Task ExecuteAsync(Entry entry);
+        Task Execute(Entry entry);
     }
 }

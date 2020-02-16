@@ -36,14 +36,14 @@ namespace AccServerAdmin.Service.Pages
 
         public async Task OnGetAsync()
         {
-            var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
-            var servers = await _getServerListQuery.ExecuteAsync().ConfigureAwait(false);
+            var settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
+            var servers = await _getServerListQuery.Execute().ConfigureAwait(false);
             
             var items = servers.Select(async s => new DashItem
             {
                 Server = s,
                 ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id),
-                HasImportableEntries = await _getImportableEntriesQuery.ExecuteAsync(s.Id).ConfigureAwait(false)
+                HasImportableEntries = await _getImportableEntriesQuery.Execute(s.Id).ConfigureAwait(false)
             }).ToList();
 
             DashItems = await Task.WhenAll(items);

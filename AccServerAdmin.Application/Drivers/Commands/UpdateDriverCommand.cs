@@ -19,7 +19,7 @@ namespace AccServerAdmin.Application.Drivers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Driver driver)
+        public async Task Execute(Driver driver)
         {
             if (!await _driverRepository.IsUniqueSteamIdAsync(driver).ConfigureAwait(false))
             {
@@ -27,7 +27,7 @@ namespace AccServerAdmin.Application.Drivers.Commands
             }
 
             _driverRepository.Update(driver.Id, driver);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
         }
     }
 }

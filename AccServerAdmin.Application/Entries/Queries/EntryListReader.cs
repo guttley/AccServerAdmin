@@ -27,9 +27,9 @@ namespace AccServerAdmin.Application.Entries.Queries
             _jsonConverter = jsonConverter;
         }
 
-        public async Task<List<Driver>> ExecuteAsync(Guid serverId)
+        public async Task<List<Driver>> Execute(Guid serverId)
         {
-            var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
+            var settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
             var resultsPath = Path.Combine(settings.InstanceBasePath, serverId.ToString(), "results");
             var entries = Directory.EnumerateFiles(resultsPath, "*entryList.json").ToList();
             var allDrivers = new Dictionary<string, Driver>();

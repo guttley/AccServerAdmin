@@ -1,10 +1,4 @@
-﻿using System;
-using AccServerAdmin.Application.Common;
-using AccServerAdmin.Domain.AccConfig;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace AccServerAdmin.Service.Controllers.Api
+﻿namespace AccServerAdmin.Service.Controllers.Api
 {
     /*
     [Authorize]

@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Servers.Queries
 {
     public interface IGetServerListQuery
     {
-        Task<IEnumerable<Server>> ExecuteAsync();
+        Task<IEnumerable<Server>> Execute();
     }
 }

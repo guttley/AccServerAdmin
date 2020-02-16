@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Servers.Queries
 {
     public interface IGetDuplicatePortQuery
     {
-        Task<bool> ExecuteAsync(Guid serverId, int tcpPort, int udpPort);
+        Task<bool> Execute(Guid serverId, int tcpPort, int udpPort);
     }
 }

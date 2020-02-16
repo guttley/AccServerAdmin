@@ -18,10 +18,10 @@ namespace AccServerAdmin.Application.Entries.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(DriverEntry driverEntry)
+        public async Task Execute(DriverEntry driverEntry)
         {
             await _driverEntryRepository.AddAsync(driverEntry).ConfigureAwait(false);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
         }
     }
 }

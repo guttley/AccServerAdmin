@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Common
 {
     public interface IServerConfigWriter
     {
-        Task ExecuteAsync(Server server, string serverPath);
+        Task Execute(Server server, string serverPath);
     }
 }

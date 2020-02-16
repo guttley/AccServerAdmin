@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.AppSettings;
 using Microsoft.AspNetCore.Authentication;
@@ -11,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
 namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
@@ -84,7 +81,7 @@ namespace AccServerAdmin.Service.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                var appSettings = await _appSettingsQuery.ExecuteAsync();
+                var appSettings = await _appSettingsQuery.Execute();
                 var passphraseOk = appSettings == null || (Input.Passphrase == appSettings?.AdminPassphrase);
 
                 if (result.Succeeded && passphraseOk)

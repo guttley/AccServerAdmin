@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.AppSettings
 
     public interface ISaveAppSettingsCommand
     {
-        Task ExecuteAsync(AppSettings appSettings);
+        Task Execute(AppSettings appSettings);
     }
 }

@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Drivers.Commands
 {
     public interface IUpdateDriverCommand
     {
-        Task ExecuteAsync(Driver driver);
+        Task Execute(Driver driver);
     }
 }

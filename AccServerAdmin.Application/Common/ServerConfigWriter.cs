@@ -25,13 +25,13 @@ namespace AccServerAdmin.Application.Common
             _getBopListQuery = getBopListQuery;
         }
 
-        public async Task ExecuteAsync(Server server, string serverPath)
+        public async Task Execute(Server server, string serverPath)
         {
             var cfgPath = Path.Combine(serverPath, "cfg");
 
             var globalBop = new GlobalBop
             {
-                BopList = (await _getBopListQuery.ExecuteAsync(server.Id).ConfigureAwait(false)).ToList()
+                BopList = (await _getBopListQuery.Execute(server.Id).ConfigureAwait(false)).ToList()
             };
 
             Save(server.NetworkCfg,  cfgPath, "configuration.json");

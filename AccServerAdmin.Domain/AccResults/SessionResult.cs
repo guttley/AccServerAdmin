@@ -9,7 +9,7 @@ namespace AccServerAdmin.Domain.AccResults
         public long Bestlap { get; set; }
 
         [JsonProperty("bestSplits")]
-        public long[] BestSplits { get; set; }
+        public List<long> BestSplits { get; set; }
 
         [JsonProperty("isWetSession")]
         public long IsWetSession { get; set; }
@@ -18,6 +18,6 @@ namespace AccServerAdmin.Domain.AccResults
         public long Type { get; set; }
 
         [JsonProperty("leaderBoardLines")]
-        public LeaderBoardLine[] Leaderboard { get; set; }
+        public List<LeaderBoardLine> Leaderboard { get; set; }
     }
 }

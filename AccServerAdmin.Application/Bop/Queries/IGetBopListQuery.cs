@@ -7,6 +7,6 @@ namespace AccServerAdmin.Application.Bop.Queries
 {
     public interface IGetBopListQuery
     {
-        Task<IEnumerable<BalanceOfPerformance>> ExecuteAsync(Guid serverId);
+        Task<IEnumerable<BalanceOfPerformance>> Execute(Guid serverId);
     }
 }

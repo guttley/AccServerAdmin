@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -45,7 +43,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public async Task OnGetAsync(Guid id)
         {
-            Server = await _getServerByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+            Server = await _getServerByIdQuery.Execute(id).ConfigureAwait(false);
             BuildBindingLists();
         }
 
@@ -71,7 +69,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 ModelState.AddModelError("Server.NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
 
 
-            if (await _getDuplicatePortQuery.ExecuteAsync(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort).ConfigureAwait(false))
+            if (await _getDuplicatePortQuery.Execute(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort).ConfigureAwait(false))
             {
                 ModelState.AddModelError("Server.NetworkCfg.TcpPort", "Tcp or Udp Port is in use by another server");
             }
@@ -117,7 +115,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 return Page();
             }
 
-            await _updateServerCommand.ExecuteAsync(Server).ConfigureAwait(false);
+            await _updateServerCommand.Execute(Server).ConfigureAwait(false);
             return RedirectToPage("./List");
         }
     }

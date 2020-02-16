@@ -17,7 +17,7 @@ namespace AccServerAdmin.Application.Bop.Queries
             _bopRepository = bopRepository;
         }
 
-        public async Task<IEnumerable<BalanceOfPerformance>> ExecuteAsync(Guid serverId)
+        public async Task<IEnumerable<BalanceOfPerformance>> Execute(Guid serverId)
         {
             return await _bopRepository.GetQueryable()
                 .Where(b => b.ServerId == serverId)

@@ -19,9 +19,9 @@ namespace AccServerAdmin.Application.Common
             _directory = directory;
         }
 
-        public async Task ExecuteAsync(Guid serverId)
+        public async Task Execute(Guid serverId)
         {
-            var settings = await _getAppSettingsQuery.ExecuteAsync();
+            var settings = await _getAppSettingsQuery.Execute();
             var path = Path.Combine(settings.InstanceBasePath, serverId.ToString());
             _directory.Delete(path, true);
         }

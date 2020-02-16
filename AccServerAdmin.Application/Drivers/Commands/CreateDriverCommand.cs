@@ -20,15 +20,15 @@ namespace AccServerAdmin.Application.Drivers.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Driver> ExecuteAsync(Driver driver)
+        public async Task<Driver> Execute(Driver driver)
         {
             if (!await _driverRepository.IsUniqueSteamIdAsync(driver).ConfigureAwait(false))
             {
                 throw new SteamIdNotUniqueException("Steam Ids must be unique");
             }
 
-            await _driverRepository.AddAsync(driver);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _driverRepository.Add(driver);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
 
             return driver;
         }

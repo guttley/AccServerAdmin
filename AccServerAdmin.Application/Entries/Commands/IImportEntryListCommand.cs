@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IImportEntryListCommand
     {
-        Task ExecuteAsync(Guid serverId);
+        Task Execute(Guid serverId);
     }
 }

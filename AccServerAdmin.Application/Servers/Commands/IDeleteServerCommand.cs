@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface IDeleteServerCommand
     {
-        Task ExecuteAsync(Guid serverId);
+        Task Execute(Guid serverId);
     }
 }

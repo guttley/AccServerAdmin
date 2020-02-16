@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IAddDriverEntryCommand
     {
-        Task ExecuteAsync(DriverEntry driverEntry);
+        Task Execute(DriverEntry driverEntry);
     }
 }

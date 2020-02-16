@@ -28,9 +28,9 @@ namespace AccServerAdmin.Application.Entries.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(Guid serverId)
+        public async Task Execute(Guid serverId)
         {
-            var drivers = await _entryListReader.ExecuteAsync(serverId).ConfigureAwait(false);
+            var drivers = await _entryListReader.Execute(serverId).ConfigureAwait(false);
 
             foreach (var driver in drivers)
             {
@@ -42,12 +42,12 @@ namespace AccServerAdmin.Application.Entries.Commands
                 }
                 else
                 {
-                    await _driverRepository.AddAsync(driver).ConfigureAwait(false);
+                    await _driverRepository.Add(driver).ConfigureAwait(false);
                     await _hubContext.Clients.All.ImportMessage($"Driver imported: {driver.PlayerId} - {driver.Firstname} {driver.Lastname}").ConfigureAwait(false);
                 }
             }
 
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
             await _hubContext.Clients.All.ImportMessage("Import Finished").ConfigureAwait(false);
         }
     }

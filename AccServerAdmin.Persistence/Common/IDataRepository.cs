@@ -19,17 +19,17 @@ namespace AccServerAdmin.Persistence.Common
         /// <summary>
         /// Returns all instances of TEntity
         /// </summary>
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAll();
 
         /// <summary>
         /// Returns single instance of TEntity
         /// </summary>
-        Task<TEntity> GetAsync(Guid id);
+        Task<TEntity> Get(Guid id);
 
         /// <summary>
         /// Adds a new instance of TEntity, returning the saved record
         /// </summary>
-        Task AddAsync(TEntity entity);
+        Task Add(TEntity entity);
 
         /// <summary>
         /// Updates an existing instance of TEntity

@@ -31,12 +31,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task OnGetAsync(Guid id, Guid serverId)
         {
             ServerId = serverId;
-            Session = await _getSessionByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+            Session = await _getSessionByIdQuery.Execute(id).ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _deleteSessionCommand.ExecuteAsync(Session.Id).ConfigureAwait(false);
+            await _deleteSessionCommand.Execute(Session.Id).ConfigureAwait(false);
             return RedirectToPage("./Edit", new { Id = ServerId });
         }
 

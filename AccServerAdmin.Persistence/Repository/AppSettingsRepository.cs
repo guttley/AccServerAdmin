@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain;
-using AccServerAdmin.Persistence.Common;
 using AccServerAdmin.Persistence.DbContext;
 
 namespace AccServerAdmin.Persistence.Repository
@@ -19,18 +18,18 @@ namespace AccServerAdmin.Persistence.Repository
         }
 
         /// <inheritdoc />
-        public override Task<AppSettings> GetAsync(Guid id)
+        public override Task<AppSettings> Get(Guid id)
         {
             throw new NotImplementedException("Use GetAll().FirstOrDefault()");
         }
 
         /// <inheritdoc />
-        public override async Task AddAsync(AppSettings entity)
+        public override async Task Add(AppSettings entity)
         {
             if (DbContext.Set<AppSettings>().Any())
                 throw new InvalidOperationException("Cannot add a second app settings record");
 
-            await base.AddAsync(entity);
+            await base.Add(entity);
         }
 
         

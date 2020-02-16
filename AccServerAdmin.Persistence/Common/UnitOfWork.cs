@@ -12,7 +12,7 @@ namespace AccServerAdmin.Persistence.Common
             _dbContext = dbContext;
         }
 
-        public async Task SaveChangesAsync()
+        public async Task SaveChanges()
         {
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace AccServerAdmin.Application.Common
 {
-    public interface IServerInstanceCleanUp
+    public interface IServerPathResolver
     {
-        Task Execute(Guid serverId);
+        Task<string> Execute(Guid serverId);
     }
 }

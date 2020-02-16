@@ -40,7 +40,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
         {
             Driver = id == Guid.Empty
                      ? new Driver() 
-                     : await _getDriverByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+                     : await _getDriverByIdQuery.Execute(id).ConfigureAwait(false);
 
             BuildBindingLists();
         }
@@ -53,11 +53,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
                 {
                     if (Driver.Id == Guid.Empty)
                     {
-                        await _createDriverCommand.ExecuteAsync(Driver).ConfigureAwait(false);
+                        await _createDriverCommand.Execute(Driver).ConfigureAwait(false);
                     } 
                     else 
                     {
-                        await _updateDriverCommand.ExecuteAsync(Driver).ConfigureAwait(false);
+                        await _updateDriverCommand.Execute(Driver).ConfigureAwait(false);
                     }
                 }
                 catch (SteamIdNotUniqueException nex)

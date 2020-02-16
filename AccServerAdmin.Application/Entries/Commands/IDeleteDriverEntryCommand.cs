@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Entries.Commands
 {
     public interface IDeleteDriverEntryCommand
     {
-        Task ExecuteAsync(DriverEntry driverEntry);
+        Task Execute(DriverEntry driverEntry);
     }
 }

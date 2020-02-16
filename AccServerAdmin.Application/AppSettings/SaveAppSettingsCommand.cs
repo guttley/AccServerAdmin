@@ -19,20 +19,20 @@ namespace AccServerAdmin.Application.AppSettings
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(AppSettings appSettings)
+        public async Task Execute(AppSettings appSettings)
         {
-            var dbSettings = (await _appSettingsRepository.GetAllAsync().ConfigureAwait(false)).FirstOrDefault();
+            var dbSettings = (await _appSettingsRepository.GetAll().ConfigureAwait(false)).FirstOrDefault();
 
             if (dbSettings is null)
             {
-                await _appSettingsRepository.AddAsync(appSettings).ConfigureAwait(false);
+                await _appSettingsRepository.Add(appSettings).ConfigureAwait(false);
             }
             else
             {
                 _appSettingsRepository.Update(dbSettings.Id, appSettings);
             }
 
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(true);
+            await _unitOfWork.SaveChanges().ConfigureAwait(true);
         }
     }
 }

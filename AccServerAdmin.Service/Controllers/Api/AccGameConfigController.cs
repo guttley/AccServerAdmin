@@ -1,10 +1,4 @@
-﻿using System;
-using AccServerAdmin.Application.Common;
-using AccServerAdmin.Domain.AccConfig;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace AccServerAdmin.Service.Controllers.Api
+﻿namespace AccServerAdmin.Service.Controllers.Api
 {
     /*
     [Authorize]
@@ -29,7 +23,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet("{serverId}")]
         public GameCfg GetGameConfig([FromQuery] Guid serverId)
         {
-            return await _getConfigQuery.ExecuteAsync(serverId).ConfigureAwait(false);
+            return await _getConfigQuery.Execute(serverId).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -38,7 +32,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpPut("{serverId}")]
         public async Task SaveGameConfig([FromQuery] Guid serverId, [FromBody] GameCfg config)
         {
-            _saveConfigCommand.ExecuteAsync(serverId, config);
+            _saveConfigCommand.Execute(serverId, config);
         }
 
     }

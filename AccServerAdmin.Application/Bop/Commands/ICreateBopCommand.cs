@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Bop.Commands
 {
     public interface ICreateBopCommand
     {
-        Task<BalanceOfPerformance> ExecuteAsync(BalanceOfPerformance bop);
+        Task<BalanceOfPerformance> Execute(BalanceOfPerformance bop);
     }
 }

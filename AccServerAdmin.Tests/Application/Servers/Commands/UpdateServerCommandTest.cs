@@ -1,13 +1,4 @@
-﻿using AccServerAdmin.Domain;
-using NSubstitute;
-using NUnit.Framework;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Threading.Tasks;
-using AccServerAdmin.Application.Common;
-using AccServerAdmin.Application.Servers.Commands;
-using AccServerAdmin.Persistence.Common;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace AccServerAdmin.Tests.Application.Servers.Commands
 {
@@ -33,7 +24,7 @@ namespace AccServerAdmin.Tests.Application.Servers.Commands
             var command = new UpdateServerCommand(repo);
 
             // Act
-            await command.ExecuteAsync(updatedServer).ConfigureAwait(false);
+            await command.Execute(updatedServer).ConfigureAwait(false);
 
             // Assert
             serverResolver.Received().Resolve(serverId);

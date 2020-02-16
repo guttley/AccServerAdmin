@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using AccServerAdmin.Application.Drivers.Commands;
 using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -31,14 +30,14 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Tools
 
         public async Task OnGetAsync(Guid id)
         {
-            Server = await _getServerByIdQuery.ExecuteAsync(id);
+            Server = await _getServerByIdQuery.Execute(id);
         }
 
         public async Task OnPostImportEntryListAsync(Guid id)
         {
             try
             {
-                await _importEntryListCommand.ExecuteAsync(id);
+                await _importEntryListCommand.Execute(id);
             }
             catch (Exception ex)
             {

@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Entries.Queries
 {
     public interface IGetEntryByIdQuery
     {
-        Task<Entry> ExecuteAsync(Guid entryId);
+        Task<Entry> Execute(Guid entryId);
     }
 }

@@ -19,6 +19,12 @@
         bool Exists(string path);
 
         /// <summary>
+        /// Deletes the file specified by the path
+        /// </summary>
+        /// <param name="path">Path to delete</param>        
+        void Delete(string path);
+
+        /// <summary>
         /// Reads all the text from a file
         /// </summary>
         /// <param name="path">Path to the file to read</param>

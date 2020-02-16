@@ -21,7 +21,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Drivers
 
         public async Task OnGetAsync()
         {
-            Drivers = await _getDriverListQuery.ExecuteAsync().ConfigureAwait(false);
+            Drivers = await _getDriverListQuery.Execute().ConfigureAwait(false);
         }
     }
 }

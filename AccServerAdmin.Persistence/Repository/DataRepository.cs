@@ -26,21 +26,21 @@ namespace AccServerAdmin.Persistence.Repository
             return _dbContext.Set<TEntity>().AsQueryable();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
             return await _dbContext.Set<TEntity>()
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
 
-        public virtual async Task<TEntity> GetAsync(Guid id)
+        public virtual async Task<TEntity> Get(Guid id)
         {
             return await _dbContext.Set<TEntity>()
                 .FirstOrDefaultAsync(e => e.Id == id)
                 .ConfigureAwait(false);
         }
 
-        public virtual async Task AddAsync(TEntity entity)
+        public virtual async Task Add(TEntity entity)
         {
             await _dbContext.Set<TEntity>().AddAsync(entity);
         }

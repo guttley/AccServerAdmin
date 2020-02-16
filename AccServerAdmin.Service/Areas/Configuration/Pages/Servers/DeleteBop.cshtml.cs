@@ -30,12 +30,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task OnGetAsync(Guid id, Guid serverId)
         {
             ServerId = serverId;
-            Balance = await _getBopByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+            Balance = await _getBopByIdQuery.Execute(id).ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _deleteBopCommand.ExecuteAsync(Balance.Id).ConfigureAwait(false);
+            await _deleteBopCommand.Execute(Balance.Id).ConfigureAwait(false);
             return RedirectToPage("./Edit", new { Id = ServerId });
         }
 

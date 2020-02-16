@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Sessions.Commands
 {
     public interface ICreateSessionCommand
     {
-        Task ExecuteAsync(Guid serverId, SessionConfiguration server);
+        Task Execute(Guid serverId, SessionConfiguration server);
     }
 }

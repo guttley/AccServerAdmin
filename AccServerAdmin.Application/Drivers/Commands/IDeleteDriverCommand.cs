@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Drivers.Commands
 {
     public interface IDeleteDriverCommand
     {
-        Task ExecuteAsync(Guid driverId);
+        Task Execute(Guid driverId);
     }
 }

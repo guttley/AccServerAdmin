@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 
 namespace AccServerAdmin.Infrastructure.IO
 {
@@ -22,9 +23,15 @@ namespace AccServerAdmin.Infrastructure.IO
         }
 
         /// <inheritdoc/>
+        public void Delete(string path)
+        {
+            File.Delete(path);
+        }
+
+        /// <inheritdoc/>
         public string ReadAllText(string path)
         {
-            return File.ReadAllText(path);
+            return File.ReadAllText(path, Encoding.Unicode);
         }
 
         /// <inheritdoc/>

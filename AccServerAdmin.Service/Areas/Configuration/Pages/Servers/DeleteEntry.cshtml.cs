@@ -30,12 +30,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task OnGetAsync(Guid id, Guid serverId)
         {
             ServerId = serverId;
-            Entry = await _getEntryByIdQuery.ExecuteAsync(id).ConfigureAwait(false);
+            Entry = await _getEntryByIdQuery.Execute(id).ConfigureAwait(false);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _deleteEntryCommand.ExecuteAsync(Entry.Id).ConfigureAwait(false);
+            await _deleteEntryCommand.Execute(Entry.Id).ConfigureAwait(false);
             return RedirectToPage("./Edit", new { Id = ServerId });
         }
 

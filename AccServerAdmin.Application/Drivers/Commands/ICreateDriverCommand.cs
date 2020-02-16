@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Drivers.Commands
 {
     public interface ICreateDriverCommand
     {
-        Task<Driver> ExecuteAsync(Driver driver);
+        Task<Driver> Execute(Driver driver);
     }
 }

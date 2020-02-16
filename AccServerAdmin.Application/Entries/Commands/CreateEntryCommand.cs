@@ -21,11 +21,11 @@ namespace AccServerAdmin.Application.Entries.Commands
         }
 
 
-        public async Task<Entry> ExecuteAsync(Entry entry)
+        public async Task<Entry> Execute(Entry entry)
         {
-            await _validator.ExecuteAsync(entry).ConfigureAwait(false);
-            await _entryRepository.AddAsync(entry).ConfigureAwait(false);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _validator.Execute(entry).ConfigureAwait(false);
+            await _entryRepository.Add(entry).ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
 
             return entry;
         }

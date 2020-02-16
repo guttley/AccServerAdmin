@@ -19,7 +19,7 @@ namespace AccServerAdmin.Application.Bop.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task ExecuteAsync(BalanceOfPerformance bop)
+        public async Task Execute(BalanceOfPerformance bop)
         {
             if (!await _bopRepository.IsUniqueBopAsync(bop).ConfigureAwait(false))
             {
@@ -27,7 +27,7 @@ namespace AccServerAdmin.Application.Bop.Commands
             }
 
             _bopRepository.Update(bop.Id, bop);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace AccServerAdmin.Application.AppSettings
 {
@@ -7,6 +6,6 @@ namespace AccServerAdmin.Application.AppSettings
 
     public interface IGetAppSettingsQuery
     {
-        Task<AppSettings> ExecuteAsync();
+        Task<AppSettings> Execute();
     }
 }

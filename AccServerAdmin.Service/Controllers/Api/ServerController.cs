@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AccServerAdmin.Application.Servers.Commands;
-using AccServerAdmin.Application.Servers.Queries;
-using AccServerAdmin.Domain;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace AccServerAdmin.Service.Controllers.Api
+﻿namespace AccServerAdmin.Service.Controllers.Api
 {
     /*
     [Authorize]
@@ -41,7 +32,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet]
         public async Task<IEnumerable<Server>> GetServerList()
         {
-            return await _getServerListQuery.ExecuteAsync().ConfigureAwait(false);
+            return await _getServerListQuery.Execute().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -50,7 +41,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpGet("{serverId}")]
         public async Task<Server> GetServerById([FromQuery] Guid serverId)
         {
-            return await _getServerByIdQuery.ExecuteAsync(serverId).ConfigureAwait(false);
+            return await _getServerByIdQuery.Execute(serverId).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -59,7 +50,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpPost("{serverName}")]
         public async Task<Server> CreateServer([FromQuery] string serverName)
         {
-            return await _createServerCommand.ExecuteAsync(serverName).ConfigureAwait(false);
+            return await _createServerCommand.Execute(serverName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -68,7 +59,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpPut("{serverId}")]
         public async Task UpdateServerAsync([FromQuery] Guid serverId, [FromBody] Server server)
         {
-            await _updateServerCommand.ExecuteAsync(server).ConfigureAwait(false);
+            await _updateServerCommand.Execute(server).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -77,7 +68,7 @@ namespace AccServerAdmin.Service.Controllers.Api
         [HttpDelete("{serverId}")]
         public async Task DeleteServer([FromQuery] Guid serverId)
         {
-            await _deleteServerCommand.ExecuteAsync(serverId).ConfigureAwait(false);
+            await _deleteServerCommand.Execute(serverId).ConfigureAwait(false);
         }
     }
     */

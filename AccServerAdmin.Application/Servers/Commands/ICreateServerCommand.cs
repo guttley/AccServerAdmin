@@ -5,6 +5,6 @@ namespace AccServerAdmin.Application.Servers.Commands
 {
     public interface ICreateServerCommand
     {
-        Task<Server> ExecuteAsync(string serverName);
+        Task<Server> Execute(string serverName);
     }
 }

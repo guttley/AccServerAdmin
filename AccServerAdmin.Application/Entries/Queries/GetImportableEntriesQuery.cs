@@ -20,11 +20,11 @@ namespace AccServerAdmin.Application.Entries.Queries
             _directory = directory;
         }
 
-        public async Task<bool> ExecuteAsync(Guid serverId)
+        public async Task<bool> Execute(Guid serverId)
         {
             try
             {
-                var settings = await _getAppSettingsQuery.ExecuteAsync().ConfigureAwait(false);
+                var settings = await _getAppSettingsQuery.Execute().ConfigureAwait(false);
                 var resultsPath = Path.Combine(settings.InstanceBasePath, serverId.ToString(), "results");
                 var entries = Directory.EnumerateFiles(resultsPath, "*entryList.json");
 

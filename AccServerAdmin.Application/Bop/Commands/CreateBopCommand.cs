@@ -19,15 +19,15 @@ namespace AccServerAdmin.Application.Bop.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BalanceOfPerformance> ExecuteAsync(BalanceOfPerformance bop)
+        public async Task<BalanceOfPerformance> Execute(BalanceOfPerformance bop)
         {
             if (!await _bopRepository.IsUniqueBopAsync(bop).ConfigureAwait(false))
             {
                 throw new BopNotUniqueException("Balance of performance already exists for this track/car");
             }
 
-            await _bopRepository.AddAsync(bop);
-            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _bopRepository.Add(bop);
+            await _unitOfWork.SaveChanges().ConfigureAwait(false);
 
             return bop;
         }

@@ -18,7 +18,7 @@ namespace AccServerAdmin.Persistence.Repository
             _dbContext = dbContext;
         }
 
-        public override async Task<Entry> GetAsync(Guid id)
+        public override async Task<Entry> Get(Guid id)
         {
             return await _dbContext.Set<Entry>()
                 .Include(e => e.Entries).ThenInclude(e => e.Driver)
@@ -26,7 +26,7 @@ namespace AccServerAdmin.Persistence.Repository
                 .ConfigureAwait(false);
         }
 
-        public override async Task<IEnumerable<Entry>> GetAllAsync()
+        public override async Task<IEnumerable<Entry>> GetAll()
         {
             return await _dbContext.Set<Entry>()
                 .Include(e => e.Entries).ThenInclude(e => e.Driver)
