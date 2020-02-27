@@ -22,11 +22,11 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
+                .Include(s => s.AssistRules)
                 .Include(s => s.ServerBop)
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
                 .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
-                .ToListAsync()
-                ;
+                .ToListAsync();
         }
 
         /// <inheritdoc />
@@ -36,11 +36,11 @@ namespace AccServerAdmin.Persistence.Repository
                 .Include(s => s.NetworkCfg)
                 .Include(s => s.GameCfg)
                 .Include(s => s.EventRules)
+                .Include(s => s.AssistRules)
                 .Include(s => s.ServerBop)
                 .Include(s => s.EventCfg).ThenInclude(e => e.Sessions)
                 .Include(s => s.EntryList).ThenInclude(e => e.Entries).ThenInclude(e => e.Entries).ThenInclude(e => e.Driver)
-                .FirstOrDefaultAsync(s => s.Id == id)
-                ;
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public override void Update(Guid id, Server updated)
@@ -50,8 +50,9 @@ namespace AccServerAdmin.Persistence.Repository
             var existingNetCfg = DbContext.Set<NetworkCfg>().Find(updated.NetworkCfg.Id);
             var existingGameCfg = DbContext.Set<GameCfg>().Find(updated.GameCfg.Id);
             var existingEventCfg = DbContext.Set<EventCfg>().Find(updated.EventCfg.Id);
-            var existingRules = DbContext.Set<EventRules>().Find(updated.EventRules.Id);
+            var existingEventRules = DbContext.Set<EventRules>().Find(updated.EventRules.Id);
             var existingEntries = DbContext.Set<EntryList>().Find(updated.EntryList.Id);
+            var existingAssistRules = DbContext.Set<AssistRules>().Find(updated.AssistRules.Id);
 
             if (existingNetCfg != null)
             {
@@ -68,14 +69,19 @@ namespace AccServerAdmin.Persistence.Repository
                 DbContext.Entry(existingEventCfg).CurrentValues.SetValues(updated.EventCfg);
             }
 
-            if (existingRules != null)
+            if (existingEventRules != null)
             {
-                DbContext.Entry(existingRules).CurrentValues.SetValues(updated.EventRules);
+                DbContext.Entry(existingEventRules).CurrentValues.SetValues(updated.EventRules);
             }
 
             if (existingEntries != null)
             {
                 DbContext.Entry(existingEntries).CurrentValues.SetValues(updated.EntryList);
+            }
+
+            if (existingAssistRules != null)
+            {
+                DbContext.Entry(existingAssistRules).CurrentValues.SetValues(updated.AssistRules);
             }
         }
 

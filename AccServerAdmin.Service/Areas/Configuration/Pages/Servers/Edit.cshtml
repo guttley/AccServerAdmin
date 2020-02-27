@@ -29,6 +29,8 @@
                     @Html.HiddenFor(model => model.Server.EventRules.Id)
                     @Html.HiddenFor(model => model.Server.EntryList.ServerId)
                     @Html.HiddenFor(model => model.Server.EntryList.Id)
+                    @Html.HiddenFor(model => model.Server.AssistRules.ServerId)
+                    @Html.HiddenFor(model => model.Server.AssistRules.Id)
 
                     <div class="card">
                         <div class="card-header">
@@ -47,6 +49,9 @@
                                 </li>
                                 <li class="nav-item flex-sm-fill">
                                     <a data-toggle="tab" role="tab" href="#nav-tab-weather" aria-selected="false" class="nav-link">Weather Settings</a>
+                                </li>
+                                <li class="nav-item flex-sm-fill">
+                                    <a data-toggle="tab" role="tab" href="#nav-tab-assists" aria-selected="false" class="nav-link">Assist Settings</a>
                                 </li>
                                 <li class="nav-item flex-sm-fill">
                                     <a data-toggle="tab" role="tab" href="#nav-tab-entries" aria-selected="false" class="nav-link">Entry List</a>
@@ -77,6 +82,10 @@
                             <div id="nav-tab-weather" role="tabpanel" aria-labelledby="weather-tab" class="tab-pane fade px-4 py-5">
                                 <!-- Weather settings -->
                                 <partial name="_EditWeatherPartial" />
+                            </div>
+                            <div id="nav-tab-assists" role="tabpanel" aria-labelledby="weather-assists" class="tab-pane fade px-4 py-5">
+                                <!-- Assist settings -->
+                                <partial name="_EditAssistsPartial" />
                             </div>
                             <div id="nav-tab-entries" role="tabpanel" aria-labelledby="entries-tab" class="tab-pane fade px-4 py-5">
                                 <!-- Entry list -->

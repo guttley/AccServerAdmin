@@ -1,4 +1,5 @@
 ﻿@using AccServerAdmin.Domain
+@using AccServerAdmin.Domain.AccConfig
 @model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
 
 
@@ -18,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var bop in Model.Server.ServerBop)
+        @foreach (var bop in Model.Server?.ServerBop ?? new List<BalanceOfPerformance>())
         {
             <tr>
                 <th scope="row">@ListData.Tracks[bop.Track]</th>

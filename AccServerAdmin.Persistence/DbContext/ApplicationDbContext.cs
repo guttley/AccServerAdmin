@@ -1,5 +1,4 @@
-﻿using System;
-using AccServerAdmin.Domain;
+﻿using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -58,6 +57,7 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<DriverEntry> DriverEntries { get; set; }
         public DbSet<BalanceOfPerformance> BalanceOfPerformance { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<AssistRules> AssistRules { get; set; }
 
     }
 }

@@ -40,12 +40,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public SelectList RacecraftRatings { get; set; }
 
-
-        public async Task OnGetAsync(Guid id)
-        {
-            Server = await _getServerByIdQuery.Execute(id);
-            BuildBindingLists();
-        }
+        public SelectList StabilityControlSettings { get; set; }
 
         private void BuildBindingLists()
         {
@@ -55,6 +50,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             TrackMedals = new SelectList(ListData.TrackMedals, "Key", "Value", Server.GameCfg.TrackMedalsRequirement);
             SafetyRatings = new SelectList(ListData.Ratings, "Key", "Value", Server.GameCfg.SafetyRatingRequirement);
             RacecraftRatings = new SelectList(ListData.Ratings, "Key", "Value", Server.GameCfg.RacecraftRatingRequirement);
+            StabilityControlSettings = new SelectList(ListData.Ratings, "Key", "Value", Server.AssistRules.StabilityControlLevelMax);
         }
 
         private async Task ValidateNetworkCfgAsync()
@@ -67,7 +63,6 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (Server.NetworkCfg.MaxConnections == 0 || Server.NetworkCfg.MaxConnections > 64)
                 ModelState.AddModelError("Server.NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
-
 
             if (await _getDuplicatePortQuery.Execute(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort))
             {
@@ -99,6 +94,13 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 if (Server.GameCfg.Password == Server.GameCfg.SpectatorPassword)
                     ModelState.AddModelError("Server.GameCfg.SpectatorPassword", "You must supply a different password for the spectator password");
             }
+        }
+
+        public async Task OnGetAsync(Guid id)
+        {
+            
+            Server = await _getServerByIdQuery.Execute(id);
+            BuildBindingLists();
         }
 
         public async Task<IActionResult> OnPostAsync()

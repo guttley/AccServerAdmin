@@ -1,0 +1,58 @@
+﻿@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditServerModel
+
+
+<div class="form-group row">
+    <label asp-for="Server.AssistRules.StabilityControlLevelMax" class="col-sm-2 form-control-label">Stability Control Max</label>
+    <div class="col-sm-10">
+        <select asp-for="Server.AssistRules.StabilityControlLevelMax" asp-items="Model.StabilityControlSettings" class="form-control">
+            <option value="">-- Select stability control max --</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-sm-2 form-control-label">&nbsp;</label>
+    <div class="col-sm-10">
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutosteer" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutosteer" class="label-material">Disable Auto Steer</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutoEngineStart" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutoEngineStart" class="label-material">Disable Auto Engine Start</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutoClutch" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutoClutch" class="label-material">Disable Auto Clutch</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutoGear" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutoGear" class="label-material">Disable Auto Gear</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutoLights" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutoLights" class="label-material">Disable Auto Lights</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutoWiper" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutoWiper" class="label-material">Disable Auto Wiper</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableAutoPitLimiter" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableAutoPitLimiter" class="label-material">Disable Auto Pit Limiter</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.AssistRules.DisableIdealLine" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.AssistRules.DisableIdealLine" class="label-material">Disable Ideal Line</label>
+        </div>
+
+    </div>
+</div>
+

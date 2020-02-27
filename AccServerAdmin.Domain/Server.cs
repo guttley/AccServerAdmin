@@ -22,6 +22,7 @@ namespace AccServerAdmin.Domain
             EventCfg = EventCfg.CreateDefault();
             EventRules = EventRules.CreateDefault();
             EntryList = EntryList.CreateDefault();
+            AssistRules = AssistRules.CreateDefault();
         }
 
         /// <summary>
@@ -68,6 +69,11 @@ namespace AccServerAdmin.Domain
         /// Entry List
         /// </summary>
         public EntryList EntryList { get; set; }
+
+        /// <summary>
+        /// Assist Rules
+        /// </summary>
+        public AssistRules AssistRules { get; set; }
 
         /// <summary>
         /// Balance of performance
