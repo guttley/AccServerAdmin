@@ -77,7 +77,7 @@ namespace AccServerAdmin.Application.Results.Queries
                 }
                 catch (Exception ex)
                 {
-                    await _hubContext.Clients.All.ImportMessage($"Error caught processing result file: {resultFile}, Error: {ex.Message}");
+                    await _hubContext.Clients.All.ImportMessage($"Error caught processing result file: {resultFile}, Error: {ex.InnerException?.Message ?? ex.Message}");
                 }
             }
 
@@ -124,6 +124,7 @@ namespace AccServerAdmin.Application.Results.Queries
 
         private async Task ImportLaps(Session session, ResultFile results)
         {
+            _driverCache.Clear();
             var cars = results.SessionResult.Leaderboard.Select(l => l.Car).ToList();
             var laps = results.Laps.OrderBy(l => l.CarId).ToList();
 
@@ -150,30 +151,40 @@ namespace AccServerAdmin.Application.Results.Queries
 
         private SessionDriver GetSessionDriver(Car car)
         {
-            var playerId = car.Drivers.FirstOrDefault()?.PlayerId;
-
-            var sessionDriver = _driverCache.FirstOrDefault(sd => sd.Driver.PlayerId == playerId &&
-                                                                  sd.CarModel == (CarModel) car.CarModel &&
-                                                                  sd.RaceNumber == car.RaceNumber &&
-                                                                  sd.CupCategory == car.CupCategory &&
-                                                                  sd.TeamName == car.TeamName);
-
-            if (sessionDriver == null)
+            try
             {
-                sessionDriver = new SessionDriver
+                var playerId = car.Drivers.FirstOrDefault()?.PlayerId;
+
+                var sessionDriver = _driverCache.FirstOrDefault(sd => sd.Driver?.PlayerId == playerId &&
+                                                                      sd.CarModel == (CarModel) car.CarModel &&
+                                                                      sd.RaceNumber == car.RaceNumber &&
+                                                                      sd.CupCategory == car.CupCategory &&
+                                                                      sd.TeamName == car.TeamName);
+
+                if (sessionDriver == null)
                 {
-                    Driver = _driverRepository.GetQueryable().FirstOrDefault(d => d.PlayerId == playerId),
-                    CarModel = (CarModel) car.CarModel,
-                    RaceNumber = car.RaceNumber,
-                    CupCategory = car.CupCategory,
-                    TeamName = car.TeamName
-                };
+                    var driver = _driverRepository.GetQueryable().FirstOrDefault(d => d.PlayerId == playerId);
 
-                _driverCache.Add(sessionDriver);
-                _sessionDriverRepository.Add(sessionDriver);
+                    sessionDriver = new SessionDriver
+                    {
+                        Driver = driver,
+                        CarModel = (CarModel) car.CarModel,
+                        RaceNumber = car.RaceNumber,
+                        CupCategory = car.CupCategory,
+                        TeamName = car.TeamName
+                    };
+
+                    _driverCache.Add(sessionDriver);
+                    _sessionDriverRepository.Add(sessionDriver);
+                }
+
+                return sessionDriver;
             }
-
-            return sessionDriver;
+            catch (Exception ex)
+            {
+                _hubContext.Clients.All.ImportMessage($"Error caught importing driver, Error: {ex.Message}");
+                return null;
+            }
         }
 
         private async Task<Session> ImportSession(string resultFile, ResultFile results)

@@ -17,6 +17,7 @@ namespace AccServerAdmin.Service
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
+                            /*
                         .UseKestrel(kestrelOptions =>
                         {
 #if (USE_HTTPS)
@@ -25,7 +26,7 @@ namespace AccServerAdmin.Service
                                 httpsOptions.ServerCertificateSelector = (c, s) => LetsEncryptRenewalService.Certificate;
                             });
 #endif
-                        })
+                        })*/
                         .UseUrls(
 #if (USE_HTTPS)
                             $"http://{DomainToUse}",

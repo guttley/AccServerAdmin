@@ -81,6 +81,10 @@ namespace AccServerAdmin.Service
                 .AddRazorPagesOptions(o =>
                 {
                     o.Conventions.AuthorizePage("/Index");
+                    o.Conventions.AuthorizeAreaFolder("Configuration", "/Drivers");
+                    o.Conventions.AuthorizeAreaFolder("Configuration", "/Servers");
+                    o.Conventions.AuthorizeAreaFolder("Configuration", "/Tools");
+                    o.Conventions.AuthorizeAreaPage("Configuration", "/Settings");
                 });
 
             services.AddSignalR();
@@ -218,6 +222,9 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDeleteBopCommand, DeleteBopCommand>();
             services.AddTransient<IGetBopListQuery, GetBopListQuery>();
             services.AddTransient<IGetBopByIdQuery, GetBopByIdQuery>();
+
+            services.AddTransient<IServerSessionQuery, ServerSessionQuery>();
+            
 
         }
     }
