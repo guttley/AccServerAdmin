@@ -3,14 +3,16 @@ using System;
 using AccServerAdmin.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200514193313_Updated result data")]
+    partial class Updatedresultdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -654,9 +656,6 @@ namespace AccServerAdmin.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("CarId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid?>("DriverId")
                         .HasColumnType("TEXT");
 
@@ -676,8 +675,6 @@ namespace AccServerAdmin.Persistence.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarId");
 
                     b.HasIndex("DriverId");
 
@@ -1072,10 +1069,6 @@ namespace AccServerAdmin.Persistence.Migrations
 
             modelBuilder.Entity("AccServerAdmin.Domain.Results.SessionLap", b =>
                 {
-                    b.HasOne("AccServerAdmin.Domain.Results.SessionCar", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId");
-
                     b.HasOne("AccServerAdmin.Domain.AccConfig.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId");

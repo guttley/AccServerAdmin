@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AccServerAdmin.Domain.AccConfig;
 
-namespace AccServerAdmin.Domain
+namespace AccServerAdmin.Domain.Results
 {
     public class SessionLap
     {
@@ -12,9 +13,11 @@ namespace AccServerAdmin.Domain
 
         public Guid SessionId { get; set; }
 
-        public SessionDriver Driver { get; set; }
+        public SessionCar Car { get; set; }
 
-        public long Laptime { get; set; }
+        public Driver Driver { get; set; }
+
+        public long LapTime { get; set; }
 
         public long Split1 { get; set; }
 

@@ -43,7 +43,7 @@ namespace AccServerAdmin.Service.Pages
             {
                 Server = s,
                 ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id),
-                HasImportableResults = await _getImportableResultsQuery.Execute(s.Id)
+                HasImportableResults = s.CollectResults && await _getImportableResultsQuery.Execute(s.Id)
             }).ToList();
 
             DashItems = await Task.WhenAll(items);

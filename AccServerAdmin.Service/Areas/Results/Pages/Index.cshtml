@@ -20,14 +20,6 @@
     <script src="@Url.Content("/js/sessionlist-datatable.js")"></script>
 }
 
-<!--
-<div class="page-header">
-    <div class="container-fluid">
-        <h2 class="h5 no-margin-bottom">Drivers - <a asp-area="Configuration" asp-page="/Drivers/Edit" asp>Create new driver</a></h2>
-    </div>
-</div>
--->
-
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
         <div class="block">
@@ -51,7 +43,7 @@
                             {
                                 <tr>
                                     <th scope="row">@session.ServerName</th>
-                                    <td >@session.Id</td>
+                                    <td>@session.Id</td>
                                     <td>@ListData.Tracks[session.Track]</td>
                                     <td>@session.SessionType</td>
                                     <td>@(session.IsWet ? "Yes" : "No")</td>

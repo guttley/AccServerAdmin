@@ -1,0 +1,46 @@
+﻿@using AccServerAdmin.Domain
+@model AccServerAdmin.Domain.Results.Session
+
+<table id="leaderboardTable" class="table table-striped table-sm table-hover" style="width: 100%;">
+    <thead>
+        <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Car</th>
+            <th>Laps</th>
+            <th>Best Time</th>
+            <th>Gap</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            var i = 0;
+            var leaders = Model.LeaderBoard.OrderBy(l => l.BestLap);
+            var  winnerTime = 0;
+            var gap = "";
+
+            foreach (var leader in leaders)
+            {
+                i++;
+
+                if (winnerTime == 0)
+                {
+                    winnerTime = leader.BestLap;
+                }
+
+                var gapDiff = leader.BestLap - winnerTime;
+                gap = gapDiff == 0 ? "" : $"+{TimeSpan.FromMilliseconds(gapDiff).TotalSeconds}";
+
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@leader.CurrentDriver.Fullname</td>
+                    <td>@ListData.Cars[leader.Car.CarModel]</td>
+                    <td>@leader.LapCount</td>
+                    <td>@TimeSpan.FromMilliseconds(leader.BestLap).ToString("g")</td>
+                    <td>@gap</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AccServerAdmin.Domain.AccConfig;
 
-namespace AccServerAdmin.Domain
+namespace AccServerAdmin.Domain.Results
 {
-    public class SessionDriver : IKeyedEntity
+    public class SessionCar : IKeyedEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Driver Driver { get; set; }
+        public Guid SessionId { get; set; }
+
+        public List<SessionCarDriver> Drivers { get; set; } = new List<SessionCarDriver>();
 
         public CarModel CarModel { get; set; }
 

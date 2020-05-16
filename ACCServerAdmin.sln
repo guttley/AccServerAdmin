@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Domain", "Ac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Application", "AccServerAdmin.Application\AccServerAdmin.Application.csproj", "{3A6DE7EB-8B20-4DA6-9761-9E82949256F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Tests", "AccServerAdmin.Tests\AccServerAdmin.Tests.csproj", "{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Persistence", "AccServerAdmin.Persistence\AccServerAdmin.Persistence.csproj", "{5FB3324E-0446-4D6F-9B07-1FE7925D580D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccServerAdmin.Infrastructure", "AccServerAdmin.Infrastructure\AccServerAdmin.Infrastructure.csproj", "{63DC755E-0D2A-486E-A249-55ABB144B72F}"
@@ -39,10 +37,6 @@ Global
 		{3A6DE7EB-8B20-4DA6-9761-9E82949256F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A6DE7EB-8B20-4DA6-9761-9E82949256F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A6DE7EB-8B20-4DA6-9761-9E82949256F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CE69ACE-6BCC-4F6C-80BF-67499EB0C7D7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FB3324E-0446-4D6F-9B07-1FE7925D580D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FB3324E-0446-4D6F-9B07-1FE7925D580D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FB3324E-0446-4D6F-9B07-1FE7925D580D}.Release|Any CPU.ActiveCfg = Release|Any CPU

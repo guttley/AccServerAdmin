@@ -90,10 +90,15 @@
             <input asp-for="Server.GameCfg.IsRaceLocked" type="checkbox" class="checkbox-template">
             <label asp-for="Server.GameCfg.IsRaceLocked" class="label-material">Race Locked</label>
         </div>
-        
+
         <div class="i-checks">
             <input asp-for="Server.GameCfg.RandomizeTrackWhenEmpty" type="checkbox" class="checkbox-template">
             <label asp-for="Server.GameCfg.RandomizeTrackWhenEmpty" class="label-material">Random Track When Empty</label>
+        </div>
+
+        <div class="i-checks">
+            <input asp-for="Server.CollectResults" type="checkbox" class="checkbox-template">
+            <label asp-for="Server.CollectResults" class="label-material">Collect Results (Not for public servers!)</label>
         </div>
 
     </div>

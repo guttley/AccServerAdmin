@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.Common;
-using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Domain.AccResults;
+using AccServerAdmin.Domain.Results;
 using AccServerAdmin.Infrastructure.Helpers;
 using AccServerAdmin.Infrastructure.IO;
 using AccServerAdmin.Notifications.Results;
@@ -23,12 +23,13 @@ namespace AccServerAdmin.Application.Results.Queries
         private readonly IHubContext<ResultImportHub, IResultImport> _hubContext;
         private readonly IDriverRepository _driverRepository;
         private readonly IDataRepository<Session> _sessionRepository;
-        private readonly IDataRepository<SessionDriver> _sessionDriverRepository;
+        private readonly IDataRepository<SessionCar> _sessionCarRepository;
+        private readonly IDataRepository<SessionPenalty> _sessionPenaltyRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IServerPathResolver _serverPathResolver;
         private readonly IJsonConverter _jsonConverter;
         private readonly IFile _file;
-        private readonly List<SessionDriver> _driverCache = new List<SessionDriver>();
+        private readonly List<SessionCar> _driverCache = new List<SessionCar>();
         private readonly Regex _fileMatcher = new Regex(@"\d{6}_\d{6}_F?[PQR]\d?.json");
 
         private string _serverName;
@@ -38,7 +39,8 @@ namespace AccServerAdmin.Application.Results.Queries
             IHubContext<ResultImportHub, IResultImport> hubContext,
             IDriverRepository driverRepository,
             IDataRepository<Session> sessionRepository,
-            IDataRepository<SessionDriver> sessionDriverRepository,
+            IDataRepository<SessionCar> sessionCarRepository,
+            IDataRepository<SessionPenalty> sessionPenaltyRepository,
             IUnitOfWork unitOfWork,
             IServerPathResolver serverPathResolver,
             IJsonConverter jsonConverter,
@@ -47,7 +49,8 @@ namespace AccServerAdmin.Application.Results.Queries
             _hubContext = hubContext;
             _driverRepository = driverRepository;
             _sessionRepository = sessionRepository;
-            _sessionDriverRepository = sessionDriverRepository;
+            _sessionCarRepository = sessionCarRepository;
+            _sessionPenaltyRepository = sessionPenaltyRepository;
             _unitOfWork = unitOfWork;
             _serverPathResolver = serverPathResolver;
             _jsonConverter = jsonConverter;
@@ -58,7 +61,6 @@ namespace AccServerAdmin.Application.Results.Queries
         public async Task Execute(Guid serverId, string serverName)
         {
             _serverName = serverName;
-            _driverCache.AddRange(_sessionDriverRepository.GetQueryable().AsNoTracking().Include("Driver"));
 
             var path = await _serverPathResolver.Execute(serverId);
             var resultPath = Path.Combine(path, "results");
@@ -69,6 +71,8 @@ namespace AccServerAdmin.Application.Results.Queries
 
             foreach (var resultFile in resultFiles)
             {
+                _driverCache.Clear();
+
                 try
                 {
                     await ProcessResults(resultFile);
@@ -116,27 +120,117 @@ namespace AccServerAdmin.Application.Results.Queries
                 return;
             }
 
-            // Import the laps
-            await ImportLaps(session, results);
+            var cars = await ImportSessionCars(session, results);
+            await ImportLaps(session, cars, results);
+            await ImportPenalties(session, cars, results);
+            await ImportLeaderBoard(session, cars, results);
 
             await _unitOfWork.SaveChanges();
         }
-
-        private async Task ImportLaps(Session session, ResultFile results)
+        
+        private SessionCar GetCar(Session session, ResultFile results, int carId)
         {
-            _driverCache.Clear();
+            var car = results.SessionResult.Leaderboard.FirstOrDefault(l => l.Car.CarId == carId);
+            var drivers = car.Car.Drivers.Select(d => GetDriver(d.PlayerId)).ToList();
+
+            var sessionCar = new SessionCar
+            {
+                SessionId = session.Id,
+                CarModel = (CarModel)car.Car.CarModel,
+                CupCategory = car.Car.CupCategory,
+                RaceNumber = car.Car.RaceNumber,
+                TeamName = car.Car.TeamName
+            };
+
+            sessionCar.Drivers = drivers.Select(d => new SessionCarDriver
+            {
+                Car = sessionCar, 
+                SessionCarId = sessionCar.Id,
+                Driver = d,
+                DriverId = d.Id
+            }).ToList();
+
+            return sessionCar;
+        }
+
+        private Domain.AccConfig.Driver GetDriver(string playerId)
+        {
+            return _driverRepository.GetQueryable().FirstOrDefault(p => p.PlayerId == playerId);
+        }
+        
+        private DateTime GetSessionTimestamp(string resultFile)
+        {
+            var parts = Path.GetFileName(resultFile).Split("_");
+
+            var year = 2000 + int.Parse(parts[0].Substring(0, 2));
+            var month = int.Parse(parts[0].Substring(2, 2));
+            var day = int.Parse(parts[0].Substring(4, 2));
+
+            var hour = int.Parse(parts[1].Substring(0, 2));
+            var minute = int.Parse(parts[1].Substring(2, 2));
+            var second = int.Parse(parts[1].Substring(4, 2));
+
+            return new DateTime(year, month, day, hour, minute, second);
+        }
+
+        private async Task<Dictionary<int, SessionCar>> ImportSessionCars(Session session, ResultFile results)
+        {
+            var sessionCars = new Dictionary<int, SessionCar>();
             var cars = results.SessionResult.Leaderboard.Select(l => l.Car).ToList();
+
+            foreach (var car in cars)
+            {
+                var sessionCar = GetCar(session, results, (int)car.CarId);
+
+                sessionCars.Add((int)car.CarId, sessionCar);
+                await _sessionCarRepository.Add(sessionCar);
+            }
+
+
+            await _hubContext.Clients.All.ImportMessage($"Imported session cars: {sessionCars.Count} from session at {session.SessionTimestamp}");
+            return sessionCars;
+        }
+
+        private async Task ImportPenalties(Session session, Dictionary<int, SessionCar> cars, ResultFile results)
+        {
+            var penalties = results.Penalties.OrderBy(p => p.ViolationInLap);
+
+            foreach (var penalty in penalties)
+            {
+                var car = cars[(int)penalty.CarId];
+
+                var sessionPenalty = new SessionPenalty
+                {
+                    SessionId = session.Id,
+                    Car = car,
+                    Penalty = penalty.PenaltyString,
+                    PenaltyValue = (int)penalty.PenaltyValue,
+                    Reason = penalty.Reason,
+                    ViolationInLap = (int)penalty.ViolationInLap,
+                    ClearedInLap = (int)penalty.ClearedInLap
+                };
+
+                await _sessionPenaltyRepository.Add(sessionPenalty);
+            }
+
+            await _hubContext.Clients.All.ImportMessage($"Imported penalties: {penalties.Count()} from session at {session.SessionTimestamp}");
+        }
+
+        private async Task ImportLaps(Session session, Dictionary<int, SessionCar> cars, ResultFile results)
+        {
             var laps = results.Laps.OrderBy(l => l.CarId).ToList();
 
             foreach (var lap in laps)
             {
-                var car = cars.FirstOrDefault(c => c.CarId == lap.CarId);
-                var sessionDriver = GetSessionDriver(car);
+                var car = cars[(int)lap.CarId];
+                var driver = car.Drivers[(int) lap.DriverIndex];
 
                 var sessionLap = new SessionLap
                 {
-                    Driver = sessionDriver,
-                    Laptime = lap.LapTime,
+                    SessionId = session.Id,
+                    Car = car,
+                    Driver = driver.Driver,
+                    LapTime = lap.LapTime,
                     Split1 = lap.Splits.Count > 0 ? lap.Splits[0] : 0,
                     Split2 = lap.Splits.Count > 1 ? lap.Splits[1] : 0,
                     Split3 = lap.Splits.Count > 2 ? lap.Splits[2] : 0
@@ -149,42 +243,38 @@ namespace AccServerAdmin.Application.Results.Queries
             await _hubContext.Clients.All.ImportMessage($"Imported laps: {laps.Count} from session at {session.SessionTimestamp}");
         }
 
-        private SessionDriver GetSessionDriver(Car car)
+        private async Task ImportLeaderBoard(Session session, Dictionary<int, SessionCar> cars, ResultFile results)
         {
-            try
+            var leaders = results.SessionResult.Leaderboard.OrderBy(l => l.Timing.BestLap).ToList();
+            var i = 0;
+
+            foreach (var l in leaders)
             {
-                var playerId = car.Drivers.FirstOrDefault()?.PlayerId;
+                var car = cars[(int)l.Car.CarId];
 
-                var sessionDriver = _driverCache.FirstOrDefault(sd => sd.Driver?.PlayerId == playerId &&
-                                                                      sd.CarModel == (CarModel) car.CarModel &&
-                                                                      sd.RaceNumber == car.RaceNumber &&
-                                                                      sd.CupCategory == car.CupCategory &&
-                                                                      sd.TeamName == car.TeamName);
-
-                if (sessionDriver == null)
+                var leader = new LeaderboardLine
                 {
-                    var driver = _driverRepository.GetQueryable().FirstOrDefault(d => d.PlayerId == playerId);
+                    Car = car,
+                    CurrentDriver = GetDriver(l.CurrentDriver.PlayerId),
+                    BestLap = (int) l.Timing.BestLap,
+                    BestSplit1 = (int) (l.Timing.BestSplits.Count > 0 ? l.Timing.BestSplits[0] : 0),
+                    BestSplit2 = (int) (l.Timing.BestSplits.Count > 1 ? l.Timing.BestSplits[1] : 0),
+                    BestSplit3 = (int) (l.Timing.BestSplits.Count > 2 ? l.Timing.BestSplits[2] : 0),
+                    LastLap = (int) l.Timing.BestLap,
+                    LastSplit1 = (int) (l.Timing.LastSplits.Count > 0 ? l.Timing.LastSplits[0] : 0),
+                    LastSplit2 = (int) (l.Timing.LastSplits.Count > 1 ? l.Timing.LastSplits[1] : 0),
+                    LastSplit3 = (int) (l.Timing.LastSplits.Count > 2 ? l.Timing.LastSplits[2] : 0),
+                    LapCount = (int) l.Timing.LapCount,
+                    TotalTime = (int) l.Timing.TotalTime,
+                    MissingMandatoryPitstop = l.MissingMandatoryPitstop > 0,
+                };
 
-                    sessionDriver = new SessionDriver
-                    {
-                        Driver = driver,
-                        CarModel = (CarModel) car.CarModel,
-                        RaceNumber = car.RaceNumber,
-                        CupCategory = car.CupCategory,
-                        TeamName = car.TeamName
-                    };
-
-                    _driverCache.Add(sessionDriver);
-                    _sessionDriverRepository.Add(sessionDriver);
-                }
-
-                return sessionDriver;
+                session.LeaderBoard.Add(leader);
+                i++;
             }
-            catch (Exception ex)
-            {
-                _hubContext.Clients.All.ImportMessage($"Error caught importing driver, Error: {ex.Message}");
-                return null;
-            }
+
+
+            await _hubContext.Clients.All.ImportMessage($"Imported leaderboard lines: {i} from session at {session.SessionTimestamp}");
         }
 
         private async Task<Session> ImportSession(string resultFile, ResultFile results)
@@ -202,27 +292,16 @@ namespace AccServerAdmin.Application.Results.Queries
                 SessionTimestamp = timestamp,
                 SessionType = results.SessionType,
                 Track = results.TrackName,
-                IsWet = results.SessionResult.IsWetSession > 0
+                IsWet = results.SessionResult.IsWetSession > 0,
+                BestLap = (int)results.SessionResult.Bestlap,
+                BestSplit1 = (int)(results.SessionResult.BestSplits.Count != 0 ? results.SessionResult.BestSplits[0] : 0),
+                BestSplit2 = (int)(results.SessionResult.BestSplits.Count > 0 ? results.SessionResult.BestSplits[1] : 0),
+                BestSplit3 = (int)(results.SessionResult.BestSplits.Count > 1 ? results.SessionResult.BestSplits[2] : 0),
             };
 
             await _sessionRepository.Add(session);
 
             return session;
-        }
-
-        private DateTime GetSessionTimestamp(string resultFile)
-        {
-            var parts = Path.GetFileName(resultFile).Split("_");
-
-            var year = 2000 + int.Parse(parts[0].Substring(0, 2));
-            var month = int.Parse(parts[0].Substring(2, 2));
-            var day = int.Parse(parts[0].Substring(4, 2));
-
-            var hour = int.Parse(parts[1].Substring(0, 2));
-            var minute = int.Parse(parts[1].Substring(2, 2));
-            var second = int.Parse(parts[1].Substring(4, 2));
-
-            return new DateTime(year, month, day, hour, minute, second);
         }
 
         private async Task ImportDrivers(ResultFile results)
@@ -240,11 +319,7 @@ namespace AccServerAdmin.Application.Results.Queries
                 {
                     var existingDriver = await _driverRepository.GetQueryable().AnyAsync(d => d.PlayerId == driver.PlayerId);
 
-                    if (existingDriver)
-                    {
-                        //await _hubContext.Clients.All.ImportMessage($"Driver already exists: {driver.PlayerId} - {driver.Fullname}");
-                    }
-                    else
+                    if (!existingDriver)
                     {
                         var configDriver = new Domain.AccConfig.Driver
                         {

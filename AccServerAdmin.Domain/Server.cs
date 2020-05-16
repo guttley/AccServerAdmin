@@ -45,6 +45,8 @@ namespace AccServerAdmin.Domain
             }
         }
 
+        public bool CollectResults { get; set; }
+
         /// <summary>
         /// Network settings
         /// </summary>

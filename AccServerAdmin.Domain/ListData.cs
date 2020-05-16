@@ -98,6 +98,17 @@ namespace AccServerAdmin.Domain
             { SessionType.Race, "Race" },
         };
 
+        public static Dictionary<string, string> ResultSessionTypes { get; } = new Dictionary<string, string>
+        {
+            { "FP", "Free Practice" },
+            { "Q", "Qualifying" },
+            { "R", "Race" },
+            { "FP1", "Free Practice 1" },
+            { "FP2", "Free Practice 2" },
+            { "Q2", "Qualifying 2" },
+            { "R2", "Race 2" },
+        };
+
         public static Dictionary<int, string> SessionDays { get; } = new Dictionary<int, string>
         {
             { 1, "Friday" },
@@ -106,3 +117,4 @@ namespace AccServerAdmin.Domain
         };
     }
 }
+

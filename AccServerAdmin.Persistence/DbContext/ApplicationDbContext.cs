@@ -1,5 +1,6 @@
-﻿using AccServerAdmin.Domain;
+using AccServerAdmin.Domain;
 using AccServerAdmin.Domain.AccConfig;
+using AccServerAdmin.Domain.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,19 @@ namespace AccServerAdmin.Persistence.DbContext
 
             builder.Entity<Session>()
                 .HasIndex(s => s.Track);
+
+            builder.Entity<SessionCarDriver>()
+                .HasKey(cd => new { cd.DriverId, cd.SessionCarId});
+
+            builder.Entity<SessionCarDriver>()
+                .HasOne(cd => cd.Car)
+                .WithMany(cd => cd.Drivers)
+                .HasForeignKey(cd => cd.SessionCarId);
+
+            builder.Entity<SessionCarDriver>()
+                .HasOne(cd => cd.Driver)
+                .WithMany(cd => cd.SessionCars)
+                .HasForeignKey(cd => cd.DriverId);
         }
 
         //
@@ -56,8 +70,12 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<DriverEntry> DriverEntries { get; set; }
         public DbSet<BalanceOfPerformance> BalanceOfPerformance { get; set; }
-        public DbSet<Session> Sessions { get; set; }
         public DbSet<AssistRules> AssistRules { get; set; }
-
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<SessionCar> SessionCars { get; set; }
+        public DbSet<SessionCarDriver> SessionCarDrivers { get; set; }
+        public DbSet<SessionLap> SessionLaps { get; set; }
+        public DbSet<SessionPenalty> SessionPenalties { get; set; }
+        public DbSet<LeaderboardLine> LeaderboardLines { get; set; }
     }
 }

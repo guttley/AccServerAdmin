@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using AccServerAdmin.Domain.Results;
 using Newtonsoft.Json;
 
 namespace AccServerAdmin.Domain.AccConfig
@@ -17,6 +18,9 @@ namespace AccServerAdmin.Domain.AccConfig
 
         [JsonIgnore]
         public List<DriverEntry> Entries { get; set; }
+
+        [JsonIgnore]
+        public List<SessionCarDriver> SessionCars { get; set; }
 
         [JsonProperty("playerID")] 
         public string PlayerId { get; set; }

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.Results;
 
 namespace AccServerAdmin.Application.Results.Queries
 {
-    public interface IServerSessionQuery
+    public interface ISessionResultQuery
     {
-        Task<IEnumerable<Session>> Execute();
+        Task<Session> Execute(Guid sessionId);
     }
 }

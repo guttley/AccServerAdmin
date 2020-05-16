@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Application.Results.Queries;
 using AccServerAdmin.Domain;
+using AccServerAdmin.Domain.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -26,11 +27,6 @@ namespace AccServerAdmin.Service.Areas.Results.Pages
         {
             var sessions = await _serverSessionQuery.Execute();
             Sessions = sessions.OrderByDescending(s => s.SessionTimestamp).ToList();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            return Page();
         }
 
     }

@@ -14,7 +14,7 @@ namespace AccServerAdmin.Domain.AccResults
         public string Reason { get; set; }
 
         [JsonProperty("penalty")]
-        public string PenaltyPenalty { get; set; }
+        public string PenaltyString { get; set; }
 
         [JsonProperty("penaltyValue")]
         public long PenaltyValue { get; set; }

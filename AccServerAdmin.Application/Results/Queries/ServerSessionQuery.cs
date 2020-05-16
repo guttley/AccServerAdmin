@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain;
+using AccServerAdmin.Domain.Results;
 using AccServerAdmin.Persistence.Common;
 
 namespace AccServerAdmin.Application.Results.Queries

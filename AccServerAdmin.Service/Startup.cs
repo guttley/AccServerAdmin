@@ -30,6 +30,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using AccServerAdmin.Application.Sessions.Queries;
 using AccServerAdmin.Application.Sessions.Commands;
+using AccServerAdmin.Domain.Results;
 using AccServerAdmin.Notifications.Results;
 
 namespace AccServerAdmin.Service
@@ -184,7 +185,8 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDriverEntryRepository, DriverEntryRepository>();
             services.AddTransient<IBopRepository, BopRepository>();
             services.AddTransient<IDataRepository<Session>, DataRepository<Session>>();
-            services.AddTransient<IDataRepository<SessionDriver>, DataRepository<SessionDriver>>();
+            services.AddTransient<IDataRepository<SessionCar>, DataRepository<SessionCar>>();
+            services.AddTransient<IDataRepository<SessionPenalty>, DataRepository<SessionPenalty>>();
 
             // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
@@ -224,7 +226,8 @@ namespace AccServerAdmin.Service
             services.AddTransient<IGetBopByIdQuery, GetBopByIdQuery>();
 
             services.AddTransient<IServerSessionQuery, ServerSessionQuery>();
-            
+            services.AddTransient<ISessionResultQuery, SessionResultQuery>();
+
 
         }
     }

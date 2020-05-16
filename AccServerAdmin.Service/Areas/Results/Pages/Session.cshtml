@@ -1,0 +1,46 @@
+﻿@page
+@using AccServerAdmin.Domain
+@model SessionModel
+@{
+    ViewData["Title"] = "Result Session";
+}
+
+@section Scripts
+{
+    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/js/sessionlist-datatable.js")"></script>
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h4 no-margin-bottom">@Model.Session.ServerName </h2>
+        <h3 class="h5 no-margin-bottom">@ListData.Tracks[Model.Session.Track] (@(Model.Session.IsWet ? "Wet" : "Dry"))</h3> 
+        <h2 class="h5 no-margin-bottom">@ListData.ResultSessionTypes[Model.Session.SessionType] - @Model.Session.SessionTimestamp.ToString("yyyy-M-d hh:mm") </h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="block">
+            <div class="block-body">
+                <div class="row">
+                    <div class="table-responsive">
+
+                        @if (Model.Session.SessionType == "R" || Model.Session.SessionType == "R2")
+                        {
+                            <partial name="_RaceResultViewPartial" model="@Model.Session" />
+                        }
+                        else
+                        {
+                            <partial name="_NonRaceResultViewPartial" model="@Model.Session" />
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
