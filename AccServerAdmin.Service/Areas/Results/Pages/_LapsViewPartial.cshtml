@@ -1,0 +1,32 @@
+﻿@model AccServerAdmin.Domain.Results.Session
+
+<table id="leaderboardTable" class="table table-striped table-sm table-hover" style="width: 100%;">
+    <thead>
+        <tr>
+            <th>Lap</th>
+            <th>Driver</th>
+            <th>Time</th>
+            <th>Split 1</th>
+            <th>Split 2</th>
+            <th>Split 3</th>
+            <th>Valid</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    @{
+        foreach (var lap in Model.Laps.OrderBy(l => l.Lap))
+        {
+            <tr>
+                <th scope="row">@lap.Lap</th>
+                <td>@lap.Driver.Fullname</td>
+                <td>@TimeSpan.FromMilliseconds(lap.LapTime).ToString(@"mm\:ss\.FFF")</td>
+                <td>@TimeSpan.FromMilliseconds(lap.Split1).ToString(@"mm\:ss\.FFF")</td>
+                <td>@TimeSpan.FromMilliseconds(lap.Split2).ToString(@"mm\:ss\.FFF")</td>
+                <td>@TimeSpan.FromMilliseconds(lap.Split3).ToString(@"mm\:ss\.FFF")</td>
+                <td>@(lap.Valid ? "Yes" : "No")</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

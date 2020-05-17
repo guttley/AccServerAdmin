@@ -2857,8 +2857,11 @@ input.input-material ~ label.is-invalid ~ label {
   border: none;
 }
 
-.table-striped tbody tr {
+.table tr {
     cursor: pointer;
+}
+
+.table-striped tbody tr {
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }

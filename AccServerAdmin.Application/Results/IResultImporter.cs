@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AccServerAdmin.Application.Results.Queries
+namespace AccServerAdmin.Application.Results
 {
     public interface IResultImporter
     {

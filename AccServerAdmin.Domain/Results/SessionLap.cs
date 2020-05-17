@@ -5,7 +5,7 @@ using AccServerAdmin.Domain.AccConfig;
 
 namespace AccServerAdmin.Domain.Results
 {
-    public class SessionLap
+    public class SessionLap : IKeyedEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,6 +16,10 @@ namespace AccServerAdmin.Domain.Results
         public SessionCar Car { get; set; }
 
         public Driver Driver { get; set; }
+
+        public int Lap { get; set; }
+
+        public bool Valid { get; set; }
 
         public long LapTime { get; set; }
 

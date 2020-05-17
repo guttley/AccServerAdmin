@@ -5,6 +5,7 @@
 <table id="leaderboardTable" class="table table-striped table-sm table-hover" style="width: 100%;">
     <thead>
         <tr>
+            <th>CarId</th>
             <th>Position</th>
             <th>Driver</th>
             <th>Car</th>
@@ -34,8 +35,8 @@
 
                 <tr>
                     <th scope="row">@i</th>
-                    <td><partial name="_DriverPartial" model="@leader"/></td>
-                    <td>@leader.CurrentDriver.Fullname</td>
+                    <td>@leader.Car.Id</td>
+                    <td><partial name="_DriverPartial" model="@leader" /></td>
                     <td>@ListData.Cars[leader.Car.CarModel]</td>
                     <td>@leader.LapCount</td>
                     <td>@(leader.BestLap == int.MaxValue ? "" : TimeSpan.FromMilliseconds(leader.BestLap).ToString("g"))</td>

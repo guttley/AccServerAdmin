@@ -1,8 +1,8 @@
 ﻿@page
 @using AccServerAdmin.Domain
-@model SessionModel
+@model LapsModel
 @{
-    ViewData["Title"] = "Result Session";
+    ViewData["Title"] = "Laps";
 }
 
 @section Scripts
@@ -11,7 +11,7 @@
     <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
     <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
     <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
-    <script src="@Url.Content("/js/leaderboard-datatable.js")"></script>
+    <script src="@Url.Content("/js/lap-datatable.js")"></script>
 }
 
 <div class="page-header">
@@ -29,14 +29,7 @@
                 <div class="row">
                     <div class="table-responsive">
 
-                        @if (Model.Session.SessionType == "R" || Model.Session.SessionType == "R2")
-                        {
-                            <partial name="_RaceResultViewPartial" model="@Model.Session" />
-                        }
-                        else
-                        {
-                            <partial name="_NonRaceResultViewPartial" model="@Model.Session" />
-                        }
+                        <partial name="_LapsViewPartial" model="@Model.Session" />
 
                     </div>
                 </div>

@@ -1,15 +1,27 @@
 $(function () {
-    var dataTable = $('#leaderTable').DataTable({
-       responsive: {
+    var dataTable = $('#leaderboardTable').DataTable({
+        "columnDefs": [
+            {
+                "targets": [1],
+                "visible": false,
+                "searchable": false
+            }
+        ],
+        "searching": false,
+        "ordering": false,
+        "paging": false,
+        "info": false,
+        responsive: {
             details: false
         }
     });
 
-
-    //$('#sessionTable').on('click', 'tbody tr', function () {
-        //var data = dataTable.row(this).data();
-        //window.location.href = 'Results/Session?sessionId=' + data[1];
-    //});
+    $('#leaderboardTable').on('click', 'tbody tr', function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var sessionId = urlParams.get("sessionId");
+        var data = dataTable.row(this).data();
+        window.location.href = '/Results/Laps?sessionId=' + sessionId + '&carId=' + data[1];
+    });
 
 });
 

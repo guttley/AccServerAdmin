@@ -16,7 +16,7 @@ using AccServerAdmin.Persistence.Repository;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AccServerAdmin.Application.Results.Queries
+namespace AccServerAdmin.Application.Results
 {
     public class ResultImporter : IResultImporter
     {
@@ -219,17 +219,25 @@ namespace AccServerAdmin.Application.Results.Queries
         private async Task ImportLaps(Session session, Dictionary<int, SessionCar> cars, ResultFile results)
         {
             var laps = results.Laps.OrderBy(l => l.CarId).ToList();
+            var lapNumbers = new Dictionary<Guid, int>();
 
             foreach (var lap in laps)
             {
                 var car = cars[(int)lap.CarId];
                 var driver = car.Drivers[(int) lap.DriverIndex];
 
+                if (!lapNumbers.ContainsKey(driver.SessionCarId))
+                {
+                    lapNumbers.Add(driver.SessionCarId, 0);
+                }
+
                 var sessionLap = new SessionLap
                 {
                     SessionId = session.Id,
                     Car = car,
                     Driver = driver.Driver,
+                    Lap = ++lapNumbers[driver.SessionCarId],
+                    Valid = lap.IsValidForBest,
                     LapTime = lap.LapTime,
                     Split1 = lap.Splits.Count > 0 ? lap.Splits[0] : 0,
                     Split2 = lap.Splits.Count > 1 ? lap.Splits[1] : 0,

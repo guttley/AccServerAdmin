@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using AccServerAdmin.Application.Results.Queries;
+using AccServerAdmin.Application.Results;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
 using Microsoft.AspNetCore.Mvc;
