@@ -1,4 +1,5 @@
 ﻿@using AccServerAdmin.Domain
+@using AccServerAdmin.Infrastructure.Helpers
 @model AccServerAdmin.Domain.Results.Session
 
 <table id="leaderboardTable" class="table table-striped table-sm table-hover" style="width: 100%;">
@@ -30,7 +31,7 @@
                 }
 
                 var gapDiff = leader.BestLap - winnerTime;
-                gap = gapDiff == 0 ? "" : $"+{TimeSpan.FromMilliseconds(gapDiff).TotalSeconds}";
+                gap = gapDiff == 0 ? "" : $"+{TimeSpan.FromMilliseconds(gapDiff).ToGapFormat()}";
 
                 <tr>
                     <th scope="row">@i</th>

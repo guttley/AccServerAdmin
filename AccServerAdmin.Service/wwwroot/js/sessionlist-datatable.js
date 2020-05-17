@@ -7,6 +7,7 @@ $(function () {
                 "searchable": false
             }
         ],
+        "order": [[5, "desc"]],
         responsive: {
             details: false
         }
@@ -15,8 +16,7 @@ $(function () {
 
     $('#sessionTable').on('click', 'tbody tr', function () {
         var data = dataTable.row(this).data();
-        window.location.href = 'Session?sessionId=' + data[1];
+        window.location.href = 'Results/Session?sessionId=' + data[1];
     });
 
 });
-
