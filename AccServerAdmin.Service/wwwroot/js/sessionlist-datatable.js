@@ -8,6 +8,7 @@ $(function () {
             }
         ],
         "order": [[5, "desc"]],
+        "searching": false,
         responsive: {
             details: false
         }

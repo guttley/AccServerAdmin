@@ -19,7 +19,7 @@ namespace AccServerAdmin.Application.Results.Queries
         {
             var session =  await _sessionRepository.GetQueryable()
                 //.Include(s => s.Laps).ThenInclude(l => l.Driver)
-                .Include(s => s.LeaderBoard).ThenInclude(lb => lb.Car)
+                .Include(s => s.LeaderBoard).ThenInclude(lb => lb.Car).ThenInclude(c => c.Drivers).ThenInclude(d => d.Driver)
                 .Include(s => s.LeaderBoard).ThenInclude(lb => lb.CurrentDriver)
                 //.Include(s => s.Penalties).ThenInclude(p => p.Car).ThenInclude(c => c.Drivers)
                 //.Include(s => s.Penalties)

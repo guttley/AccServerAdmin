@@ -6,17 +6,24 @@ namespace AccServerAdmin.Infrastructure.Helpers
     {
         public static string ToGapFormat(this TimeSpan ts)
         {
-            if (ts.TotalHours >= 1)
+            if (ts.TotalDays >= 1 | ts.TotalSeconds == 0)
             {
-                return ts.ToString(@"hh\:mm\:ss\.FFF");
-            } 
-            
+                return string.Empty;
+            }
+
+            var format = @"ss\.FFF";
+
             if (ts.TotalMinutes >= 1)
             {
-                return ts.ToString(@"mm\:ss\.FFF");
-            } 
+                format = @"mm\:ss\.FFF";
+            }
 
-            return ts.ToString(@"ss\.FFF");
+            if (ts.TotalHours >= 1)
+            {
+                format = @"hh\:mm\:ss\.FFF";
+            } 
+            
+            return $"+{ts.ToString(format)}";
         }
     }
 }

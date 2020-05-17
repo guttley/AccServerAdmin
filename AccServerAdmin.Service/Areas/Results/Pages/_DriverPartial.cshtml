@@ -1,0 +1,14 @@
+﻿@using AccServerAdmin.Domain
+@model AccServerAdmin.Domain.Results.LeaderboardLine
+
+    @if (Model.Car.Drivers.Count == 1)
+    {
+        @Model.CurrentDriver.Fullname
+    }
+    else
+    {
+        foreach (var driver in Model.Car.Drivers)
+        {
+            <div>@driver.Driver.Fullname</div>
+        }
+    }

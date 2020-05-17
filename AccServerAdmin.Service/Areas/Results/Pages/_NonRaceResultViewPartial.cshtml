@@ -31,15 +31,15 @@
                 }
 
                 var gapDiff = leader.BestLap - winnerTime;
-                gap = gapDiff == 0 ? "" : $"+{TimeSpan.FromMilliseconds(gapDiff).ToGapFormat()}";
 
                 <tr>
                     <th scope="row">@i</th>
+                    <td><partial name="_DriverPartial" model="@leader"/></td>
                     <td>@leader.CurrentDriver.Fullname</td>
                     <td>@ListData.Cars[leader.Car.CarModel]</td>
                     <td>@leader.LapCount</td>
-                    <td>@TimeSpan.FromMilliseconds(leader.BestLap).ToString("g")</td>
-                    <td>@gap</td>
+                    <td>@(leader.BestLap == int.MaxValue ? "" : TimeSpan.FromMilliseconds(leader.BestLap).ToString("g"))</td>
+                    <td>@TimeSpan.FromMilliseconds(gapDiff).ToGapFormat()</td>
                 </tr>
             }
         }

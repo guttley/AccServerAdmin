@@ -15,42 +15,43 @@
     </thead>
     <tbody>
 
-        @{
-            var i = 0;
-            var leaders = Model.LeaderBoard.OrderByDescending(l => l.LapCount).ThenBy(l => l.TotalTime);
-            var  winnerTime = 0;
-            var winnerLaps = 0;
-            var gap = "";
+    @{
+        var leaders = Model.LeaderBoard.OrderByDescending(l => l.LapCount).ThenBy(l => l.TotalTime);
+        var i = 0;
+        var  winnerTime = 0;
+        var winnerLaps = 0;
+        var gap = "";
 
-            foreach (var leader in leaders)
+        foreach (var leader in leaders)
+        {
+            i++;
+            
+
+            if (winnerLaps == 0)
             {
-                i++;
-
-                if (winnerLaps == 0)
-                {
-                    winnerLaps = leader.LapCount;
-                    winnerTime = leader.TotalTime;
-                }
-
-                if (leader.LapCount < winnerLaps)
-                {
-                    gap = $"+{winnerLaps - leader.LapCount} Lap(s)";
-                }
-                else
-                {
-                    var gapDiff = leader.TotalTime - winnerTime;
-                    gap = gapDiff == 0 ? "" : $"+{TimeSpan.FromMilliseconds(gapDiff).ToGapFormat()}";
-                }
-
-                <tr>
-                    <th scope="row">@i</th>
-                    <td>@leader.CurrentDriver.Fullname</td>
-                    <td>@ListData.Cars[leader.Car.CarModel]</td>
-                    <td>@leader.LapCount</td>
-                    <td>@TimeSpan.FromMilliseconds(leader.TotalTime).ToString("g")</td>
-                    <td>@gap</td>
-                </tr>
+                winnerLaps = leader.LapCount;
+                winnerTime = leader.TotalTime;
             }
+
+            if (leader.LapCount < winnerLaps)
+            {
+                gap = $"+{winnerLaps - leader.LapCount} Lap(s)";
+            }
+            else
+            {
+                var gapDiff = leader.TotalTime - winnerTime;
+                gap = gapDiff == 0 ? "" : TimeSpan.FromMilliseconds(gapDiff).ToGapFormat();
+            }
+
+            <tr>
+                <th scope="row">@i</th>
+                <td><partial name="_DriverPartial" model="@leader"/></td>
+                <td>@ListData.Cars[leader.Car.CarModel]</td>
+                <td>@leader.LapCount</td>
+                <td>@(leader.TotalTime == int.MaxValue ? "" : TimeSpan.FromMilliseconds(leader.TotalTime).ToString("g"))</td>
+                <td>@gap</td>
+            </tr>
         }
+    }
     </tbody>
 </table>

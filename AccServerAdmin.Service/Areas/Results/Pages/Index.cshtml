@@ -35,6 +35,10 @@
                                     <th>Session Type</th>
                                     <th>Wet</th>
                                     <th>Timestamp</th>
+                                    @if(User.Identity.IsAuthenticated)
+                                    {
+                                        <th>Admin</th>    
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,7 +51,11 @@
                                     <td>@ListData.Tracks[session.Track]</td>
                                     <td>@session.SessionType</td>
                                     <td>@(session.IsWet ? "Yes" : "No")</td>
-                                    <td>@session.SessionTimestamp.ToString("yyyy-M-d hh:mm")</td>
+                                    <td>@session.SessionTimestamp.ToString("yyyy-M-d HH:mm")</td>
+                                    @if(User.Identity.IsAuthenticated)
+                                    {
+                                        <td>Admin</td>
+                                    }
                                 </tr>
                             }
 
