@@ -18,13 +18,37 @@
         foreach (var lap in Model.Laps.OrderBy(l => l.Lap))
         {
             <tr>
-                <th scope="row">@lap.Lap</th>
+                <th scope="row">@(lap.Lap == 9999 ? "" : lap.Lap.ToString())</th>
                 <td>@lap.Driver.Fullname</td>
-                <td>@TimeSpan.FromMilliseconds(lap.LapTime).ToString(@"mm\:ss\.FFF")</td>
-                <td>@TimeSpan.FromMilliseconds(lap.Split1).ToString(@"mm\:ss\.FFF")</td>
-                <td>@TimeSpan.FromMilliseconds(lap.Split2).ToString(@"mm\:ss\.FFF")</td>
-                <td>@TimeSpan.FromMilliseconds(lap.Split3).ToString(@"mm\:ss\.FFF")</td>
-                <td>@(lap.Valid ? "Yes" : "No")</td>
+
+                <td>
+                    <div class="@(lap.LapTime == Model.BestLap && lap.Lap != 9999 ? "text-success" : "")">
+                        @TimeSpan.FromMilliseconds(lap.LapTime).ToString(@"mm\:ss\.FFF")
+                    </div>
+                </td>
+                <td>
+                    <div class="@(lap.Split1 == Model.BestSplit1 && lap.Lap != 9999 ? "text-success" : "")">
+                        @TimeSpan.FromMilliseconds(lap.Split1).ToString(@"mm\:ss\.FFF")
+                    </div>
+                </td>
+                <td>
+                    <div class="@(lap.Split2 == Model.BestSplit2 && lap.Lap != 9999 ? "text-success" : "")">
+                        @TimeSpan.FromMilliseconds(lap.Split2).ToString(@"mm\:ss\.FFF")
+                    </div>
+                </td>
+                <td>
+                    <div class="@(lap.Split3 == Model.BestSplit3 && lap.Lap != 9999 ? "text-success" : "")">
+                        @TimeSpan.FromMilliseconds(lap.Split3).ToString(@"mm\:ss\.FFF")
+                    </div>
+                </td>
+                <td>
+                    @if (lap.Lap != 9999)
+                    {
+                        <div class="@(lap.Valid ? "text-success-dark" : "text-danger-dark")">
+                            @(lap.Valid ? "Yes" : "No")
+                        </div>
+                    }
+                </td>
             </tr>
         }
     }

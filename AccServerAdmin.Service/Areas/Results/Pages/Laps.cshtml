@@ -16,9 +16,19 @@
 
 <div class="page-header">
     <div class="container-fluid">
-        <h2 class="h4 no-margin-bottom">@Model.Session.ServerName </h2>
-        <h3 class="h5 no-margin-bottom">@ListData.Tracks[Model.Session.Track] (@(Model.Session.IsWet ? "Wet" : "Dry"))</h3> 
-        <h2 class="h5 no-margin-bottom">@ListData.ResultSessionTypes[Model.Session.SessionType] - @Model.Session.SessionTimestamp.ToString("yyyy-M-d hh:mm") </h2>
+        <div class="row d-flex align-items-center">
+            <div class="col-lg-10 d-flex align-items-start">
+                <div class="d-block">
+                    <h2 class="h4 no-margin-bottom">@Model.Session.ServerName </h2>
+                    <h3 class="h5 no-margin-bottom">@ListData.Tracks[Model.Session.Track] (@(Model.Session.IsWet ? "Wet" : "Dry"))</h3>
+                    <h2 class="h5 no-margin-bottom">@ListData.ResultSessionTypes[Model.Session.SessionType] - @Model.Session.SessionTimestamp.ToString("yyyy-M-d hh:mm") </h2>
+                </div>
+            </div>
+            <div class="col-lg-2 d-flex align-items-end">
+                <button class="btn btn-primary" onclick="javascript:history.go(-1)">Back to Session</button>
+            </div>
+        </div>
+
     </div>
 </div>
 

@@ -5560,6 +5560,10 @@ a.text-secondary:focus, a.text-secondary:hover {
   color: #28a745 !important;
 }
 
+.text-success-dark {
+    color: #1e7e34 !important;
+}
+
 a.text-success:focus, a.text-success:hover {
   color: #1e7e34 !important;
 }
@@ -5582,6 +5586,10 @@ a.text-warning:focus, a.text-warning:hover {
 
 .text-danger {
   color: #bb414d !important;
+}
+
+.text-danger-dark {
+    color: #95343d !important;
 }
 
 a.text-danger:focus, a.text-danger:hover {

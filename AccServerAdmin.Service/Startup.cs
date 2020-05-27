@@ -11,6 +11,7 @@ using AccServerAdmin.Application.Drivers.Queries;
 using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Entries.Queries;
 using AccServerAdmin.Application.Results;
+using AccServerAdmin.Application.Results.Commands;
 using AccServerAdmin.Application.Results.Queries;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
@@ -230,8 +231,8 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerSessionQuery, ServerSessionQuery>();
             services.AddTransient<ISessionResultQuery, SessionResultQuery>();
             services.AddTransient<ISessionLapsQuery, SessionLapsQuery>();
-
-
+            services.AddTransient<IDeleteResultSessionCommand, DeleteResultSessionCommand>();
+            
         }
     }
 }
