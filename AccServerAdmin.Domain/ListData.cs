@@ -105,6 +105,11 @@ namespace AccServerAdmin.Domain
             { "R", "Race" },
             { "FP1", "Free Practice 1" },
             { "FP2", "Free Practice 2" },
+            { "FP3", "Free Practice 3" },
+            { "FP4", "Free Practice 4" },
+            { "FP5", "Free Practice 5" },
+            { "FP6", "Free Practice 6" },
+            { "FP7", "Free Practice 7" },
             { "Q2", "Qualifying 2" },
             { "R2", "Race 2" },
         };
