@@ -190,6 +190,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDataRepository<SessionCar>, DataRepository<SessionCar>>();
             services.AddTransient<IDataRepository<SessionPenalty>, DataRepository<SessionPenalty>>();
             services.AddTransient<IDataRepository<SessionLap>, DataRepository<SessionLap>>();
+            services.AddTransient<IDataRepository<GlobalEntryList>, DataRepository<GlobalEntryList>>();
 
             // Commands/Queries
             services.AddTransient<IGetAppSettingsQuery, GetAppSettingsQuery>();
@@ -232,6 +233,12 @@ namespace AccServerAdmin.Service
             services.AddTransient<ISessionResultQuery, SessionResultQuery>();
             services.AddTransient<ISessionLapsQuery, SessionLapsQuery>();
             services.AddTransient<IDeleteResultSessionCommand, DeleteResultSessionCommand>();
+
+            services.AddTransient<IGetGlobalEntryListQuery, GetGlobalEntryListQuery>();
+            services.AddTransient<IGetGlobalEntryListByIdQuery, GetGlobalEntryListByIdQuery>();
+            services.AddTransient<ICreateGlobalEntryListCommand, CreateGlobalEntryListCommand>();
+            services.AddTransient<IUpdateGlobalEntryListCommand, UpdateGlobalEntryListCommand>();
+            services.AddTransient<IDeleteGlobalEntryListCommand, DeleteGlobalEntryListCommand>();
             
         }
     }

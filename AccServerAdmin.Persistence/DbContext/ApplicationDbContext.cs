@@ -77,5 +77,6 @@ namespace AccServerAdmin.Persistence.DbContext
         public DbSet<SessionLap> SessionLaps { get; set; }
         public DbSet<SessionPenalty> SessionPenalties { get; set; }
         public DbSet<LeaderboardLine> LeaderboardLines { get; set; }
+        public DbSet<GlobalEntryList> GlobalEntries { get; set; }
     }
 }

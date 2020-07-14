@@ -1,0 +1,151 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.EditEntryModel
+@{
+    ViewData["Title"] = "Server entry";
+}
+
+@section Scripts
+{
+    <script src="@Url.Content("/js/entry-import.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/js/driverselect-datatable.js")"></script>
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Server Entry</h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Edit Entry</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form method="post">
+
+                            @Html.HiddenFor(model => model.ServerId)
+                            @Html.HiddenFor(model => model.EntryListId)
+                            @Html.HiddenFor(model => model.Entry.Id)
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.RaceNumber" class="col-sm-2 form-control-label">Race Number</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.RaceNumber" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.RaceNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.DefaultGridPosition" class="col-sm-2 form-control-label">Default Grid Position</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.DefaultGridPosition" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.DefaultGridPosition" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.ForcedCarModel" class="col-sm-2 form-control-label">Car Model</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="Entry.ForcedCarModel" asp-items="Model.CarModels" class="form-control">
+                                        <option value="">-- Select a Car Type --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.CustomCar" class="col-sm-2 form-control-label">Custom Car Json</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.CustomCar" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.CustomCar" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.Ballast" class="col-sm-2 form-control-label">Ballast KG</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.Ballast" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.Ballast" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Entry.Restrictor" class="col-sm-2 form-control-label">Restrictor %</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="Entry.Restrictor" type="text" class="form-control">
+                                    <span asp-validation-for="Entry.Restrictor" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 form-control-label">&nbsp;</label>
+                                <div class="col-sm-10">
+                                    <div class="i-checks">
+                                        <input asp-for="Entry.ServerAdmin" type="checkbox" class="checkbox-template">
+                                        <label asp-for="Entry.ServerAdmin">Server Admin</label>
+                                    </div>
+
+                                    <div class="i-checks">
+                                        <input asp-for="Entry.OverrideDriverInfo" type="checkbox" class="checkbox-template">
+                                        <label asp-for="Entry.OverrideDriverInfo">Override Driver Info</label>
+                                    </div>
+
+                                    <div class="i-checks">
+                                        <input asp-for="Entry.OverrideCarModelForCustomCar" type="checkbox" class="checkbox-template">
+                                        <label asp-for="Entry.OverrideCarModelForCustomCar">Override Car Model</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 form-control-label">Drivers</label>
+                                <div class="col-sm-10">
+                                    <ul>
+                                        @foreach (var driver in Model.Entry.Drivers)
+                                        {
+                                            <li>
+                                                @driver.Fullname
+                                                <a asp-page-handler="RemoveDriver"
+                                                   asp-route-serverId="@Model.ServerId"
+                                                   asp-route-entryListId="@Model.EntryListId"
+                                                   asp-route-entryId="@Model.Entry.Id"
+                                                   asp-route-driverId="@driver.Id"
+                                                   alt="Select @driver.Fullname">Remove Driver</a>
+                                            </li>
+                                        }
+                                    </ul>
+
+                                    <button type="button" data-toggle="modal" data-target="#driverSelector" class="btn btn-primary">Add Driver</button>
+                                </div>
+
+                                <partial name="_AddEntryDriverPartial" />
+                            </div>
+
+                            <div class="form-group-material">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                                <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,41 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.EntryLists.AddEntryModel
+@{
+    ViewData["Title"] = "Add a new Entry";
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Entries</h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+
+                    <div class="card-header d-flex align-items-center">
+                        <h4>Create New Entry</h4>
+                    </div>
+                    <div class="card-body">
+                        <p></p>
+                        <form method="post">
+                            <div class="form-group">
+                                <label asp-for="Entry.RaceNumber" class="label-material">Race Number</label>
+                                <input asp-for="Entry.RaceNumber" type="text" class="form-control">
+                                <span asp-validation-for="Entry.RaceNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
