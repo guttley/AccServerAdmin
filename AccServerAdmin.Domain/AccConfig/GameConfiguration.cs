@@ -35,6 +35,10 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonIgnore]
         public Guid ServerId { get; set; }
 
+        [JsonProperty("carGroup")]
+        [JsonConverter(typeof(CarGroupConverter))]
+        public CarGroup CarGroup { get; set; }
+
         [JsonProperty("serverName")]
         public string ServerName { get; set; }
 

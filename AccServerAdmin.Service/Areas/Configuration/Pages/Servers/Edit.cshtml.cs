@@ -28,6 +28,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         [BindProperty]
         public Server Server { get; set; }
 
+        public SelectList CarGroups { get; set; }
+
         public SelectList Tracks { get; set; }
 
         public SelectList EventTypes { get; set; }
@@ -44,6 +46,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         private void BuildBindingLists()
         {
+            CarGroups = new SelectList(ListData.CarGroups, "Key", "Value", Server.GameCfg.CarGroup);
             Tracks = new SelectList(ListData.Tracks, "Key", "Value", Server.EventCfg.Track);
             EventTypes = new SelectList(ListData.EventTypes, "Key", "Value", Server.EventCfg.EventType);
             FormationLapTypes = new SelectList(ListData.FormationLapTypes, "Key", "Value", Server.EventCfg.EventType);

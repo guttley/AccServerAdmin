@@ -77,6 +77,40 @@ namespace AccServerAdmin.Domain.AccConfig
         McLaren720SGt3Special = 22,
 
         [Description("Porsche 911 II GT3 R 2019")]
-        Porsche911IiGt3R2019 = 23
+        Porsche911IiGt3R2019 = 23,
+        
+            
+        [Description("Alpine A1110 GT4")]
+        AlpineA1110Gt4 = 50,
+
+        [Description("Aston Martin Vantage GT4")]
+        AstonMartinVantageGt4 = 51,
+
+        [Description("Audi R8 LMS GT4")]
+        AudiR8LmsGt4 = 52,
+
+        [Description("BMW M4 GT4")]
+        BmwM4Gt4 = 53,
+
+        [Description("Chevrolet Camaro GT4")]
+        ChevroletCamaroGt4 = 55,
+
+        [Description("Ginetta G55 GT4")]
+        GinettaG55Gt4 = 56,
+
+        [Description("KTM X-Bow GT4")]
+        KtmXBowGt4 = 57,
+
+        [Description("Maserati MC GT4")]
+        MaseratiMcGt4 = 58,
+
+        [Description("McLaren 570S GT4")]
+        McLaren570SGt4 = 59,
+
+        [Description("Mercedes AMG GT4")]
+        MercedesAmgGt4 = 60,
+
+        [Description("Porsche 718 Cayman GT4")]
+        Porsche718CaymanGt4 = 61,
     }
 }

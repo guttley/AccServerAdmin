@@ -66,6 +66,15 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("postRaceSeconds")]
         public int PostRaceSeconds { get; set; }
 
+        [JsonProperty("simRacerWeatherConditions")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool SimRacerWeatherConditions { get; set; }
+
+        [JsonProperty("isFixedConditionQualification")]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool isFixedConditionQualification { get; set; }
+        
+
         [JsonProperty("sessions")]
         public List<SessionConfiguration> Sessions { get; set; }
 

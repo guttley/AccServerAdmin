@@ -99,6 +99,7 @@ namespace AccServerAdmin.Application
         {
             //var serverInstanceCleanUp = _scope.ServiceProvider.GetRequiredService<IServerInstanceCleanUp>();
 
+            
             _processes.TryRemove(serverId, out var processInfo);
 
             _logger.LogInformation($"Stopping server PID: {processInfo.ProcessInfo.Id}");

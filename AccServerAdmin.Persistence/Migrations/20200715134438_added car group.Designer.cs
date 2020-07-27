@@ -3,14 +3,16 @@ using System;
 using AccServerAdmin.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccServerAdmin.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200715134438_added car group")]
+    partial class addedcargroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,9 +291,6 @@ namespace AccServerAdmin.Persistence.Migrations
                     b.Property<int>("SessionOverTimeSeconds")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("SimRacerWeatherConditions")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Track")
                         .HasColumnType("TEXT");
 
@@ -299,9 +298,6 @@ namespace AccServerAdmin.Persistence.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("WeatherRandomness")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("isFixedConditionQualification")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -353,9 +349,6 @@ namespace AccServerAdmin.Persistence.Migrations
 
                     b.Property<Guid>("ServerId")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("TyreSetCount")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

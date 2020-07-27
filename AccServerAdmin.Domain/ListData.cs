@@ -19,12 +19,18 @@ namespace AccServerAdmin.Domain
                 Ratings.Add(i, i.ToString());
             }
 
+            CarGroups = EnumHelper.GetValues<CarGroup>()
+                .OrderBy(p => p)
+                .ToDictionary(model => model, model => model.GetDescription());
+
             Cars = EnumHelper.GetValues<CarModel>()
                 .OrderBy(p => p)
                 .ToDictionary(model => model, model => model.GetDescription());
         }
 
         public static Guid AnonymousDriverId { get; } = Guid.Parse("00000000-0000-0000-0000-000000000001");
+
+        public static Dictionary<CarGroup, string> CarGroups { get; }
 
         public static Dictionary<CarModel, string> Cars { get; }
 

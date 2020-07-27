@@ -50,6 +50,9 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("isMandatoryPitstopSwapDriverRequired")]
         public bool MandatoryPitstopSwapDriverRequired { get; set; }
 
+        [JsonProperty("tyreSetCount")]
+        public int TyreSetCount { get; set; }
+
         public static EventRules CreateDefault()
         {
             return new EventRules
@@ -64,7 +67,8 @@ namespace AccServerAdmin.Domain.AccConfig
                 RefuellingTimeFixed = false,
                 MandatoryPitstopRefuellingRequired = false,
                 MandatoryPitstopTyreChangeRequired = false,
-                MandatoryPitstopSwapDriverRequired = false
+                MandatoryPitstopSwapDriverRequired = false,
+                TyreSetCount = 50
             };
         }
 

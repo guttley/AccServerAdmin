@@ -37,7 +37,7 @@ namespace AccServerAdmin.Infrastructure.IO
         /// <inheritdoc/>
         public void WriteAllText(string path, string contents)
         {
-            File.WriteAllText(path, contents);
+            File.WriteAllText(path, contents, Encoding.Unicode);
         }
     }
 }
