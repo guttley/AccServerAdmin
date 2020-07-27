@@ -185,9 +185,11 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDataRepository<SessionConfiguration>, DataRepository<SessionConfiguration>>();
             services.AddTransient<IDataRepository<Entry>, DataRepository<Entry>>();
             services.AddTransient<IDriverEntryRepository, DriverEntryRepository>();
+            services.AddTransient<IDataRepository<Session>, DataRepository<Session>>();
             services.AddTransient<IBopRepository, BopRepository>();
             services.AddTransient<IDataRepository<Session>, DataRepository<Session>>();
             services.AddTransient<IDataRepository<SessionCar>, DataRepository<SessionCar>>();
+            services.AddTransient<IDataRepository<SessionCarDriver>, DataRepository<SessionCarDriver>>();
             services.AddTransient<IDataRepository<SessionPenalty>, DataRepository<SessionPenalty>>();
             services.AddTransient<IDataRepository<SessionLap>, DataRepository<SessionLap>>();
             services.AddTransient<IDataRepository<GlobalEntryList>, DataRepository<GlobalEntryList>>();

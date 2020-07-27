@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 
 namespace AccServerAdmin.Persistence.Repository
@@ -7,5 +8,7 @@ namespace AccServerAdmin.Persistence.Repository
     {
         Task AddAsync(DriverEntry driverEntry);
         void Delete(DriverEntry driverEntry);
+
+        IQueryable<DriverEntry> GetQueryable();
     }
 }

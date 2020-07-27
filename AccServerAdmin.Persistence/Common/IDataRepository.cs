@@ -40,5 +40,10 @@ namespace AccServerAdmin.Persistence.Common
         /// Removes an instance of TEntity referenced by the Id
         /// </summary>
         void Delete(Guid id);
+
+        /// <summary>
+        /// Removes the instance of TEntity 
+        /// </summary>
+        void Delete(TEntity entity);
     }
 }

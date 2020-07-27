@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AccServerAdmin.Domain.AccConfig;
 using AccServerAdmin.Persistence.DbContext;
 
@@ -22,6 +23,11 @@ namespace AccServerAdmin.Persistence.Repository
         public void Delete(DriverEntry driverEntry)
         {
             _dbContext.DriverEntries.Remove(driverEntry);
+        }
+
+        public IQueryable<DriverEntry> GetQueryable()
+        {
+            return _dbContext.DriverEntries;
         }
     }
 }

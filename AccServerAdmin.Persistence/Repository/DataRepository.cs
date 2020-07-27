@@ -28,16 +28,12 @@ namespace AccServerAdmin.Persistence.Repository
 
         public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _dbContext.Set<TEntity>()
-                .ToListAsync()
-                ;
+            return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
         public virtual async Task<TEntity> Get(Guid id)
         {
-            return await _dbContext.Set<TEntity>()
-                .FirstOrDefaultAsync(e => e.Id == id)
-                ;
+            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public virtual async Task Add(TEntity entity)
@@ -61,6 +57,11 @@ namespace AccServerAdmin.Persistence.Repository
         public virtual void Delete(Guid id)
         {
             var entity = _dbContext.Set<TEntity>().Find(id);
+            _dbContext.Set<TEntity>().Remove(entity);
+        }
+
+        public virtual void Delete(TEntity entity)
+        {
             _dbContext.Set<TEntity>().Remove(entity);
         }
     }
