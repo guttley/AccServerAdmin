@@ -12,6 +12,7 @@
             <th>Laps</th>
             <th>Total Time</th>
             <th>Gap</th>
+            <th>Fastest Lap</th>
         </tr>
     </thead>
     <tbody>
@@ -22,11 +23,11 @@
         var  winnerTime = 0;
         var winnerLaps = 0;
         var gap = "";
+        var bestlap = Model.LeaderBoard.Min(l => l.BestLap);
 
         foreach (var leader in leaders)
         {
             i++;
-            
 
             if (winnerLaps == 0)
             {
@@ -52,6 +53,12 @@
                 <td>@leader.LapCount</td>
                 <td>@(leader.TotalTime == int.MaxValue ? "" : TimeSpan.FromMilliseconds(leader.TotalTime).ToString("g"))</td>
                 <td>@gap</td>
+
+                <td>
+                    <div class="@(leader.BestLap == bestlap ? "text-success" : "")">
+                        @TimeSpan.FromMilliseconds(leader.BestLap).ToString(@"mm\:ss\.FFF")
+                    </div>
+                </td>
             </tr>
         }
     }

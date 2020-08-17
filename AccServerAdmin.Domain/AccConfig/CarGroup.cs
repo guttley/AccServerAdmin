@@ -4,7 +4,7 @@ namespace AccServerAdmin.Domain.AccConfig
 {
     public enum CarGroup
     {
-        [Description("Free For All")]
+        [Description("FreeForAll")]
         FreeForAll = 0,
 
         [Description("GT3")]
