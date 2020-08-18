@@ -81,7 +81,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 await _updateSessionCommand.Execute(ServerId, Session);
             }
 
-            return RedirectToPage("./Edit", new { Id = ServerId});
+            return Redirect($"/Configuration/Servers/Edit?Id={ServerId}#nav-tab-sessions");
         }
 
         private void BuildBindingLists()

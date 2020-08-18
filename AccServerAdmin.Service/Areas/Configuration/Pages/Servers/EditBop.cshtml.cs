@@ -97,7 +97,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                     ModelState.AddModelError("Balance.Car", nex.Message);
                 }
 
-                return Redirect($"Edit?Id={ServerId}");
+                return Redirect($"/Configuration/Servers/Edit?Id={ServerId}#nav-tab-bop");
             } 
             else
             { 

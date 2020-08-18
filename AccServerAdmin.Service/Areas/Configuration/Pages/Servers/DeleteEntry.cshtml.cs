@@ -36,7 +36,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         public async Task<IActionResult> OnPostAsync()
         {
             await _deleteEntryCommand.Execute(Entry.Id);
-            return RedirectToPage("./Edit", new { Id = ServerId });
+            return Redirect($"/Configuration/Servers/Edit?Id={ServerId}#nav-tab-entries");
         }
 
     }

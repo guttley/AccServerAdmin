@@ -1,5 +1,16 @@
 $(function () {
 
+    // Javascript to enable link to tab
+    var hash = document.location.hash;
+    if (hash) {
+        console.log(hash);
+        $('.tab-pane').removeClass('active');
+
+        $(hash).addClass("active");
+
+        $('a[href="' + hash + '"]').tab('show');
+    }
+
     // ------------------------------------------------------- //
     // Tooltips init
     // ------------------------------------------------------ //    

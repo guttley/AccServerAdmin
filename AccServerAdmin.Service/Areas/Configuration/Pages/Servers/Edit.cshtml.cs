@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AccServerAdmin.Application.Entries.Commands;
 using AccServerAdmin.Application.Servers.Commands;
 using AccServerAdmin.Application.Servers.Queries;
 using AccServerAdmin.Domain;
@@ -12,17 +13,20 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
     public class EditServerModel : PageModel
     {
         private readonly IUpdateServerCommand _updateServerCommand;
+        private readonly IGridResetCommand _resetGridCommand;
         private readonly IGetServerByIdQuery _getServerByIdQuery;
         private readonly IGetDuplicatePortQuery _getDuplicatePortQuery;
 
         public EditServerModel(
             IGetServerByIdQuery getServerByIdQuery,
             IGetDuplicatePortQuery getDuplicatePortQuery,
-            IUpdateServerCommand updateServerCommand)
+            IUpdateServerCommand updateServerCommand,
+            IGridResetCommand resetGridCommand)
         {
             _getServerByIdQuery = getServerByIdQuery;
             _getDuplicatePortQuery = getDuplicatePortQuery;
             _updateServerCommand = updateServerCommand;
+            _resetGridCommand = resetGridCommand;
         }
 
         [BindProperty]
@@ -101,7 +105,6 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public async Task OnGetAsync(Guid id)
         {
-            
             Server = await _getServerByIdQuery.Execute(id);
             BuildBindingLists();
         }
@@ -122,6 +125,12 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             await _updateServerCommand.Execute(Server);
             return RedirectToPage("./List");
+        }
+
+        public async Task OnGetResetGrid(Guid serverId, Guid entryListId)
+        {
+            await _resetGridCommand.Execute(entryListId);
+            await OnGetAsync(serverId);
         }
     }
 }

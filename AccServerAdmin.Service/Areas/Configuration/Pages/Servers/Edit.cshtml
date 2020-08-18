@@ -97,6 +97,8 @@
                                         <input asp-for="Server.EntryList.ForceEntryList" type="checkbox" class="checkbox-template">
                                         <label asp-for="Server.EntryList.ForceEntryList" class="label-material">Force Entry List</label>
                                     </div>
+
+                                    <a asp-area="Configuration" asp-page="/Servers/Edit" asp-route-serverId=" @Model.Server.Id" asp-route-entryListId="@Model.Server.EntryList.Id" asp-page-handler="ResetGrid" onclick="confirm('Are you sure you want to reset the grid positions?');">Reset grid positions</a>
                                 </div>
                             </div>
                             <div id="nav-tab-bop" role="tabpanel" aria-labelledby="bop-tab" class="tab-pane fade px-4 py-5">

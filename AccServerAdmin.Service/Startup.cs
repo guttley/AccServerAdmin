@@ -224,6 +224,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IDeleteEntryCommand, DeleteEntryCommand>();
             services.AddTransient<IAddDriverEntryCommand, AddDriverEntryCommand>();
             services.AddTransient<IDeleteDriverEntryCommand, DeleteDriverEntryCommand>();
+            services.AddTransient<IGridResetCommand, GridResetCommand>();
 
             services.AddTransient<ICreateBopCommand, CreateBopCommand>();
             services.AddTransient<IUpdateBopCommand, UpdateBopCommand>();

@@ -102,7 +102,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 return Page();
             }
 
-            return Redirect($"Edit?Id={ServerId}");
+            return Redirect($"/Configuration/Servers/Edit?Id={ServerId}#nav-tab-entries");
         }
 
         public async Task OnGetSelectDriver(Guid serverId, Guid entryListId, Guid entryId, Guid driverId)
