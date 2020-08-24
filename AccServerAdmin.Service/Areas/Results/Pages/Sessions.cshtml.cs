@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AccServerAdmin.Service.Areas.Results.Pages
 {
-    public class FastestLapsModel : PageModel
+    public class SessionsModel : PageModel
     {
         private readonly IServerSessionQuery _serverSessionQuery;
         private readonly IDeleteResultSessionCommand _deleteSessionCommand;
@@ -19,7 +19,7 @@ namespace AccServerAdmin.Service.Areas.Results.Pages
         public List<Session> Sessions { get; set; }
 
 
-        public FastestLapsModel(
+        public SessionsModel(
             IServerSessionQuery serverSessionQuery,
             IDeleteResultSessionCommand deleteSessionCommand)
         {

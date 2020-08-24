@@ -24,61 +24,34 @@
     </div>
 </div>
 
-@section Scripts
-{
-    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
-    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
-    <script src="@Url.Content("/js/sessionlist-datatable.js")"></script>
-}
-
 <section class="no-padding-top no-padding-bottom">
-    <div class="container-fluid">
-        <div class="block">
-            <div class="block-body">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table id="sessionTable" class="table table-striped table-sm table-hover" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>Server</th>
-                                    <th>SessionId</th>
-                                    <th>Track</th>
-                                    <th>Session Type</th>
-                                    <th>Wet</th>
-                                    <th>Timestamp</th>
-                                    @if(User.Identity.IsAuthenticated)
-                                    {
-                                        <th>Admin</th>    
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
+    <div class="container">
 
-                            @foreach (var session in Model.Sessions)
-                            {
-                                <tr>
-                                    <th scope="row">@session.ServerName</th>
-                                    <td>@session.Id</td>
-                                    <td>@ListData.Tracks[session.Track]</td>
-                                    <td>@session.SessionType</td>
-                                    <td>@(session.IsWet ? "Yes" : "No")</td>
-                                    <td>@session.SessionTimestamp.ToString("yyyy-M-d HH:mm")</td>
-                                    @if(User.Identity.IsAuthenticated)
-                                    {
-                                        <td>
-                                            <a asp-route-sessionId="@session.Id" asp-page-handler="DeleteSession" onclick="confirm('Are you sure you want to delete this session?');">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
-                            }
+        <div class="row">
 
-                            </tbody>
-                        </table>
-                    </div>
+
+            <div class="col-lg-4">
+                <div class="user-block block text-center">
+
+                    <button class="btn btn-primary" onclick="window.location.href = '/Results/TrackSelection'">Results by Track</button>
+
+
                 </div>
             </div>
+
+            <div class="col-lg-4">
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="user-block block text-center">
+
+                    <button class="btn btn-primary" onclick="window.location.href = '/Results/Sessions'">Results by Session</button>
+
+                </div>
+            </div>
+
         </div>
+
     </div>
 </section>

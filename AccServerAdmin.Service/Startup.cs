@@ -235,6 +235,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IServerSessionQuery, ServerSessionQuery>();
             services.AddTransient<ISessionResultQuery, SessionResultQuery>();
             services.AddTransient<ISessionLapsQuery, SessionLapsQuery>();
+            services.AddTransient<ITrackLapsQuery, TrackLapsQuery>();
             services.AddTransient<IDeleteResultSessionCommand, DeleteResultSessionCommand>();
 
             services.AddTransient<IGetGlobalEntryListQuery, GetGlobalEntryListQuery>();
