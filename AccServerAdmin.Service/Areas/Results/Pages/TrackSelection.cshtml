@@ -31,34 +31,57 @@
     <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
     <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
     <script src="@Url.Content("/js/tracklist-datatable.js")"></script>
+    
+    <script language="javascript">
+        function submitform()
+        {
+            $('form').submit();
+        }
+    </script>
 }
 
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
         <div class="block">
             <div class="block-body">
-                <div class="row">
-                    <div class="table-responsive">
+
+                <div class="table-responsive">
+                    
+                    <div id="datatable1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                        <div class="row">
+                            <div class="dataTables_length" id="datatable1_length">
+                                <form>
+                                    <label>
+                                        Tracks with results in the last
+                                        <select asp-for="DaysHistory" asp-items="Model.DaysHistorySelection" class="custom-select custom-select-sm form-control form-control-sm"
+                                                onchange="submitform();">
+                                        </select>
+                                    </label>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
                         <table id="trackTable" class="table table-striped table-sm table-hover" style="width: 100%;">
                             <thead>
-                                <tr>
-                                    <th>Track</th>
-                                    <th>TrackId</th>
-                                </tr>
+                            <tr>
+                                <th>Track</th>
+                                <th>TrackId</th>
+                            </tr>
                             </thead>
                             <tbody>
 
-                            @foreach (var (key, value) in ListData.Tracks.OrderBy(t => t.Value))
+                            @foreach (var track in Model.Tracks)
                             {
                                 <tr>
-                                    <th scope="row">@value</th>
-                                    <th >@key</th>
+                                    <th scope="row">@ListData.Tracks[track]</th>
+                                    <th>@track</th>
                                 </tr>
                             }
 
                             </tbody>
                         </table>
-                    </div>
+
                 </div>
             </div>
         </div>

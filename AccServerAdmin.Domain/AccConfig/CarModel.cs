@@ -16,7 +16,7 @@ namespace AccServerAdmin.Domain.AccConfig
         [Description("Ferrari 488 GT3")]
         Ferrari488Gt3 = 2,
 
-        [Description("Audi R8 LMS")]
+        [Description("Audi R8 LMS GT3")]
         AudiR8Lms = 3,
 
         [Description("Lamborghini Huracan GT3")]
@@ -46,31 +46,31 @@ namespace AccServerAdmin.Domain.AccConfig
         [Description("Aston Martin Vantage V12 GT3")]
         AstonMartinVantageV12Gt3 = 12,
 
-        [Description("Lamborghini Gallardo R-EX")]
+        [Description("Lamborghini Gallardo R-EX GT3")]
         LamborghiniGallardoREx = 13,
 
-        [Description("Jaguar G3")]
+        [Description("Jaguar GT3")]
         JaguarG3 = 14,
 
         [Description("Lexus RC F GT3")]
         LexusRcFGt3 = 15,
 
-        [Description("Lamborghini Huracan Evo 2019")]
+        [Description("Lamborghini Huracan Evo 2019 GT3")]
         LamborghiniHuracanEvo2019 = 16,
 
         [Description("Honda NSX GT3")]
         HondaNsxGt3 = 17,
 
-        [Description(" Lamborghini Huracan SuperTrofeo")]
+        [Description("Lamborghini Huracan SuperTrofeo")]
         LamborghiniHuracanSuperTrofeo = 18,
 
-        [Description(" Audi R8 LMS Evo 2019")]
+        [Description("Audi R8 LMS Evo 2019 GT3")]
         AudiR8LmsEvo2019 = 19,
 
-        [Description(" AMR V8 Vantage 2019")]
+        [Description("AMR V8 Vantage 2019 GT3")]
         AmrV8Vantage2019 = 20,
 
-        [Description(" Honda NSX Evo 2019")]
+        [Description("Honda NSX Evo 2019 GT3")]
         HondaNsxEvo2019 = 21,
 
         [Description("McLaren 720S GT3 (Special)")]
