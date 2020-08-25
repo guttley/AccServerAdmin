@@ -42,7 +42,11 @@ namespace AccServerAdmin.Application
             {
                 try
                 {
+<<<<<<< HEAD
                     await Task.Delay(5000);
+=======
+                    await Task.Delay(3000);
+>>>>>>> master
                     await ImportFile(e);
                 }
                 catch (Exception ex)
