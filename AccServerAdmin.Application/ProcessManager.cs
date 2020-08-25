@@ -1,5 +1,4 @@
-﻿using AccServerAdmin.Domain;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -82,11 +81,8 @@ namespace AccServerAdmin.Application
 
             _logger.LogInformation($"Starting server: {server.Name}");
 
-            var processInfo = new ServerProcessInfo
-            {
-                ProcessInfo = Process.Start(startInfo),
-                ServerId = serverId,
-            };
+            var processInfo = new ServerProcessInfo(_services, serverId, startInfo);
+            processInfo.Start();
 
             _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");
 
@@ -98,12 +94,10 @@ namespace AccServerAdmin.Application
         public void StopServer(Guid serverId)
         {
             //var serverInstanceCleanUp = _scope.ServiceProvider.GetRequiredService<IServerInstanceCleanUp>();
-
-            
             _processes.TryRemove(serverId, out var processInfo);
 
             _logger.LogInformation($"Stopping server PID: {processInfo.ProcessInfo.Id}");
-            processInfo.ProcessInfo.Kill(true);
+            processInfo.Dispose();
             _logger.LogInformation("Server stopped");
 
             //await serverInstanceCleanUp.Execute(serverId);
@@ -113,7 +107,7 @@ namespace AccServerAdmin.Application
         {
             foreach (var process in ServerProcesses)
             {
-                process.ProcessInfo.Kill(true);
+                process.Dispose();
             }
 
             _disposed = true;

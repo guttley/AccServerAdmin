@@ -67,7 +67,7 @@ namespace AccServerAdmin.Application.Results
             var resultArchivePath = Path.Combine(resultPath, "archive");
             var resultFiles = GetResultFiles(resultPath).ToList();
 
-            await _hubContext.Clients.All.ImportMessage($"Found {resultFiles.Count} files to import");
+            await _hubContext?.Clients.All.ImportMessage($"Found {resultFiles.Count} files to import");
 
             foreach (var resultFile in resultFiles)
             {
@@ -81,11 +81,11 @@ namespace AccServerAdmin.Application.Results
                 }
                 catch (Exception ex)
                 {
-                    await _hubContext.Clients.All.ImportMessage($"Error caught processing result file: {resultFile}, Error: {ex.InnerException?.Message ?? ex.Message}");
+                    await _hubContext?.Clients.All.ImportMessage($"Error caught processing result file: {resultFile}, Error: {ex.InnerException?.Message ?? ex.Message}");
                 }
             }
 
-            await _hubContext.Clients.All.ImportMessage("Import Complete");
+            await _hubContext?.Clients.All.ImportMessage("Import Complete");
         }
 
         private void ArchiveResultFile(string archivePath, string resultFile)
@@ -116,7 +116,7 @@ namespace AccServerAdmin.Application.Results
 
             if (session == null)
             {
-                await _hubContext.Clients.All.ImportMessage($"Ignoring result file {resultFile} as it appears to already be imported");
+                await _hubContext?.Clients.All.ImportMessage($"Ignoring result file {resultFile} as it appears to already be imported");
                 return;
             }
 
@@ -187,7 +187,7 @@ namespace AccServerAdmin.Application.Results
             }
 
 
-            await _hubContext.Clients.All.ImportMessage($"Imported session cars: {sessionCars.Count} from session at {session.SessionTimestamp}");
+            await _hubContext?.Clients.All.ImportMessage($"Imported session cars: {sessionCars.Count} from session at {session.SessionTimestamp}");
             return sessionCars;
         }
 
@@ -213,7 +213,7 @@ namespace AccServerAdmin.Application.Results
                 await _sessionPenaltyRepository.Add(sessionPenalty);
             }
 
-            await _hubContext.Clients.All.ImportMessage($"Imported penalties: {penalties.Count()} from session at {session.SessionTimestamp}");
+            await _hubContext?.Clients.All.ImportMessage($"Imported penalties: {penalties.Count()} from session at {session.SessionTimestamp}");
         }
 
         private async Task ImportLaps(Session session, Dictionary<int, SessionCar> cars, ResultFile results)
@@ -282,7 +282,7 @@ namespace AccServerAdmin.Application.Results
             }
 
 
-            await _hubContext.Clients.All.ImportMessage($"Imported leaderboard lines: {i} from session at {session.SessionTimestamp}");
+            await _hubContext?.Clients.All.ImportMessage($"Imported leaderboard lines: {i} from session at {session.SessionTimestamp}");
         }
 
         private async Task<Session> ImportSession(string resultFile, ResultFile results)
@@ -319,7 +319,7 @@ namespace AccServerAdmin.Application.Results
                 .OrderBy(d => d.Fullname)
                 .ToList();
 
-            await _hubContext.Clients.All.ImportMessage($"Importing {drivers.Count} drivers");
+            await _hubContext?.Clients.All.ImportMessage($"Importing {drivers.Count} drivers");
 
             foreach (var driver in drivers)
             {
@@ -338,13 +338,13 @@ namespace AccServerAdmin.Application.Results
                         };
 
                         await _driverRepository.Add(configDriver);
-                        await _hubContext.Clients.All.ImportMessage($"Driver imported: {driver.PlayerId} - {driver.Fullname}");
+                        await _hubContext?.Clients.All.ImportMessage($"Driver imported: {driver.PlayerId} - {driver.Fullname}");
                         await _unitOfWork.SaveChanges();
                     }
                 } 
                 catch (Exception ex)
                 {
-                    await _hubContext.Clients.All.ImportMessage($"Error caught importing driver: {driver?.Fullname}, Error: {ex.Message}");
+                    await _hubContext?.Clients.All.ImportMessage($"Error caught importing driver: {driver?.Fullname}, Error: {ex.Message}");
                 }
             }
 

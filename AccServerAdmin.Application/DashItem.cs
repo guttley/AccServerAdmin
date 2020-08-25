@@ -1,4 +1,6 @@
-﻿namespace AccServerAdmin.Domain
+﻿using AccServerAdmin.Domain;
+
+namespace AccServerAdmin.Application
 {
     public class DashItem
     {

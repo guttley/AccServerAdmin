@@ -7,6 +7,7 @@ $(function () {
                 "searchable": false
             }
         ],
+        "lengthChange": false,
         "searching": false,
         responsive: {
             details: false
@@ -16,7 +17,7 @@ $(function () {
 
     $('#trackTable').on('click', 'tbody tr', function () {
         var data = dataTable.row(this).data();
-        window.location.href = '/Results/TrackLaps?track=' + data[1] + '&daysHistory=30';
+        window.location.href = '/Results/TrackLaps?track=' + data[1] + '&daysHistory=' + $('#DaysHistory').val();
     });
 
 });
