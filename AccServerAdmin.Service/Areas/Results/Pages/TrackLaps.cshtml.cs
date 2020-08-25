@@ -21,10 +21,10 @@ namespace AccServerAdmin.Service.Areas.Results.Pages
             _trackLapsQuery = trackLapsQuery;
         }
 
-        public async Task OnGetAsync(string track)
+        public async Task OnGetAsync(string track, int daysHistory)
         {
             Track = track;
-            Laps = await _trackLapsQuery.Execute(track).ConfigureAwait(false);
+            Laps = await _trackLapsQuery.Execute(track, daysHistory).ConfigureAwait(false);
         }
 
     }

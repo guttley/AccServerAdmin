@@ -16,7 +16,7 @@ $(function () {
 
     $('#trackTable').on('click', 'tbody tr', function () {
         var data = dataTable.row(this).data();
-        window.location.href = '/Results/TrackLaps?track=' + data[1];
+        window.location.href = '/Results/TrackLaps?track=' + data[1] + '&daysHistory=30';
     });
 
 });

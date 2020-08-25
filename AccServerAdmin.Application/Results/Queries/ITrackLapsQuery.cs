@@ -6,6 +6,6 @@ namespace AccServerAdmin.Application.Results.Queries
 {
     public interface ITrackLapsQuery
     {
-        Task<IList<SessionLap>> Execute(string track);
+        Task<IList<SessionLap>> Execute(string track, int daysHistory);
     }
 }

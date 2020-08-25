@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccServerAdmin.Domain.Results;
@@ -20,21 +21,30 @@ namespace AccServerAdmin.Application.Results.Queries
             _lapRepository = lapRepository;
         }
 
-        public async Task<IList<SessionLap>> Execute(string track)
+        public async Task<IList<SessionLap>> Execute(string track, int daysHistory)
         {
+            var timestamp = DateTime.Now.Subtract(TimeSpan.FromDays(daysHistory));
             var sessions = _sessionRepository.GetQueryable()
-                .Where(s => s.Track == track && s.SessionType != "R" && s.SessionType != "R2")
+                .Where(s => s.Track == track && s.SessionType != "R" && s.SessionType != "R2" && s.SessionTimestamp > timestamp)
                 .Select(s => s.Id);
 
-            var driverLaps = await _lapRepository.GetQueryable()
+            var allLaps = await _lapRepository.GetQueryable()
                 .Include(l => l.Driver)
                 .Include(l => l.Car)
                 .Where(l => l.Valid && sessions.Contains(l.SessionId))
                 .ToListAsync();
-            
-            var laps = driverLaps.GroupBy(l => l.Driver.Id)
-                .Select(d => d.OrderBy(l => l.LapTime))
-                .Select(l => l.First()).ToList();
+
+            var drivers = allLaps.Select(l => l.Driver.Id).Distinct();
+            var laps = new List<SessionLap>();
+
+            foreach (var driverId in drivers)
+            {
+                var driverLaps = allLaps.Where(l => l.Driver.Id == driverId);
+                var carLaps = driverLaps.GroupBy(l => l.Car.CarModel)
+                                        .Select(l => l.OrderBy(x => x.LapTime));
+
+                laps.AddRange(carLaps.Select(carLap => carLap.First()));
+            }
 
             return laps;
         }
