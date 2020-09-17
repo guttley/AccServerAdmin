@@ -81,7 +81,7 @@ namespace AccServerAdmin.Application
 
             _logger.LogInformation($"Starting server: {server.Name}");
 
-            var processInfo = new ServerProcessInfo(_services, serverId, startInfo);
+            var processInfo = new ServerProcessInfo(_services, serverId, server.Name, startInfo);
             processInfo.Start();
 
             _logger.LogInformation($"Server PID: {processInfo.ProcessInfo.Id}");

@@ -13,8 +13,9 @@ namespace AccServerAdmin.Application
     public class ServerProcessInfo : IDisposable
     {
         private readonly IServiceProvider _services;
+        private readonly string _serverName;
         private readonly FileSystemWatcher _watcher;
-
+        
         public Guid ServerId { get; }
 
         public Process ProcessInfo { get; private set; }
@@ -22,9 +23,10 @@ namespace AccServerAdmin.Application
         public ProcessStartInfo StartInfo { get; }
 
 
-        public ServerProcessInfo(IServiceProvider services, Guid serverId, ProcessStartInfo startInfo)
+        public ServerProcessInfo(IServiceProvider services, Guid serverId, string serverName, ProcessStartInfo startInfo)
         {
             _services = services;
+            _serverName = serverName;
             ServerId = serverId;
             StartInfo = startInfo;
 
@@ -42,7 +44,7 @@ namespace AccServerAdmin.Application
             {
                 try
                 {
-                    await Task.Delay(5000);
+                    await Task.Delay(10000);
                     await ImportFile(e);
                 }
                 catch (Exception ex)
@@ -57,7 +59,7 @@ namespace AccServerAdmin.Application
             using var scope = _services.CreateScope();
             var import = scope.ServiceProvider.GetRequiredService<IResultImporter>();
 
-            await import.Execute(ServerId, "import");
+            await import.Execute(ServerId, _serverName);
         }
 
         public void Start()
