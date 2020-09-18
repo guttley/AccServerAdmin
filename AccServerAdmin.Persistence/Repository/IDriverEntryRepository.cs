@@ -8,7 +8,7 @@ namespace AccServerAdmin.Persistence.Repository
     {
         Task AddAsync(DriverEntry driverEntry);
         void Delete(DriverEntry driverEntry);
-
+        void Update(DriverEntry driverEntry);
         IQueryable<DriverEntry> GetQueryable();
     }
 }

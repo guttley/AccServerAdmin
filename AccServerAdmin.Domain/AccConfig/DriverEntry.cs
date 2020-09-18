@@ -11,5 +11,7 @@ namespace AccServerAdmin.Domain.AccConfig
         public Guid EntryId { get; set; }
 
         public Entry Entry { get; set; }
+
+        public int DriverNumber { get; set; }
     }
 }

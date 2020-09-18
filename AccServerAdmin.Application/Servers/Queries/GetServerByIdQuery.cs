@@ -24,7 +24,7 @@ namespace AccServerAdmin.Application.Servers.Queries
                     .OrderBy(s => s.DayOfWeekend)
                     .ThenBy(s => s.HourOfDay)
                     .ToList();
-            
+
             return server;
         }
     }

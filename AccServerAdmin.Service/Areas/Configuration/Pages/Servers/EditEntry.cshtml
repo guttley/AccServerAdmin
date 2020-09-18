@@ -111,17 +111,39 @@
                                 <label class="col-sm-2 form-control-label">Drivers</label>
                                 <div class="col-sm-10">
                                     <ul>
-                                        @foreach (var driver in Model.Entry.Drivers)
+                                        @if (Model.Entry.Entries != null)
                                         {
-                                            <li>
-                                                @driver.Fullname
-                                                <a asp-page-handler="RemoveDriver"
+                                            @foreach (var entry in Model.Entry.Entries.OrderBy(e => e.DriverNumber))
+                                            {
+                                        <li>
+                                            @entry.DriverNumber -&nbsp;
+                                            @entry.Driver.Fullname -&nbsp;
+
+                                            @if (entry.DriverNumber > 1)
+                                            {
+                                                <a asp-page-handler="MoveDriverUp"
                                                    asp-route-serverId="@Model.ServerId"
                                                    asp-route-entryListId="@Model.EntryListId"
                                                    asp-route-entryId="@Model.Entry.Id"
-                                                   asp-route-driverId="@driver.Id"
-                                                   alt="Select @driver.Fullname">Remove Driver</a>
-                                            </li>
+                                                   asp-route-driverId="@entry.DriverId"
+                                                   asp-route-driverNumber="@entry.DriverNumber">Up </a>
+                                            }
+                                            
+                                            <a asp-page-handler="MoveDriverDown"
+                                               asp-route-serverId="@Model.ServerId"
+                                               asp-route-entryListId="@Model.EntryListId"
+                                               asp-route-entryId="@Model.Entry.Id"
+                                               asp-route-driverId="@entry.DriverId"
+                                               asp-route-driverNumber="@entry.DriverNumber">Down</a> -&nbsp;
+
+                                            <a asp-page-handler="RemoveDriver"
+                                               asp-route-serverId="@Model.ServerId"
+                                               asp-route-entryListId="@Model.EntryListId"
+                                               asp-route-entryId="@Model.Entry.Id"
+                                               asp-route-driverId="@entry.DriverId"
+                                               alt="Select @entry.Driver.Fullname">Remove Driver</a>
+                                        </li>
+                                            }
                                         }
                                     </ul>
 

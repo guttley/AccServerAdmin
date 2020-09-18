@@ -29,10 +29,16 @@
                 <td>@entry.ForcedCarModel.GetDescription()</td>
 
                 <td>
-                    @foreach (var driver in entry.Drivers)
-                    {
-                        @driver.Fullname<br />
-                    }
+                    <table>
+                        <tbody>
+                            @foreach (var de in entry.Entries.OrderBy(e => e.DriverNumber))
+                            {
+                            <tr>
+                                <td>@de.DriverNumber - @de.Driver.Fullname</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
                 </td>
 
                 <td>@entry.DefaultGridPosition</td>

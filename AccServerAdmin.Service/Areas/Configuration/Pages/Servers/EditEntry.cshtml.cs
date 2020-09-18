@@ -21,19 +21,22 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         private readonly IGetDriverListQuery _getDriverListQuery;
         private readonly IAddDriverEntryCommand _addDriverCommand;
         private readonly IDeleteDriverEntryCommand _deleteDriverCommand;
+        private readonly IMoveDriverEntryCommand _moveDriverEntryCommand;
 
         public EditEntryModel(
             IGetEntryByIdQuery getEntryByIdQuery,
             IUpdateEntryCommand updateEntryCommand,
             IGetDriverListQuery getDriverListQuery,
             IAddDriverEntryCommand addDriverCommand,
-            IDeleteDriverEntryCommand deleteDriverCommand)
+            IDeleteDriverEntryCommand deleteDriverCommand,
+            IMoveDriverEntryCommand moveDriverEntryCommand)
         {
             _getEntryByIdQuery = getEntryByIdQuery;
             _updateEntryCommand = updateEntryCommand;
             _getDriverListQuery = getDriverListQuery;
             _addDriverCommand = addDriverCommand;
             _deleteDriverCommand = deleteDriverCommand;
+            _moveDriverEntryCommand = moveDriverEntryCommand;
         }
 
         [BindProperty] public Guid ServerId { get; set; }
@@ -46,7 +49,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public SelectList CarModels { get; set; }
 
-        private async Task BuildBindingListsAsync()
+        private async Task BuildBindingLists()
         {
             var model = Entry?.ForcedCarModel ?? CarModel.NotForced;
 
@@ -64,7 +67,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                 ? new Entry {EntryListId = entryListId}
                 : await _getEntryByIdQuery.Execute(id);
 
-            await BuildBindingListsAsync();
+            await BuildBindingLists();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -98,7 +101,7 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
             if (!ModelState.IsValid)
             {
-                await BuildBindingListsAsync();
+                await BuildBindingLists();
                 return Page();
             }
 
@@ -116,6 +119,20 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
         {
             var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId};
             await _deleteDriverCommand.Execute(driverEntry);
+            await OnGetAsync(serverId, entryListId, entryId);
+        }
+
+        public async Task OnGetMoveDriverUp(Guid serverId, Guid entryListId, Guid entryId, Guid driverId, int driverNumber)
+        {
+            var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId, DriverNumber = driverNumber};
+            await _moveDriverEntryCommand.Execute(driverEntry, false);
+            await OnGetAsync(serverId, entryListId, entryId);
+        }
+
+        public async Task OnGetMoveDriverDown(Guid serverId, Guid entryListId, Guid entryId, Guid driverId, int driverNumber)
+        {
+            var driverEntry = new DriverEntry {DriverId = driverId, EntryId = entryId, DriverNumber = driverNumber};
+            await _moveDriverEntryCommand.Execute(driverEntry, true);
             await OnGetAsync(serverId, entryListId, entryId);
         }
     }

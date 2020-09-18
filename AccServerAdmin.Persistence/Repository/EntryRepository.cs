@@ -22,16 +22,14 @@ namespace AccServerAdmin.Persistence.Repository
         {
             return await _dbContext.Set<Entry>()
                 .Include(e => e.Entries).ThenInclude(e => e.Driver)
-                .FirstOrDefaultAsync(e => e.Id == id)
-                ;
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public override async Task<IEnumerable<Entry>> GetAll()
         {
             return await _dbContext.Set<Entry>()
                 .Include(e => e.Entries).ThenInclude(e => e.Driver)
-                .ToListAsync()
-                ;
+                .ToListAsync();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace AccServerAdmin.Domain.AccConfig
             {
                 if (Entries != null)
                 {
-                    return Entries.Select(e => e.Driver).ToList();
+                    return Entries.OrderBy(e => e.DriverNumber).Select(e => e.Driver).ToList();
                 }
 
                 return _drivers ??= new List<Driver>();
