@@ -25,6 +25,7 @@
                             <div class="form-group">
                                 <label asp-for="Entry.RaceNumber" class="label-material">Race Number</label>
                                 <input asp-for="Entry.RaceNumber" type="text" class="form-control">
+                                <input asp-for="Entry.OverrideDriverInfo" type ="hidden"/>
                                 <span asp-validation-for="Entry.RaceNumber" class="text-danger"></span>
                             </div>
 

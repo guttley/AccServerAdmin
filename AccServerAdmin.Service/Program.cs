@@ -32,8 +32,11 @@ namespace AccServerAdmin.Service
                             $"http://{DomainToUse}",
                             $"https://{DomainToUse}")
 #else 
+    #if(!RELEASE)
                             "http://localhost:48080")
-                            //$"http://{DomainToUse}")
+    #else
+                            $"http://{DomainToUse}")
+    #endif
 #endif
                         .UseStartup<Startup>();
                 });

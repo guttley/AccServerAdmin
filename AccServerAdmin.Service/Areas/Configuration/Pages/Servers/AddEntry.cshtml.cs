@@ -28,6 +28,11 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
 
         public void OnGet(Guid serverId, Guid entryListId)
         {
+            Entry = new Entry
+            {
+                OverrideDriverInfo = true
+            };
+
             ServerId = serverId;
             EntryListId = entryListId;
         }

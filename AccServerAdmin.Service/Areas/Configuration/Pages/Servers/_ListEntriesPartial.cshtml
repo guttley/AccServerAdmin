@@ -34,7 +34,9 @@
                             @foreach (var de in entry.Entries.OrderBy(e => e.DriverNumber))
                             {
                             <tr>
-                                <td>@de.DriverNumber - @de.Driver.Fullname</td>
+                                <td>
+                                    @de.DriverNumber - <a asp-area="Configuration" asp-page="/Drivers/Edit" asp-route-Id="@de.DriverId">@de.Driver.Fullname</a>
+                                </td>
                             </tr>
                             }
                         </tbody>
