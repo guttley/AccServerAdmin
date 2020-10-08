@@ -68,8 +68,8 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
             if (Server.NetworkCfg.UdpPort < 1024 || Server.NetworkCfg.UdpPort > ushort.MaxValue)
                 ModelState.AddModelError("Server.NetworkCfg.UdpPort", $"UdpPort must be greater than 1024 and less than {ushort.MaxValue}");
 
-            if (Server.NetworkCfg.MaxConnections == 0 || Server.NetworkCfg.MaxConnections > 64)
-                ModelState.AddModelError("Server.NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
+//            if (Server.NetworkCfg.MaxConnections == 0 || Server.NetworkCfg.MaxConnections > 64)
+//                ModelState.AddModelError("Server.NetworkCfg.MaxConnections", "MaxConnections must be between 1 and 64");
 
             if (await _getDuplicatePortQuery.Execute(Server.Id, Server.NetworkCfg.TcpPort, Server.NetworkCfg.UdpPort))
             {
