@@ -1,7 +1,6 @@
 ﻿using AccServerAdmin.Application;
 using AccServerAdmin.Application.AppSettings;
 using AccServerAdmin.Application.Servers.Queries;
-using AccServerAdmin.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -12,6 +11,11 @@ using AccServerAdmin.Application.Results.Queries;
 
 namespace AccServerAdmin.Service.Pages
 {
+    public class StatusResult
+    {
+        public double CpuUsage { get; set; }
+    }
+
     public class IndexModel : PageModel
     {
         private readonly IGetServerListQuery _getServerListQuery;
@@ -60,6 +64,13 @@ namespace AccServerAdmin.Service.Pages
         {
             _processManager.StopServer(serverId);
             return new RedirectResult("Index");
+        }
+
+        public ActionResult OnGetServerStatus()
+        {
+            var result = new StatusResult {CpuUsage = Math.Round(_processManager.CpuUsage, MidpointRounding.ToEven)};
+
+            return new JsonResult(result);
         }
     }
 }

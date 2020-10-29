@@ -73,13 +73,12 @@ namespace AccServerAdmin.Domain.AccConfig
         [Description("Honda NSX Evo 2019 GT3")]
         HondaNsxEvo2019 = 21,
 
-        [Description("McLaren 720S GT3 (Special)")]
+        [Description("McLaren 720S GT3")]
         McLaren720SGt3Special = 22,
 
         [Description("Porsche 911 II GT3 R 2019")]
         Porsche911IiGt3R2019 = 23,
-        
-            
+
         [Description("Alpine A1110 GT4")]
         AlpineA1110Gt4 = 50,
 

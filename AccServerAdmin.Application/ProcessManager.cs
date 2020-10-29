@@ -18,8 +18,13 @@ namespace AccServerAdmin.Application
         private readonly ILogger<ProcessManager> _logger;
         private readonly ConcurrentDictionary<Guid, ServerProcessInfo> _processes = new ConcurrentDictionary<Guid, ServerProcessInfo>();
         private readonly Task _processCheckTask;
+        private readonly PerformanceCounter _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total", true);
+        private readonly PerformanceCounter _ramCounter = new PerformanceCounter("Process", "Working Set", true);
 
         public IReadOnlyList<ServerProcessInfo> ServerProcesses => _processes.Values.ToList();
+
+        public double CpuUsage { get; private set; }
+        public double RamUsage { get; private set; }
 
         public ProcessManager(
             IServiceProvider services,
@@ -32,23 +37,38 @@ namespace AccServerAdmin.Application
         
         private void CheckProcesses()
         {
+            var ticks = 0;
+
             while(!_disposed)
             {
                 try
                 {
+                    ticks++;
+                    Task.Delay(1000).Wait();
+
+                    CpuUsage = _cpuCounter.NextValue();
+
+                    if (ticks < 2)
+                    {
+                        continue;
+                    }
+
+                    ticks = 0;
+
                     var toCheck = new List<ServerProcessInfo>(_processes.Values);
 
                     foreach (var process in toCheck)
                     {
-                        using var processInfo = Process.GetProcessById(process.ProcessInfo.Id);
-                        if (processInfo == null)
+                        using (var processInfo = Process.GetProcessById(process.ProcessInfo.Id))
                         {
-                            _logger.LogInformation($"Server found not to be running: {process.ServerId}");
-                            _processes.TryRemove(process.ServerId, out _);
+                            if (processInfo is null)
+                            {
+                                    _logger.LogInformation($"Server found not to be running: {process.ServerId}");
+                                    _processes.TryRemove(process.ServerId, out _);
+                                }
                         }
                     }
 
-                    Task.Delay(3000).Wait();
                 } 
                 catch (Exception ex)
                 {
@@ -57,6 +77,22 @@ namespace AccServerAdmin.Application
             }
 
         }
+
+        /*
+        private double GetCpuUsageForProcess(Process process)
+        {
+            var startTime = DateTime.UtcNow;
+            var startCpuUsage = process.TotalProcessorTime;
+            Task.Delay(500).Wait();
+    
+            var endTime = DateTime.UtcNow;
+            var endCpuUsage = process.TotalProcessorTime;
+            var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
+            var totalMsPassed = (endTime - startTime).TotalMilliseconds;
+            var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
+            return cpuUsageTotal * 100;
+        }
+        */
 
         public async Task<ServerProcessInfo> StartServerAsync(Guid serverId)
         {
@@ -110,6 +146,7 @@ namespace AccServerAdmin.Application
                 process.Dispose();
             }
 
+            _processCheckTask.Dispose();
             _disposed = true;
         }
     }

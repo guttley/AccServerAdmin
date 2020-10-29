@@ -4,9 +4,15 @@
     ViewData["Title"] = "Dashboard - ACC Server Admin";
 }
 
+@section Scripts
+{
+    <script src="@Url.Content("/js/dashboard.js")"></script>
+}
+
 <div class="page-header">
     <div class="container-fluid">
-        <h2 class="h5 no-margin-bottom">Dashboard</h2>
+        <h2 class="h5 no-margin-bottom" id="dashboard">Dashboard</h2>
+        <div class="no-margin-bottom" id="stats"></div>
     </div>
 </div>
 
