@@ -1,0 +1,45 @@
+﻿@page
+@model AccServerAdmin.Service.Areas.Configuration.Pages.Servers.CopyServerModel
+@{
+    ViewData["Title"] = "Copy Server";
+}
+
+<div class="page-header">
+    <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">Servers</h2>
+    </div>
+</div>
+
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+
+                        <div class="card-header d-flex align-items-center">
+                            <h4>Copy Server - @Model.Server.Name</h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form method="post">
+
+                                @Html.HiddenFor(model => model.Server.Id)
+
+                                <div class="form-group-material">
+                                    <div class="text-danger">Are you sure you wish to copy this server?</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Copy" class="btn btn-primary">
+                                    <button type="button" onclick="window.history.go(-1); return false;" class="btn btn-primary">Cancel</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

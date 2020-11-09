@@ -204,6 +204,7 @@ namespace AccServerAdmin.Service
             services.AddTransient<IGetServerListQuery, GetServerListQuery>();
             services.AddTransient<IGetServerByIdQuery, GetServerByIdQuery>();
             services.AddTransient<IGetDuplicatePortQuery, GetDuplicatePortQuery>();
+            services.AddTransient<ICopyServerCommand, CopyServerCommand>();
 
             services.AddTransient<IGetSessionByIdQuery, GetSessionByIdQuery>();
             services.AddTransient<ICreateSessionCommand, CreateSessionCommand>();
