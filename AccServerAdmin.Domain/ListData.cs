@@ -62,6 +62,18 @@ namespace AccServerAdmin.Domain
             {"mount_panorama_2019", "Mount Panorama 2019" },
             {"suzuka_2019", "Suzuka 2019" },
             {"laguna_seca_2019", "Laguna Seca 2019" },
+            {"monza_2020", "Monza 2020" },
+            {"zolder_2020", "Zolder 2020" },
+            {"brands_hatch_2020", "Brands Hatch 2020" },
+            {"silverstone_2020", "Silverstone 2020" },
+            {"paul_ricard_2020", "Paul Ricard 2020" },
+            {"misano_2020", "Misano 2020" },
+            {"spa_2020", "Spa-Francorchamps 2020" },
+            {"nurburgring_2020", "Nurburgring 2020" },
+            {"barcelona_2020", "Barcelona 2020" },
+            {"hungaroring_2020", "Hungaroring 2020" },
+            {"zandvoort_2020", "Zandvoort 2020" },
+            {"imola_2020", "Imola 2020" },
         };
 
         public static Dictionary<int, string> DriverTypes { get; } = new Dictionary<int, string>
