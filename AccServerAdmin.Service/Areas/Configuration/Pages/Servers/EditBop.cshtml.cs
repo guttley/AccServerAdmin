@@ -90,21 +90,18 @@ namespace AccServerAdmin.Service.Areas.Configuration.Pages.Servers
                     {
                         await _updateBopCommand.Execute(Balance);
                     }
+
+                    return Redirect($"/Configuration/Servers/Edit?Id={ServerId}#nav-tab-bop");
                 }
                 catch (BopNotUniqueException nex)
                 {
                     ModelState.AddModelError("Balance.Track", nex.Message);
                     ModelState.AddModelError("Balance.Car", nex.Message);
                 }
-
-                return Redirect($"/Configuration/Servers/Edit?Id={ServerId}#nav-tab-bop");
             } 
-            else
-            { 
-                BuildBindingLists();
-                return Page();
-            }
-        }
 
+            BuildBindingLists();
+            return Page(); 
+        }
     }
 }

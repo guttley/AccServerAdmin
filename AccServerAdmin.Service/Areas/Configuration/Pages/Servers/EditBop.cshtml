@@ -41,6 +41,8 @@
                                     <select asp-for="Balance.Track" asp-items="Model.Tracks" class="form-control">
                                         <option value="">-- Select a track --</option>
                                     </select>
+
+                                    <span asp-validation-for="Balance.Track" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -50,6 +52,8 @@
                                     <select asp-for="Balance.Car" asp-items="Model.Cars" class="form-control">
                                         <option value="">-- Select a Car Type --</option>
                                     </select>
+
+                                    <span asp-validation-for="Balance.Car" class="text-danger"></span>
                                 </div>
                             </div>
 
