@@ -4,6 +4,15 @@
     ViewData["Title"] = "Edit Server";
 }
 
+@section Scripts
+{
+    <script src="@Url.Content("/vendor/datatables.net/js/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive/js/dataTables.responsive.min.js")"></script>
+    <script src="@Url.Content("/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js")"></script>
+    <script src="@Url.Content("/js/server-bop-datatable.js")"></script>
+}
+
 <div class="page-header">
     <div class="container-fluid">
         <h2 class="h5 no-margin-bottom">Servers</h2>

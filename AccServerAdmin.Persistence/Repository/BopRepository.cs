@@ -15,7 +15,9 @@ namespace AccServerAdmin.Persistence.Repository
         public async Task<bool> IsUniqueBopAsync(BalanceOfPerformance bop)
         {
             var hasMatch = await DbContext.Set<BalanceOfPerformance>()
-                .AnyAsync(b => b.Track == bop.Track && b.Car == bop.Car);
+                .AnyAsync(b => b.ServerId == bop.ServerId
+                               && b.Track == bop.Track 
+                               && b.Car == bop.Car);
 
             return !hasMatch;
         }
