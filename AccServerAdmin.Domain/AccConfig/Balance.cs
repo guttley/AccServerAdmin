@@ -21,7 +21,7 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonProperty("carModel")] 
         public CarModel Car { get; set; }
 
-        [JsonProperty("ballast")]
+        [JsonProperty("ballastKg")]
         public int Ballast { get; set; }
 
         [JsonProperty("restrictor")]
