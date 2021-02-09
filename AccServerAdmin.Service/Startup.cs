@@ -132,6 +132,7 @@ namespace AccServerAdmin.Service
 
         private void ConfigureDatabase(IServiceCollection services)
         {
+            /*
             var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AccServerAdmin");
 
             if (!Directory.Exists(dbPath))
@@ -140,6 +141,11 @@ namespace AccServerAdmin.Service
             dbPath = Path.Combine(dbPath, "AccServerAdmin.db3");
 
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite($"DataSource={dbPath}"));
+            */
+
+            var config = GetConfiguration();
+            var connectionString = config.GetConnectionString("AzureSqlDb");
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(connectionString));
             services.AddDefaultIdentity<IdentityUser>(o => o.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
             var provider = services.BuildServiceProvider();
@@ -160,6 +166,19 @@ namespace AccServerAdmin.Service
                 dbContext.SaveChanges();
             }
 
+        }
+
+        private static IConfigurationRoot GetConfiguration()
+        {
+            var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+
+            if (environment != null)
+            {
+                builder.AddJsonFile($"appsettings.{environment}.json", optional: true);
+            }
+
+            return builder.Build();
         }
 
         private void RegisterApplicationComponents(IServiceCollection services)

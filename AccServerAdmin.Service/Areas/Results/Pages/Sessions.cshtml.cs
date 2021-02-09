@@ -45,5 +45,18 @@ namespace AccServerAdmin.Service.Areas.Results.Pages
             await BuildSessionList();
             return Page();
         }
+
+        public async Task<IActionResult> OnGetDeleteOldSession(int daysOld)
+        {
+            var sessions = await _serverSessionQuery.Execute();
+            var oldSessions = sessions.Where(s => s.SessionTimestamp < DateTime.Now.Subtract(TimeSpan.FromDays(daysOld)));
+
+            foreach (var session in oldSessions)
+            {
+                await _deleteSessionCommand.Execute(session.Id);
+            }
+
+            return Page();
+        }
     }
 }

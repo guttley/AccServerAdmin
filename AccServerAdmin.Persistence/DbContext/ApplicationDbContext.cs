@@ -43,7 +43,7 @@ namespace AccServerAdmin.Persistence.DbContext
                 .HasIndex(s => s.Track);
 
             builder.Entity<SessionCarDriver>()
-                .HasKey(cd => new { cd.DriverId, cd.SessionCarId});
+                   .HasKey(cd => new { cd.DriverId, cd.SessionCarId});
 
             builder.Entity<SessionCarDriver>()
                 .HasOne(cd => cd.Car)
