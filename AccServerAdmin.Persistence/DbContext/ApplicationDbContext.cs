@@ -4,6 +4,7 @@ using AccServerAdmin.Domain.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AccServerAdmin.Persistence.DbContext
 {
@@ -12,6 +13,14 @@ namespace AccServerAdmin.Persistence.DbContext
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        /// <inheritdoc />
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+
+            optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

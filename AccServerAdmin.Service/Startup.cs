@@ -145,7 +145,7 @@ namespace AccServerAdmin.Service
 
             var config = GetConfiguration();
             var connectionString = config.GetConnectionString("AzureSqlDb");
-            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(connectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
             services.AddDefaultIdentity<IdentityUser>(o => o.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
             var provider = services.BuildServiceProvider();

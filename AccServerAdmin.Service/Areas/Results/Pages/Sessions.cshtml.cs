@@ -56,6 +56,7 @@ namespace AccServerAdmin.Service.Areas.Results.Pages
                 await _deleteSessionCommand.Execute(session.Id);
             }
 
+            await BuildSessionList();
             return Page();
         }
     }
