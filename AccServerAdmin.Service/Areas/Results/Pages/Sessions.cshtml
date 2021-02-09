@@ -17,6 +17,7 @@
         {
             <div class="col-lg-2 d-flex align-items-end">
                 <button class="btn btn-primary" onclick="window.location.href='/'" >Back to Admin</button>
+                <a asp-route-daysOld="30" asp-page-handler="DeleteOldSession" onclick="confirm('Are you sure you want to delete sessions older than 30 days?');">Delete Sessions Older Than 30 Days</a>
             </div>
         }
          </div>

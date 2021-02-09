@@ -146,8 +146,10 @@ namespace AccServerAdmin.Application
                 process.Dispose();
             }
 
-            _processCheckTask.Dispose();
             _disposed = true;
+            _processCheckTask.Wait();
+            _processCheckTask.Dispose();
+            
         }
     }
 }
