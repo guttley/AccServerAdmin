@@ -42,15 +42,21 @@ namespace AccServerAdmin.Service.Pages
         {
             var settings = await _getAppSettingsQuery.Execute();
             var servers = await _getServerListQuery.Execute();
-            
-            var items = servers.Select(async s => new DashItem
-            {
-                Server = s,
-                ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == s.Id),
-                HasImportableResults = s.CollectResults && await _getImportableResultsQuery.Execute(s.Id)
-            }).ToList();
+            var items = new List<DashItem>();
 
-            DashItems = await Task.WhenAll(items);
+            foreach (var server in servers)
+            {
+                var item = new DashItem
+                {
+                    Server = server,
+                    ProcessInfo = _processManager.ServerProcesses.FirstOrDefault(p => p.ServerId == server.Id),
+                    HasImportableResults = server.CollectResults && await _getImportableResultsQuery.Execute(server.Id)
+                };
+
+                items.Add(item);
+            }
+
+            DashItems = items;
             Globals.NeedsConfiguring = settings is null;
         }
 
