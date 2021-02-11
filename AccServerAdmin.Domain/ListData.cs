@@ -74,6 +74,9 @@ namespace AccServerAdmin.Domain
             {"hungaroring_2020", "Hungaroring 2020" },
             {"zandvoort_2020", "Zandvoort 2020" },
             {"imola_2020", "Imola 2020" },
+            {"oulton_park_2019", "Oulton Park 2019" },
+            {"donington_2019", "Donington 2019" },
+            {"snetterton_2019", "Snetterton 2019" },
         };
 
         public static Dictionary<int, string> DriverTypes { get; } = new Dictionary<int, string>
