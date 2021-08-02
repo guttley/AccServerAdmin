@@ -62,7 +62,7 @@ namespace AccServerAdmin.Domain.AccConfig
         [JsonConverter(typeof(BoolConverter))]
         public bool OverrideCarModelForCustomCar { get; set; }
 
-        [JsonProperty("ballastKG")]
+        [JsonProperty("ballastKg")]
         public int Ballast { get; set; }
 
         [JsonProperty("restrictor")]
