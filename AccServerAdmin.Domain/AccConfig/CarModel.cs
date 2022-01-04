@@ -85,6 +85,9 @@ namespace AccServerAdmin.Domain.AccConfig
         [Description("Mercedes AMG GT3 Evo 2020")]
         MercedesAmgGt3_2020 = 25,
 
+        [Description("BMW M4 GT3 2020")]
+        BmwM4Gt3 = 30,
+
         [Description("Alpine A1110 GT4")]
         AlpineA1110Gt4 = 50,
 
