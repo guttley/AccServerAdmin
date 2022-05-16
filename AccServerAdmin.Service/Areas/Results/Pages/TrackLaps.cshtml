@@ -54,7 +54,6 @@
                                 var i = 0;
                                 var laps = Model.Laps.OrderBy(l => l.LapTime);
                                 long winnerTime = 0;
-                                var gap = "";
 
                                 foreach (var lap in laps)
                                 {
@@ -66,11 +65,14 @@
                                     }
 
                                     var gapDiff = lap.LapTime - winnerTime;
+                                    var carModel = ListData.Cars.ContainsKey(lap.Car.CarModel)
+                                        ? ListData.Cars[lap.Car.CarModel]
+                                        : $"No car model found for \"{lap.Car.CarModel}\"";
 
                                     <tr>
                                         <th scope="row">@i</th>
                                         <td>@lap.Driver.Fullname</td>
-                                        <td>@ListData.Cars[lap.Car.CarModel]</td>
+                                        <td>@carModel</td>
                                         <td>@(lap.LapTime == int.MaxValue ? "" : TimeSpan.FromMilliseconds(lap.LapTime).ToString("g"))</td>
                                         <td>@TimeSpan.FromMilliseconds(gapDiff).ToGapFormat()</td>
                                     </tr>

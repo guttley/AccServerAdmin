@@ -85,8 +85,23 @@ namespace AccServerAdmin.Domain.AccConfig
         [Description("Mercedes AMG GT3 Evo 2020")]
         MercedesAmgGt3_2020 = 25,
 
+        [Description("Ferrari 488 Challenge Evo")]
+        Ferrari488ChallengeEvo = 26,
+
+        [Description("BMW M2 CS Racing")]
+        BmwM2CS = 27,
+
+        [Description("Porsche 911 GT3 Cup (Type 992)")]
+        Porsche911Cup = 28,
+
+        [Description("Lamborghini Huracán SuperTrofeo EVO2")]
+        LamborghiniHuracanSuperTrofeoEvo2 = 29,
+        
         [Description("BMW M4 GT3 2020")]
         BmwM4Gt3 = 30,
+
+        [Description("Audi R8 LMS GT3 Evo 2 2022")]
+        AudiR8LmsEvo2022 = 31,
 
         [Description("Alpine A1110 GT4")]
         AlpineA1110Gt4 = 50,

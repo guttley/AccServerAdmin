@@ -33,7 +33,7 @@ namespace AccServerAdmin.Service
                             $"https://{DomainToUse}")
 #else 
     #if(!RELEASE)
-                            "http://localhost:48080")
+                            "http://localhost:5000")
     #else
                             $"http://{DomainToUse}")
     #endif
