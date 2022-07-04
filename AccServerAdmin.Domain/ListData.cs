@@ -55,6 +55,9 @@ namespace AccServerAdmin.Domain
             {"oulton_park", "Oulton Park" },
             {"donington", "Donington" },
             {"snetterton", "Snetterton" },
+            {"cota", "Curcuit Of The Americas" },
+            {"indianapolis", "Indianapolis" },
+            {"watkins_glen", "Watkins Glen" },
         };
 
         public static Dictionary<int, string> DriverTypes { get; } = new Dictionary<int, string>

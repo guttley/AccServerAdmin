@@ -351,3 +351,5 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 AccServerAdmin.Service/accServerAdmin.db3
+
+.idea/.idea.ACCServerAdmin/.idea/
